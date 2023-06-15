@@ -1,15 +1,12 @@
 import { BrowserRouter as Router } from "react-router-dom";
-// import Home from "./pages/Home";
+import Home from "./pages/Home";
 import RouterCombiner from "./route.combiner";
 import PrivateRoute from "./private.routes";
 import { ReactNode } from "react";
+import PublicLayout from "./layouts/public.layout";
 
 const Pages = {
-  IndexPage: () => (
-    <div>
-      <h1>Here Is Index Page</h1>
-    </div>
-  ),
+  IndexPage: Home,
   AdminPage: () => <div>Hi I'am Admin Page</div>,
   LoginPage: () => <div>Please Login,This is Login Page</div>,
   AdminNewUser: () => <div>I'am New User Page,I'am Under Admin Page</div>,
@@ -22,12 +19,7 @@ const Layouts = {
       <div>{children}</div>
     </div>
   ),
-  PublicLayout: ({ children }: { children: ReactNode }) => (
-    <div>
-      <h1>Public Layout</h1>
-      <div>{children}</div>
-    </div>
-  ),
+  PublicLayout: PublicLayout,
 };
 
 const Routes = [
