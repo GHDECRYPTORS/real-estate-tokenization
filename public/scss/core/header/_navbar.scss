@@ -1,0 +1,24 @@
+@include media-breakpoint-down(lg) {
+	.main-header {
+		.navbar-nav {
+			--bs-nav-link-padding-y: 0.8rem;
+			> .nav-item {
+				+ .nav-item {
+					border-top: 1px solid var(--#{$prefix}gray-200);
+				}
+				> .nav-link {
+					display: flex;
+					align-items: center;
+					&:after {
+						margin-left: auto;
+					}
+				}
+				.dropdown-menu {
+					background-color: var(--#{$prefix}gray-100);
+					margin-bottom: 0.5rem;
+					box-shadow: none;
+				}
+			}
+		}
+	}
+}

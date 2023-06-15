@@ -1,0 +1,80 @@
+.product-card {
+	background-color: var(--#{$prefix}product-card-bg);
+	border: 1px solid var(--#{$prefix}product-card-border);
+	padding: 10px;
+	border-radius: $border-radius-lg;
+	position: relative;
+	.product-card-user {
+		display: flex;
+		padding: 10px;
+		background-color: var(--#{$prefix}gray-100);
+		border-radius: $border-radius-lg;
+		margin-bottom: 10px;
+		.bid-btn {
+			&:after {
+				display: none;
+			}
+		}
+	}
+	.product-card-media {
+		overflow: hidden;
+		border-radius: $border-radius-lg;
+		position: relative;
+	}
+	.product-card-timer {
+		position: absolute;
+		bottom: 0;
+		left: 0;
+		right: 0;
+		padding: 15px;
+		display: flex;
+		justify-content: center;
+	}
+	.countdown {
+		display: flex;
+		margin: 0;
+		list-style: none;
+		padding: 10px;
+		border-radius: $border-radius-lg;
+		font-size: 12px;
+		li {
+			padding: 0 6px;
+			color: var(--#{$prefix}white);
+			text-align: center;
+		}
+		span {
+		    font-size: 9px;
+		    text-transform: uppercase;
+		    letter-spacing: 0.04rem;
+		}
+	}
+
+	.product-title {
+		padding: 12px 0;
+	}
+	.product-actions {
+		padding: 10px;
+		background-color: var(--#{$prefix}gray-100);
+		border-radius: $border-radius-lg;
+	}
+	.product-card-cart {
+		position: absolute;
+		bottom: 0;
+		left: 0;
+		right: 0;
+		padding: 10px;
+		transition: ease all 0.35s;
+		opacity: 0;
+		.btn {
+			--#{$prefix}btn-padding-y: 0.975rem;
+		}
+	}
+	&:hover {
+		.product-actions {
+			opacity: 0;
+		}
+		.product-card-cart {
+			opacity: 1;
+		}
+	}
+}

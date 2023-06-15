@@ -1,0 +1,62 @@
+.user-card-01 {
+	display: flex;
+	align-items: center;
+	background-color: var(--#{$prefix}user-card-bg);
+	border: 1px solid var(--#{$prefix}user-card-border);
+	backdrop-filter: $bg-blur-lg;
+	position: relative;
+	border-radius: $border-radius-lg;
+	padding: 1rem;
+}
+
+.user-steps-section {
+	align-items: center;
+	flex-wrap: nowrap;
+	max-width: 100%;
+	overflow-x: auto;
+	margin: 0 -10px;
+}
+.user-steps-card {
+	background-color: var(--#{$prefix}user-card-bg);
+	border: 1px solid var(--#{$prefix}user-card-border);
+	position: relative;
+	backdrop-filter: $bg-blur-lg;
+	border-radius: $border-radius-lg;
+	margin: 0 10px;
+	flex: 1 1 auto;
+	transition: ease all 0.35s;
+	padding: 25px;
+	text-align: center;
+	cursor: pointer;
+	.user-steps-head {
+		padding: 20px;
+	    text-align: center;
+	    font-size: 30px;
+	    font-weight: 600;
+	    color: var(--#{$prefix}primary);
+	}
+	&:not(.active) {
+		.user-steps-card-body {
+			display: none;
+		}
+	}
+	.user-steps-card-icon {
+		border-radius: $border-radius-lg;
+		transition: ease all 0.35s;
+		i {
+			display: none;
+		}
+	}
+	&.active {
+		flex: 0 0 280px;
+		.user-steps-card-icon {
+			border-radius: 50%;
+			span {
+				display: none;
+			}
+			i {
+				display: block;
+			}
+		}
+	}
+}

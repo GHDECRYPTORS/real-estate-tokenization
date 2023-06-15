@@ -1,0 +1,45 @@
+.dropdown-toggle {
+    &:after {
+        content: "\f282";
+        display: inline-block;
+        font-family: bootstrap-icons !important;
+        font-style: normal;
+        font-weight: 400 !important;
+        font-variant: normal;
+        text-transform: none;
+        line-height: 1;
+        vertical-align: -0.125em;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+        color: currentColor;
+        font-size: 75%;
+        margin-left: 7px;
+        border: none;
+    }
+}
+
+
+
+.dropdown-item {
+    --#{$prefix}dropdown-item-border-radius: #{$btn-border-radius};
+    
+}
+
+.dropdown-menu {
+	box-shadow: var(--#{$prefix}dropdown-box-shadow);
+}
+
+// Dropdown Hover
+@include media-breakpoint-up(lg) {
+	.dropdown-hover {
+		.dropdown-menu {
+			display: none !important;
+			margin: 0;
+		}
+		&:hover {
+			.dropdown-menu {
+				display: block !important;
+			}
+		}
+	}
+}

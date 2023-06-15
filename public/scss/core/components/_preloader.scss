@@ -1,0 +1,20 @@
+.loading-preloader {
+	position: fixed;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	z-index: 11111;
+	background-color: var(--#{$prefix}white);
+	.loading-preloader-in {
+	    position: absolute;
+	    top: 0;
+	    left: 0;
+	    right: 0;
+	    bottom: 0;
+	    margin: auto;
+	    display: flex;
+	    align-items: center;
+	    justify-content: center;
+	}
+}

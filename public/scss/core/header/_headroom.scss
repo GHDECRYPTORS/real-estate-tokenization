@@ -1,0 +1,21 @@
+// Header Fixed Effect
+.main-header {
+	transition: ease top 0.35s;
+	&.headroom--unpinned {
+		top: -250px;
+	}
+	&.headroom--pinned {
+		top: 0;
+	}
+}
+
+// Header Scroll Color
+.main-header {
+	&.headroom--not-top {
+		background-color: var(--#{$prefix}body-bg);
+	}
+	&.headroom--pinned.headroom--not-top {
+		box-shadow: $box-shadow-sm;
+	}
+	
+}

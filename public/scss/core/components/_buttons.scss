@@ -1,0 +1,181 @@
+// Button With Icons
+.btn {
+	.btn-icon {
+		&:first-child {
+			padding-right: 0.5rem;
+		}
+		&:last-child {
+			padding-left: 0.5rem;
+		}
+	}
+}
+
+
+// Button With Shadow
+.btn-shadow {
+    &:hover,
+    &:focus,
+    &:active,
+    &.active,
+    &.show {
+        box-shadow: 0 .25rem .25rem .125rem rgba(var(--#{$prefix}btn-focus-shadow-rgb), .1),
+        0 .375rem .75rem -.125rem rgba(var(--#{$prefix}btn-focus-shadow-rgb), .4);
+    }
+}
+
+
+// Soft Buttons
+@each $color, $value in $theme-colors {
+    $color-rgb: to-rgb($value);
+    .btn-#{$color}-soft {
+    	--#{$prefix}btn-color: var(--#{$prefix}#{$color});
+	    --#{$prefix}btn-bg: rgba(var(--#{$prefix}#{$color}-rgb), 0.1);
+	    --#{$prefix}btn-border-color: transparent;
+	    --#{$prefix}btn-hover-color: var(--#{$prefix}white);
+	    --#{$prefix}btn-hover-bg: var(--#{$prefix}#{$color});
+	    --#{$prefix}btn-hover-border-color: var(--#{$prefix}#{$color});
+	    --#{$prefix}btn-active-color: var(--#{$prefix}white);
+	    --#{$prefix}btn-active-bg: var(--#{$prefix}#{$color});
+	    --#{$prefix}btn-active-shadow: unset;
+	    --#{$prefix}btn-focus-shadow-rgb: var(--#{$prefix}#{$color}-rgb);
+	    --#{$prefix}btn-active-border-color: var(--#{$prefix}#{$color});
+	    --#{$prefix}btn-disabled-color: var(--#{$prefix}#{$color});
+	    --#{$prefix}btn-disabled-bg: rgba(var(--#{$prefix}#{$color}-rgb), 0.1);
+	    --#{$prefix}btn-disabled-border-color: rgba(var(--#{$prefix}#{$color}-rgb), 0.1);
+    }
+}
+
+
+// Button Hover Icon
+.btn-hover-icon {
+	position: relative;
+	overflow: hidden;
+	.btn-text {
+		padding: 0 7px;
+	}
+	.btn-icon {
+		position: absolute;
+		top: 0;
+		bottom: 0;
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		opacity: 0;
+		transition: ease all 0.35s;
+		padding: 0 !important;
+		&:first-child {
+			left: 0;
+			transform: translateX(-10px);
+		}
+		&:last-child {
+			right: 0;
+			transform: translateX(10px);
+		}
+	}
+	.btn-text {
+		transition: ease all 0.35s;	
+		display: inline-flex;
+		transform: translateX(0);
+	}
+	&:hover {
+		.btn-icon {
+			opacity: 1;
+			&:first-child {
+				transform: translateX(12px);
+			}
+			&:last-child {
+				transform: translateX(-12px);
+			}
+			
+		}
+		.btn-text {
+			&:first-child {
+				transform: translateX(-10px);
+			}
+			&:last-child {
+				transform: translateX(10px);
+			}
+		}
+	}
+}
+
+
+// Button Hover Text
+.btn-hover-text {
+	position: relative;
+	overflow: hidden;
+	.btn-text {
+		transform: translateY(0);
+	    opacity: 1;
+	    display: inline-flex;
+	    transition: cubic-bezier(0.22, 0.61, 0.36, 1) all 0.35s;
+	}
+	.btn-text-hover {
+	    position: absolute;
+	    top: 0;
+	    left: 0;
+	    right: 0;
+	    bottom: 0;
+	    display: inline-flex;
+	    align-items: center;
+	    justify-content: center;
+	    transform: translateY(20px);
+	    opacity: 0;
+	    transition: cubic-bezier(0.22, 0.61, 0.36, 1) all 0.35s;
+	}
+	&:hover {
+		.btn-text {
+			opacity: 0;
+			transform: translateY(-20px);
+		}
+		.btn-text-hover {
+			opacity: 1;
+			transform: translateY(0px);	
+		}
+	}
+}
+
+// Gradient Button
+
+.btn-gradient {
+	background: linear-gradient(to right, var(--#{$prefix}primary) 0%, var(--#{$prefix}secondary)  51%, var(--#{$prefix}primary)  100%);
+	background-size: 200% auto;
+	transition: ease all 0.35s;
+	--#{$prefix}btn-color: var(--#{$prefix}white);
+	--#{$prefix}btn-hover-color: var(--#{$prefix}white);
+	--#{$prefix}btn-active-color: var(--#{$prefix}white);
+	--#{$prefix}btn-active-border-color: transparent;
+	&:hover {
+		background-position: right center;
+	}
+}
+
+// Btn Mode
+.btn-mode {
+	--#{$prefix}btn-bg: var(--#{$prefix}emphasis-color);
+	--#{$prefix}btn-color: var(--#{$prefix}tertiary-bg);
+	&:hover {
+		background: var(--#{$prefix}primary);
+		color: var(--#{$prefix}white);
+	}
+}
+
+// Btn Mode
+.btn-border-mode {
+	--#{$prefix}btn-border-width: 2px;
+	--#{$prefix}btn-border-color: var(--#{$prefix}gray-300);
+	--#{$prefix}btn-hover-border-color: transparent;
+	--#{$prefix}btn-bg: var(--#{$prefix}gray-100);
+	
+	--bs-btn-active-color:var(--#{$prefix}white);
+	--bs-btn-active-border-color:transparent;
+	&.active,
+	&:focus,
+	&:active,
+	&:hover {
+		background: $theme-gradient;
+		background-size: 200% auto;
+		border-color: transparent;
+		color: var(--#{$prefix}white);
+	}
+}

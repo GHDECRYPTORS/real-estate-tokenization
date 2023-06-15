@@ -1,0 +1,32 @@
+article {
+
+    h2,
+    h3,
+    h4,
+    h5 {
+        margin-bottom: 1.2rem;
+        &:not(:first-child) {
+            margin-top: 1.5rem;
+        }
+    }
+    
+    figure {
+        margin: 3rem 0;
+        + h2,
+        + h3,
+        + h4,
+        + h5 {
+            margin-top: 0 !important;
+        }
+    }    
+    blockquote {
+        margin: 3rem 0;
+        + h2,
+        + h3,
+        + h4,
+        + h5 {
+            margin-top: 0 !important;
+        }
+    }
+
+}

@@ -1,0 +1,70 @@
+@include media-breakpoint-up(lg) {
+	.sidebar-col {
+		flex: 0 0 300px;
+		max-width: 300px;
+		position: sticky;
+		top: 90px;
+	}
+}
+
+.explor-sidebar {
+	background-color: var(--#{$prefix}gray-100);
+	padding: .5rem 1.5rem;
+	border-radius: $border-radius-lg;
+	.accordion {
+		.accordion-item {
+			border: none;
+			border-radius: 0;
+			background: none;
+			+ .accordion-item  {
+				border-top: 1px solid var(--#{$prefix}gray-300);
+			}
+		}
+		.accordion-header {
+			.accordion-button {
+				border: none;
+				border-radius: 0;
+				box-shadow: none;
+				padding: 1rem 0;
+				background: none;
+				color: var(--#{$prefix}dark-text);
+				display: flex;
+			    align-items: center;
+			    justify-content: space-between;
+			    font-weight: 600;
+				&:after {
+				    background: none;
+				    content: "\f286";
+				    display: inline-flex;
+				    font-family: bootstrap-icons !important;
+				    font-style: normal;
+				    font-weight: 400 !important;
+				    font-variant: normal;
+				    text-transform: none;
+				    line-height: 10px;
+				    -webkit-font-smoothing: antialiased;
+				    -moz-osx-font-smoothing: grayscale;
+				    color: currentColor;
+				    font-size: 14px;
+				    margin-left: 0;
+				    align-items: center;
+				    justify-content: center;
+				}
+				
+			}
+		}
+		.accordion-body {
+			padding: 0 0 1rem;
+		}
+	}
+}
+
+.sidebar-check-list {
+	margin: 0;
+	padding: 0;
+	list-style: none;
+	font-size: 0.95rem;
+	li + li {
+		padding-top: 8px;
+	}
+}

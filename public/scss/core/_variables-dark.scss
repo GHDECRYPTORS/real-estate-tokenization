@@ -1,0 +1,83 @@
+// Dark color mode variables
+//
+// Custom variables for the `[data-bs-theme="dark"]` theme. Use this as a starting point for your own custom color modes by creating a new theme-specific file like `_variables-dark.scss` and adding the variables you need.
+
+//
+// Global colors
+//
+
+// scss-docs-start sass-dark-mode-vars
+
+$dark-gray-100:	rgba($white, 0.025);
+$dark-gray-200:	rgba($white, 0.05);
+$dark-gray-300:	rgba($white, 0.13);
+$dark-gray-400:	rgba($white, 0.25);
+$dark-gray-500:	rgba($white, 0.4);
+$dark-gray-600:	rgba($white, 0.5);
+$dark-gray-700:	rgba($white, 0.7);
+$dark-gray-800:	rgba($white, 0.9);
+$dark-gray-900:	$white;
+
+
+
+// scss-docs-start sass-dark-mode-vars
+$primary-text-dark:                 $primary-300 !default;
+$secondary-text-dark:               $gray-300 !default;
+$success-text-dark:                 $green-300 !default;
+$info-text-dark:                    $cyan-300 !default;
+$warning-text-dark:                 $yellow-300 !default;
+$danger-text-dark:                  $red-300 !default;
+$light-text-dark:                   $gray-100 !default;
+$dark-text-dark:            $white !default;
+
+$primary-bg-subtle-dark:            $primary-900 !default;
+$secondary-bg-subtle-dark:          $gray-900 !default;
+$success-bg-subtle-dark:            $green-900 !default;
+$info-bg-subtle-dark:               $cyan-900 !default;
+$warning-bg-subtle-dark:            $yellow-900 !default;
+$danger-bg-subtle-dark:             $red-900 !default;
+$light-bg-subtle-dark:              $gray-800 !default;
+$dark-bg-subtle-dark:               mix($gray-800, $black) !default;
+
+$primary-border-subtle-dark:        $primary-700 !default;
+$secondary-border-subtle-dark:      $gray-700 !default;
+$success-border-subtle-dark:        $green-700 !default;
+$info-border-subtle-dark:           $cyan-800 !default;
+$warning-border-subtle-dark:        $yellow-800 !default;
+$danger-border-subtle-dark:         $red-700 !default;
+$light-border-subtle-dark:          $gray-700 !default;
+$dark-border-subtle-dark:           $gray-800 !default;
+
+$body-color-dark:                   #898f99 !default;
+$body-bg-dark:                      #051027 !default;
+$body-emphasis-color-dark:          $gray-100 !default;
+$body-secondary-color-dark:         rgba($body-color-dark, .75) !default;
+$body-secondary-bg-dark:            $gray-800 !default;
+$body-tertiary-color-dark:          rgba($body-color-dark, .5) !default;
+$body-tertiary-bg-dark:             mix($gray-800, $gray-900, 50%) !default;
+$emphasis-color-dark:               $white !default;
+$border-color-dark:                 $gray-700 !default;
+$border-color-translucent-dark:     rgba($white, .15) !default;
+$headings-color-dark:               #fff !default;
+$link-color-dark:                   $primary-300 !default;
+$link-hover-color-dark:             $primary-200 !default;
+$code-color-dark:                   $pink-300 !default;
+
+
+
+
+
+
+
+$dark-product-card-bg:           $body-bg-dark !important;
+$dark-product-card-border:       rgba(var(--#{$prefix}white-rgb), 0.1) !important;
+
+$dark-user-card-bg:           rgba(var(--#{$prefix}white-rgb), 0.1) !important;
+$dark-user-card-border:       rgba(var(--#{$prefix}white-rgb), 0.2) !important;
+
+
+$dark-px-card-bg:           rgba(var(--#{$prefix}white-rgb), 0.1) !important;
+$dark-px-card-border:       rgba(var(--#{$prefix}white-rgb), 0.2) !important;
+
+
+

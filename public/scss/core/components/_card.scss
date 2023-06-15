@@ -1,0 +1,5 @@
+.px-card {
+	background-color: var(--#{$prefix}user-card-bg);
+	border: 1px solid var(--#{$prefix}user-card-border);
+	backdrop-filter: $bg-blur-lg;
+}

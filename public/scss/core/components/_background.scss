@@ -1,0 +1,114 @@
+// All-caps `RGBA()` function used because of this Sass bug: https://github.com/sass/node-sass/issues/2251
+@each $color, $value in $grays {
+    $color-rgb: to-rgb($value);
+    .bg-gray-#{$color} {
+        background-color: var(--#{$prefix}gray-#{$color}) !important;
+    }
+    .border-gray-#{$color} {
+        border-color: var(--#{$prefix}gray-#{$color}) if($enable-important-utilities,  !important, null);
+    }
+}
+
+.bg-cover {
+    background-size: cover;
+}
+
+.bg-contain {
+    background-size: contain;
+}
+
+.bg-right-center {
+    background-position: center right;
+}
+
+.bg-bottom-center {
+    background-position: bottom center;
+}
+
+.bg-no-repeat {
+    background-repeat: no-repeat;
+}
+
+.bg-center {
+    background-position: center;
+}
+
+@include media-breakpoint-up(lg) {
+  .bg-fixed {
+    background-attachment: fixed;
+  }
+}
+
+.bg-dark-gradient {
+    background: linear-gradient(356deg, rgba(var(--#{$prefix}dark-rgb), 0.5), transparent);
+}
+
+
+.bg-effect {
+    position: relative;
+    overflow: hidden;
+    &.position-fixed {
+        z-index: -1;
+    }
+    .bg-ef-1 {
+        position: absolute;
+        width: 20vw;
+        height: 20vw;
+        left: -8vw;
+        top: -8vw;
+        background: #0063ff;
+        filter: blur(150px);
+        transform: rotate(133.22deg);
+        opacity: 0.25;
+    }
+    .bg-ef-2 {
+        position: absolute;
+        width: 20vw;
+        height: 20vw;
+        right: -8vw;
+        top: -8vw;
+        background: #ffeb00;
+        filter: blur(150px);
+        transform: rotate(-108.02deg);
+        opacity: 0.15;
+    }
+
+    .bg-ef-3 {
+        position: absolute;
+        width: 20vw;
+        height: 20vw;
+        right: -8vw;
+        bottom: -8vw;
+        background: #f30cff;
+        filter: blur(140px);
+        opacity: 0.15;
+        
+    }
+
+    .bg-ef-4 {
+        position: absolute;
+        width: 25vw;
+        height: 25vw;
+        left: -15vw;
+        bottom: -13vw;
+        background: #b75d24;
+        filter: blur(140px);
+        transform: rotate(-108.02deg);
+        opacity: 0.15;
+    }
+
+    .bg-ef-center {
+        position: absolute;
+        width: 30vw;
+        height: 30vw;
+        left: 0;
+        bottom: 0;
+        right: 0;
+        top: 0;
+        margin: auto;
+        background: #ffeb00;
+        filter: blur(160px);
+        border-radius: 50%;
+        opacity: 0.10;
+    }
+}

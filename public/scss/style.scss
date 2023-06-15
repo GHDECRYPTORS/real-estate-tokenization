@@ -1,0 +1,129 @@
+@import "../vendor/bootstrap/scss/mixins/banner";
+@include bsBanner("");
+
+
+
+// scss-docs-start import-stack
+// Bootstrap Configuration
+@import '../vendor/bootstrap/scss/functions';
+
+// Theme Setup
+@import 'core/variables';
+@import 'core/variables-dark';
+@import "core/components/utilitie";
+
+@import "../vendor/bootstrap/scss/variables";
+@import "../vendor/bootstrap/scss/variables-dark";
+@import "../vendor/bootstrap/scss/maps";
+@import "../vendor/bootstrap/scss/mixins";
+@import "../vendor/bootstrap/scss/utilities";
+
+
+
+
+// Custom setup
+@import 'core/custom/user-variables';
+
+// Bootstrap Layout & components
+@import "../vendor/bootstrap/scss/root";
+@import 'core/root';
+@import "../vendor/bootstrap/scss/reboot";
+@import "../vendor/bootstrap/scss/type";
+@import "../vendor/bootstrap/scss/images";
+@import "../vendor/bootstrap/scss/containers";
+@import "../vendor/bootstrap/scss/grid";
+@import "../vendor/bootstrap/scss/tables";
+@import "../vendor/bootstrap/scss/forms";
+@import "../vendor/bootstrap/scss/buttons";
+@import "../vendor/bootstrap/scss/transitions";
+@import "../vendor/bootstrap/scss/dropdown";
+@import "../vendor/bootstrap/scss/button-group";
+@import "../vendor/bootstrap/scss/nav";
+@import "../vendor/bootstrap/scss/navbar";
+@import "../vendor/bootstrap/scss/card";
+@import "../vendor/bootstrap/scss/accordion";
+@import "../vendor/bootstrap/scss/breadcrumb";
+@import "../vendor/bootstrap/scss/pagination";
+@import "../vendor/bootstrap/scss/badge";
+@import "../vendor/bootstrap/scss/alert";
+@import "../vendor/bootstrap/scss/progress";
+@import "../vendor/bootstrap/scss/list-group";
+@import "../vendor/bootstrap/scss/close";
+@import "../vendor/bootstrap/scss/toasts";
+@import "../vendor/bootstrap/scss/modal";
+@import "../vendor/bootstrap/scss/tooltip";
+@import "../vendor/bootstrap/scss/popover";
+@import "../vendor/bootstrap/scss/carousel";
+@import "../vendor/bootstrap/scss/spinners";
+@import "../vendor/bootstrap/scss/offcanvas";
+@import "../vendor/bootstrap/scss/placeholders";
+
+// Helpers
+@import "../vendor/bootstrap/scss/helpers";
+
+// Utilities
+@import "../vendor/bootstrap/scss/utilities/api";
+// scss-docs-end import-stack
+
+
+
+
+
+// ---------- Vendor ---------- //
+
+// swiper
+@import '../vendor/swiper/swiper-bundle.min.css';
+// bootstrap icon
+@import '../vendor/bootstrap/icon/bootstrap-icons.css';
+
+// feather icon
+@import '../vendor/feather/feather.css';
+
+// cryptofont icon
+@import '../vendor/cryptofont/cryptofont.min.css';
+
+
+
+
+// Fonts
+@import 'core/fonts';
+
+
+// Components
+@import 'core/components/spinner';
+@import 'core/components/avatar';
+@import 'core/components/accordion';
+@import 'core/components/preloader';
+@import 'core/components/background';
+@import 'core/components/buttons';
+@import 'core/components/dropdown';
+@import 'core/components/images';
+@import 'core/components/heading';
+@import 'core/components/slider';
+@import 'core/components/list-menu';
+@import 'core/components/icon';
+@import 'core/components/card';
+@import 'core/components/color';
+@import 'core/components/article';
+
+
+
+// Product Card
+@import 'core/product/product-card';
+@import 'core/product/user-card';
+@import 'core/product/sidebar';
+@import 'core/product/activity';
+@import 'core/product/explore-details';
+
+
+// Layout
+@import 'core/layout/seaction';
+@import 'core/layout/wrapper';
+
+
+
+// Header
+@import 'core/header/header';
+
+// Footer
+@import 'core/footer/footer';

@@ -1,0 +1,48 @@
+.mobile-header {
+	position: fixed;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	display: flex;
+	z-index: 11;
+	background-color: var(--#{$prefix}body-bg);
+	border-top: 1px solid var(--#{$prefix}gray-300);
+	.h-col {
+	    flex: 1;
+	    display: flex;
+	    justify-content: center;
+	}
+	.h-icon {
+		width: 100%;
+	    justify-content: center;
+	    align-items: center;
+	    display: flex;
+	    height: 55px;
+	    flex-direction: column;
+	    padding: 6px 0;
+	    i {
+	    	width: 50px;
+		    display: inline-flex;
+		    align-items: center;
+		    height: 28px;
+		    color: var(--#{$prefix}dark-text);
+		    background-color: var(--#{$prefix}gray-200);
+		    justify-content: center;
+		    font-size: 14px;
+		    border-radius: 30px;
+	    }
+	    span {
+    	    font-size: 9px;
+		    color: var(--#{$prefix}dark-text);
+		    letter-spacing: 1px;
+		    padding-top: 2px;
+		    text-transform: uppercase;
+	    }
+	}
+}
+
+@include media-breakpoint-down(lg) {
+	.wrapper {
+		padding-bottom: 56px;
+	}	
+}

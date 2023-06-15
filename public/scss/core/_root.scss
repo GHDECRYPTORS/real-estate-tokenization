@@ -1,0 +1,51 @@
+:root,
+[data-bs-theme="light"] {
+    --#{$prefix}product-card-bg:            #{$product-card-bg};
+    --#{$prefix}product-card-border:        #{$product-card-border};
+
+    --#{$prefix}user-card-bg:                #{$user-card-bg};
+    --#{$prefix}user-card-border:            #{$user-card-border};
+
+    --#{$prefix}px-card-bg:                #{$px-card-bg};
+    --#{$prefix}px-card-border:            #{$px-card-border};
+
+    --#{$prefix}avatar-border:              #{$white};
+
+    --#{$prefix}footer-link-color:          rgba(var(--#{$prefix}dark-rgb), 0.75);
+    --#{$prefix}footer-link-color-hover:    var(--#{$prefix}dark);
+
+    --#{$prefix}text-mode:                  var(--#{$prefix}dark);
+
+}
+
+@if $enable-dark-mode {
+    @include color-mode(dark, true) {
+        --#{$prefix}gray-100:   #{$dark-gray-100};
+        --#{$prefix}gray-200:   #{$dark-gray-200};
+        --#{$prefix}gray-300:   #{$dark-gray-300};
+        --#{$prefix}gray-400:   #{$dark-gray-400};
+        --#{$prefix}gray-500:   #{$dark-gray-500};
+        --#{$prefix}gray-600:   #{$dark-gray-600};
+        --#{$prefix}gray-700:   #{$dark-gray-700};
+        --#{$prefix}gray-800:   #{$dark-gray-800};
+        --#{$prefix}gray-900:   #{$dark-gray-900};
+        
+        --#{$prefix}avatar-border:              #{$dark};
+
+        --#{$prefix}product-card-bg:            #{$dark-product-card-bg};
+        --#{$prefix}product-card-border:        #{$dark-product-card-border};
+
+        --#{$prefix}user-card-bg:            #{$dark-user-card-bg};
+        --#{$prefix}user-card-border:        #{$dark-user-card-border};
+
+        --#{$prefix}px-card-bg:                #{$dark-px-card-bg};
+        --#{$prefix}px-card-border:            #{$dark-px-card-border};
+
+        --#{$prefix}footer-link-color:          rgba(var(--#{$prefix}white-rgb), 0.75);
+        --#{$prefix}footer-link-color-hover:    var(--#{$prefix}white);
+
+        --#{$prefix}text-mode:                  var(--#{$prefix}white);
+
+
+    }
+}

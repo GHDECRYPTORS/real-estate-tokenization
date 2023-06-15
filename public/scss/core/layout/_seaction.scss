@@ -1,0 +1,17 @@
+.section {
+    padding-top: $px-section-md-padding-y;
+    padding-bottom: $px-section-md-padding-y;
+    @include media-breakpoint-up(md) {
+        padding-top: $px-section-md-padding-y;
+        padding-bottom: $px-section-md-padding-y;
+    }
+
+    @include media-breakpoint-up(lg) {
+        padding-top: $px-section-lg-padding-y;
+        padding-bottom: $px-section-lg-padding-y;
+    }
+    @include media-breakpoint-up(xl) {
+        padding-top: $px-section-xl-padding-y;
+        padding-bottom: $px-section-xl-padding-y;
+    }
+}

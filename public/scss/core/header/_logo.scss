@@ -1,0 +1,24 @@
+.logo {
+	.navbar-brand {
+		display: flex;
+	}
+}
+
+// Logo Mode
+.logo-light {
+	display: none;
+}
+
+@include color-mode(dark) {
+	.logo-dark {
+		display: none;
+	}
+	.logo-light {
+		display: block;
+	}
+}
+@include color-mode(light) {
+	.logo-light {
+		display: none;
+	}
+}
