@@ -1,7 +1,11 @@
-function Search() {
+interface SearchProps {
+  showSearch: boolean;
+  setShowSearch: (show: boolean) => void;
+}
+const Search: React.FC<SearchProps> = ({ showSearch, setShowSearch }) => {
   return (
     <div
-      className="offcanvas offcanvas-end"
+      className={`offcanvas offcanvas-end ${showSearch ? "show" : ""}`}
       tabIndex={-1}
       id="header_search_bar"
       aria-labelledby="header_search_barLabel"
@@ -15,6 +19,7 @@ function Search() {
           className="btn-close"
           data-bs-dismiss="offcanvas"
           aria-label="Close"
+          onClick={() => setShowSearch(false)}
         ></button>
       </div>
       <div className="offcanvas-body">
@@ -298,6 +303,6 @@ function Search() {
       </div>
     </div>
   );
-}
+};
 
 export default Search;

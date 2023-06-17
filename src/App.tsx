@@ -4,13 +4,15 @@ import RouterCombiner from "./route.combiner";
 import PrivateRoute from "./private.routes";
 import { ReactNode } from "react";
 import PublicLayout from "./layouts/public.layout";
-
+import Explore from "./pages/Explore";
+import NotFound from "./pages/404";
 const Pages = {
   IndexPage: Home,
   AdminPage: () => <div>Hi I'am Admin Page</div>,
   LoginPage: () => <div>Please Login,This is Login Page</div>,
   AdminNewUser: () => <div>I'am New User Page,I'am Under Admin Page</div>,
-  NotFound: () => <div>404 NotFound</div>,
+  NotFound,
+  Explore,
 };
 const Layouts = {
   AdminLayout: ({ children }: { children: ReactNode }) => (
@@ -34,22 +36,10 @@ const Routes = [
     exact: true,
   },
   {
-    path: "/admin",
-    Component: Pages.AdminPage,
-    Private: true,
-    Layout: Layouts.AdminLayout,
-    modules: [
-      {
-        path: "/new_product",
-        Component: () => <div>New Product</div>,
-        exact: true,
-      },
-      {
-        path: "/delete_product",
-        Component: () => <div>Delete Product</div>,
-        exact: true,
-      },
-    ],
+    path: "/explore",
+    Component: Pages.Explore,
+    // Private: true,
+    Layout: Layouts.PublicLayout,
   },
   {
     path: "/users",
@@ -84,6 +74,7 @@ const App = () => {
           routes={Routes}
           PrivateRoute={PrivateRoute}
           auth={auth}
+          PageNotFound={Pages.NotFound}
         />
       </Router>
     </div>

@@ -26,7 +26,7 @@ function Footer() {
                 and discover exclusive digital items.
               </p>
             </div>
-            <div className="col-lg-3 col-6">
+            {/* <div className="col-lg-3 col-6">
               <h5 className="footer-title-01">Marketplace</h5>
               <ul className="list-unstyled footer-link-01 m-0">
                 <li>
@@ -110,7 +110,7 @@ function Footer() {
                   New UI kits or big discounts. Never spam.
                 </p>
               </form>
-            </div>
+            </div> */}
           </div>
         </div>
       </div>
@@ -119,7 +119,7 @@ function Footer() {
         <div className="row gy-4 align-items-center">
           <div className="col-md-7">
             <h4 className="m-0 fw-500 text-center text-md-start">
-              The NEFT Marketplace with everything for everyone.
+              The NFT Marketplace with everything for everyone.
             </h4>
           </div>
           <div className="col-md-5">
@@ -127,71 +127,12 @@ function Footer() {
               <li className="mx-2">
                 <a
                   className="icon-md btn btn-border-mode p-0 rounded-3"
-                  href="#"
+                  href="https://github.com/ghdecryptors"
                 >
-                  <i className="bi-facebook"></i>
-                </a>
-              </li>
-              <li className="mx-2">
-                <a
-                  className="icon-md btn btn-border-mode p-0 rounded-3"
-                  href="#"
-                >
-                  <i className="bi-linkedin"></i>
-                </a>
-              </li>
-              <li className="mx-2">
-                <a
-                  className="icon-md btn btn-border-mode p-0 rounded-3"
-                  href="#"
-                >
-                  <i className="bi-twitter"></i>
-                </a>
-              </li>
-              <li className="mx-2">
-                <a
-                  className="icon-md btn btn-border-mode p-0 rounded-3"
-                  href="#"
-                >
-                  <i className="bi-instagram"></i>
+                  <i className="bi-github"></i>
                 </a>
               </li>
             </ul>
-          </div>
-        </div>
-      </div>
-      <div className="container">
-        <div className="row py-3 gy-3 align-items-center">
-          <div className="col-md-6">
-            <ul className="nav justify-content-center justify-content-md-start my-2 links-white small list-unstyled footer-link-01 m-0">
-              <li className="p-0 mx-3 ms-md-0 me-md-3">
-                <a href="#" className="">
-                  Privace &amp; Policy
-                </a>
-              </li>
-              <li className="p-0 mx-3 ms-md-0 me-md-3">
-                <a href="#" className="">
-                  Faq's
-                </a>
-              </li>
-              <li className="p-0 mx-3 ms-md-0 me-md-3">
-                <a href="#" className="">
-                  Get a Quote
-                </a>
-              </li>
-            </ul>
-          </div>
-          <div className="col-md-6 text-center text-md-end">
-            <p className="text-white-85 small m-0">
-              © 2023 Maffei is Proudly Powered by{" "}
-              <a
-                href="http://pxdraft.com/"
-                target="_blank"
-                className="text-reset"
-              >
-                pxdraft
-              </a>
-            </p>
           </div>
         </div>
       </div>

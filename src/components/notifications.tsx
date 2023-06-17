@@ -1,7 +1,14 @@
-function Notifications() {
+interface NotificationsProps {
+  showNotifications: boolean;
+  setShowNotifications: (show: boolean) => void;
+}
+const Notifications: React.FC<NotificationsProps> = ({
+  showNotifications,
+  setShowNotifications,
+}) => {
   return (
     <div
-      className="offcanvas offcanvas-end"
+      className={`offcanvas offcanvas-end ${showNotifications ? "show" : ""}`}
       tabIndex={-1}
       id="header_notification_bar"
       aria-labelledby="header_notification_barLabel"
@@ -15,6 +22,7 @@ function Notifications() {
           className="btn-close"
           data-bs-dismiss="offcanvas"
           aria-label="Close"
+          onClick={() => setShowNotifications(false)}
         ></button>
       </div>
       <div className="offcanvas-body">
@@ -185,6 +193,6 @@ function Notifications() {
       </div>
     </div>
   );
-}
+};
 
 export default Notifications;

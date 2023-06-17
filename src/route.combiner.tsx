@@ -1,5 +1,6 @@
 import React, { ReactNode } from "react";
 import { Route, Routes } from "react-router-dom";
+import PublicLayout from "./layouts/public.layout";
 
 interface PrivateRouteProps {
   auth: boolean; // Replace 'boolean' with the actual type of 'auth'
@@ -25,13 +26,19 @@ interface RoutesProps {
   PrivateRoute: React.ComponentType<PrivateRouteProps>;
   routes: RouteConfig[];
   auth: boolean; // Replace 'boolean' with the actual type of 'auth'
+  PageNotFound: React.ComponentType;
 }
 
 const DefaultLayout: React.FC<{ children: ReactNode }> = ({ children }) => {
   return <>{children}</>;
 };
 
-const _Routes: React.FC<RoutesProps> = ({ PrivateRoute, routes, auth }) => {
+const _Routes: React.FC<RoutesProps> = ({
+  PrivateRoute,
+  routes,
+  auth,
+  PageNotFound,
+}) => {
   const RoutesMap = routes.map(
     ({
       Private,
@@ -66,7 +73,20 @@ const _Routes: React.FC<RoutesProps> = ({ PrivateRoute, routes, auth }) => {
       );
     }
   );
-  return <Routes>{...RoutesMap}</Routes>;
+  // RoutesMap.push();
+  return (
+    <Routes>
+      <Route
+        path="*"
+        element={
+          <PublicLayout>
+            <PageNotFound />
+          </PublicLayout>
+        }
+      />
+      {...RoutesMap}
+    </Routes>
+  );
 };
 
 export default _Routes;
