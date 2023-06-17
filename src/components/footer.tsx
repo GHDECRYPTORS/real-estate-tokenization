@@ -7,16 +7,18 @@ function Footer() {
             <div className="col-lg-3 me-auto">
               <div className="pb-4">
                 <img
-                  className="footer-logo-light"
-                  src="assets/img/logo-light.svg"
+                  className="logo-dark w-8"
+                  src="assets/img/logo.png"
                   title=""
                   alt=""
+                  style={{ width: "200px" }}
                 />
                 <img
-                  className="footer-logo-dark"
-                  src="assets/img/logo.svg"
+                  className="logo-light"
+                  src="assets/img/logo.png"
                   title=""
                   alt=""
+                  style={{ width: "200px" }}
                 />
               </div>
               <p>

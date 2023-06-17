@@ -4,651 +4,8 @@ const Home = () => {
       {/* <!-- Header --> */}
 
       {/* <!-- Mobile Headr --> */}
-      <div className="mobile-header d-lg-none">
-        {/* <!-- Search --> */}
-        <div className="h-col h-search-toggle">
-          <a
-            className="h-search-icon h-icon"
-            data-bs-toggle="offcanvas"
-            href="#header_search_bar"
-            role="button"
-            aria-controls="header_search_bar"
-          >
-            <i className="bi bi-search"></i>
-            <span>SEARCH</span>
-          </a>
-        </div>
-        {/* <!-- Notification --> */}
-        <div className="h-col h-notification">
-          <a
-            className="h-notification-icon h-icon"
-            data-bs-toggle="offcanvas"
-            href="#header_notification_bar"
-            role="button"
-            aria-controls="header_notification_bar"
-          >
-            <i className="bi bi-bell"></i>
-            <span>Activity</span>
-          </a>
-        </div>
-        {/* <!-- User --> */}
-        <div className="h-col h-user">
-          <a
-            className="h-user-icon h-icon"
-            data-bs-toggle="offcanvas"
-            href="#header_user_bar"
-            role="button"
-            aria-controls="header_user_barLabel"
-          >
-            <i className="bi-person-circle"></i>
-            <span>ACCOUNT</span>
-          </a>
-        </div>
-      </div>
+
       {/* <!-- User --> */}
-      <div
-        className="offcanvas offcanvas-end"
-        tabIndex={-1}
-        id="header_user_bar"
-        aria-labelledby="header_user_barLabel"
-      >
-        <div className="offcanvas-header border-bottom border-gray-300">
-          <div className="offcanvas-title" id="header_user_barLabel">
-            <div className="d-flex align-items-center">
-              <div className="avatar">
-                <img
-                  className="avatar-img rounded-circle"
-                  src="assets/img/avatar-2.jpg"
-                  title=""
-                  alt=""
-                />
-              </div>
-              <div className="col ps-3">
-                <h6 className="mb-0">Jupiter</h6>
-                <span className="fs-xs fw-400">@jupiter_0202</span>
-              </div>
-            </div>
-          </div>
-          <button
-            type="button"
-            className="btn-close"
-            data-bs-dismiss="offcanvas"
-            aria-label="Close"
-          ></button>
-        </div>
-        <div className="offcanvas-body">
-          <ul className="list-unstyled">
-            <li className="mb-2">
-              <a
-                className="btn btn-sm text-start btn-border-mode rounded-3 p-3 w-100"
-                href="#"
-              >
-                <i className="bi-subtract"></i>
-                <span className="text-truncate ps-3">653211545655652112</span>
-              </a>
-            </li>
-            <li className="mb-2">
-              <a
-                className="btn btn-sm text-start btn-border-mode rounded-3 p-3 w-100"
-                href="#"
-              >
-                <span className="fw-400 mb-3 d-block">Balance</span>
-                <div className="d-flex">
-                  <div className="icon-sm">
-                    <i className="cf cf-etc h4 fw-400 m-0"></i>
-                  </div>
-                  <div className="col ps-3">
-                    <h4 className="m-0">3,89 ETH</h4>
-                  </div>
-                </div>
-              </a>
-            </li>
-            <li className="mb-2">
-              <a
-                className="btn btn-sm text-start btn-border-mode rounded-3 p-3 w-100"
-                href="#"
-              >
-                <i className="bi-person"></i>
-                <span className="ps-3">My Account</span>
-              </a>
-            </li>
-            <li className="mb-2">
-              <a
-                className="btn btn-sm text-start btn-border-mode rounded-3 p-3 w-100"
-                href="#"
-              >
-                <i className="bi-gear"></i>
-                <span className="ps-3">Setting</span>
-              </a>
-            </li>
-            <li className="mb-2">
-              <a
-                className="btn btn-sm text-start btn-border-mode rounded-3 p-3 w-100"
-                href="#"
-              >
-                <i className="bi-bookmark"></i>
-                <span className="ps-3">Saved</span>
-              </a>
-            </li>
-            <li className="mb-2">
-              <a
-                className="btn btn-sm text-start btn-border-mode rounded-3 p-3 w-100"
-                href="#"
-              >
-                <i className="bi-clock-history"></i>
-                <span className="ps-3">Your Activity</span>
-              </a>
-            </li>
-            <li className="mb-2">
-              <a
-                className="btn btn-sm text-start btn-border-mode rounded-3 p-3 w-100"
-                href="#"
-              >
-                <i className="bi-bag-check"></i>
-                <span className="ps-3">Report a Problem</span>
-              </a>
-            </li>
-            <li className="mb-2">
-              <a
-                className="btn btn-sm text-start btn-border-mode rounded-3 p-3 w-100"
-                href="#"
-              >
-                <i className="bi-lock"></i>
-                <span className="ps-3">Log Out</span>
-              </a>
-            </li>
-          </ul>
-        </div>
-      </div>
-      {/* <!-- End User -->
-<!-- Search --> */}
-      <div
-        className="offcanvas offcanvas-end"
-        tabIndex={-1}
-        id="header_search_bar"
-        aria-labelledby="header_search_barLabel"
-      >
-        <div className="offcanvas-header border-bottom border-gray-300">
-          <h5 className="offcanvas-title" id="header_search_barLabel">
-            Search
-          </h5>
-          <button
-            type="button"
-            className="btn-close"
-            data-bs-dismiss="offcanvas"
-            aria-label="Close"
-          ></button>
-        </div>
-        <div className="offcanvas-body">
-          <form className="h-search-form d-flex w-100 border border-gray-300 p-1 rounded-3">
-            <input
-              type="text"
-              placeholder="Search Here"
-              value=""
-              className="border-0 rounded-0 shadow-none form-control form-control-sm flex-full"
-            />
-            <button className="btn icon-md btn-border-mode p-0 search-btn rounded-3">
-              <i className="bi bi-search"></i>
-            </button>
-          </form>
-          <div className="pt-4">
-            <h6 className="mb-3 text-uppercase fs-sm fw-500">Latest Search</h6>
-            <ul className="list-unstyled d-flex flex-wrap">
-              <li className="me-2 mb-2">
-                <a className="btn btn-sm btn-border-mode rounded-3" href="#">
-                  Latest NFT's{" "}
-                  <span className="btn-icon bi-graph-up-arrow"></span>{" "}
-                </a>
-              </li>
-              <li className="me-2 mb-2">
-                <a className="btn btn-sm btn-border-mode rounded-3" href="#">
-                  Top NFT's <span className="btn-icon bi-graph-up-arrow"></span>{" "}
-                </a>
-              </li>
-              <li className="me-2 mb-2">
-                <a className="btn btn-sm btn-border-mode rounded-3" href="#">
-                  Low <span className="btn-icon bi-graph-up-arrow"></span>{" "}
-                </a>
-              </li>
-              <li className="me-2 mb-2">
-                <a className="btn btn-sm btn-border-mode rounded-3" href="#">
-                  Offers <span className="btn-icon bi-graph-up-arrow"></span>{" "}
-                </a>
-              </li>
-              <li className="me-2 mb-2">
-                <a className="btn btn-sm btn-border-mode rounded-3" href="#">
-                  Top Sale <span className="btn-icon bi-graph-up-arrow"></span>{" "}
-                </a>
-              </li>
-              <li className="me-2 mb-2">
-                <a className="btn btn-sm btn-border-mode rounded-3" href="#">
-                  Authors<span className="btn-icon bi-graph-up-arrow"></span>{" "}
-                </a>
-              </li>
-              <li className="me-2 mb-2">
-                <a className="btn btn-sm btn-border-mode rounded-3" href="#">
-                  Best Seller
-                  <span className="btn-icon bi-graph-up-arrow"></span>{" "}
-                </a>
-              </li>
-            </ul>
-          </div>
-          <div className="pt-4">
-            <h6 className="mb-3 text-uppercase fs-sm fw-500">Top Nft's</h6>
-            <div className="swiper-hover-arrow position-relative">
-              <div
-                className="swiper swiper-container"
-                data-swiper-options='{
-                                  "slidesPerView": 1.80,
-                                  "spaceBetween": 15,
-                                  "loop": true,
-                                  "pagination": {
-                                    "el": ".swiper-pagination",
-                                    "clickable": true
-                                    }
-                            }'
-              >
-                <div className="swiper-wrapper">
-                  {/* <!-- Product Box --> */}
-                  <div className="swiper-slide">
-                    <div className="product-card">
-                      <div className="product-card-media">
-                        <a href="#">
-                          <img
-                            className="product-card-img"
-                            src="assets/img/product-8.jpg"
-                            title=""
-                            alt=""
-                          />
-                        </a>
-                      </div>
-                      <div className="product-card-body">
-                        <div className="product-title d-flex align-items-center">
-                          <h6 className="m-0">
-                            <a className="text-reset stretched-linka" href="#">
-                              Space Shapes #3
-                            </a>
-                          </h6>
-                          <button className="like-btn btn btn-primary-soft p-0 rounded-circle avatar avatar-xs ms-auto">
-                            <i className="avatar-text fi-heart"></i>
-                          </button>
-                        </div>
-                        <div className="product-actions d-flex fs-sm">
-                          <div className="price col lh-sm">
-                            <span className="m-0">
-                              Mirrored{" "}
-                              <span className="text-body fw-400 w-100 d-block">
-                                18 ETH
-                              </span>{" "}
-                            </span>
-                          </div>
-                          <div className="price col lh-sm">
-                            <span className="m-0">
-                              3.99 ETH{" "}
-                              <span className="text-body fw-400 w-100 d-block">
-                                1/1
-                              </span>{" "}
-                            </span>
-                          </div>
-                        </div>
-                        <div className="product-card-cart">
-                          <a className="btn btn-primary w-100" href="#">
-                            Buy Now
-                          </a>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  {/* <!-- End Product Box -->
-                        <!-- Product Box --> */}
-                  <div className="swiper-slide">
-                    <div className="product-card">
-                      <div className="product-card-media">
-                        <a href="#">
-                          <img
-                            className="product-card-img"
-                            src="assets/img/product-1.jpg"
-                            title=""
-                            alt=""
-                          />
-                        </a>
-                      </div>
-                      <div className="product-card-body">
-                        <div className="product-title d-flex align-items-center">
-                          <h6 className="m-0">
-                            <a className="text-reset stretched-linka" href="#">
-                              Space Shapes #3
-                            </a>
-                          </h6>
-                          <button className="like-btn btn btn-primary-soft p-0 rounded-circle avatar avatar-xs ms-auto">
-                            <i className="avatar-text fi-heart"></i>
-                          </button>
-                        </div>
-                        <div className="product-actions d-flex fs-sm">
-                          <div className="price col lh-sm">
-                            <span className="m-0">
-                              Mirrored{" "}
-                              <span className="text-body fw-400 w-100 d-block">
-                                18 ETH
-                              </span>{" "}
-                            </span>
-                          </div>
-                          <div className="price col lh-sm">
-                            <span className="m-0">
-                              3.99 ETH{" "}
-                              <span className="text-body fw-400 w-100 d-block">
-                                1/1
-                              </span>{" "}
-                            </span>
-                          </div>
-                        </div>
-                        <div className="product-card-cart">
-                          <a className="btn btn-primary w-100" href="#">
-                            Buy Now
-                          </a>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  {/* <!-- End Product Box -->
-                        <!-- Product Box --> */}
-                  <div className="swiper-slide">
-                    <div className="product-card">
-                      <div className="product-card-media">
-                        <a href="#">
-                          <img
-                            className="product-card-img"
-                            src="assets/img/product-2.jpg"
-                            title=""
-                            alt=""
-                          />
-                        </a>
-                      </div>
-                      <div className="product-card-body">
-                        <div className="product-title d-flex align-items-center">
-                          <h6 className="m-0">
-                            <a className="text-reset stretched-linka" href="#">
-                              Space Shapes #3
-                            </a>
-                          </h6>
-                          <button className="like-btn btn btn-primary-soft p-0 rounded-circle avatar avatar-xs ms-auto">
-                            <i className="avatar-text fi-heart"></i>
-                          </button>
-                        </div>
-                        <div className="product-actions d-flex fs-sm">
-                          <div className="price col lh-sm">
-                            <span className="m-0">
-                              Mirrored{" "}
-                              <span className="text-body fw-400 w-100 d-block">
-                                18 ETH
-                              </span>{" "}
-                            </span>
-                          </div>
-                          <div className="price col lh-sm">
-                            <span className="m-0">
-                              3.99 ETH{" "}
-                              <span className="text-body fw-400 w-100 d-block">
-                                1/1
-                              </span>{" "}
-                            </span>
-                          </div>
-                        </div>
-                        <div className="product-card-cart">
-                          <a className="btn btn-primary w-100" href="#">
-                            Buy Now
-                          </a>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  {/* <!-- End Product Box -->
-                        <!-- Product Box --> */}
-                  <div className="swiper-slide">
-                    <div className="product-card">
-                      <div className="product-card-media">
-                        <a href="#">
-                          <img
-                            className="product-card-img"
-                            src="assets/img/product-3.jpg"
-                            title=""
-                            alt=""
-                          />
-                        </a>
-                      </div>
-                      <div className="product-card-body">
-                        <div className="product-title d-flex align-items-center">
-                          <h6 className="m-0">
-                            <a className="text-reset stretched-linka" href="#">
-                              Space Shapes #3
-                            </a>
-                          </h6>
-                          <button className="like-btn btn btn-primary-soft p-0 rounded-circle avatar avatar-xs ms-auto">
-                            <i className="avatar-text fi-heart"></i>
-                          </button>
-                        </div>
-                        <div className="product-actions d-flex fs-sm">
-                          <div className="price col lh-sm">
-                            <span className="m-0">
-                              Mirrored{" "}
-                              <span className="text-body fw-400 w-100 d-block">
-                                18 ETH
-                              </span>{" "}
-                            </span>
-                          </div>
-                          <div className="price col lh-sm">
-                            <span className="m-0">
-                              3.99 ETH{" "}
-                              <span className="text-body fw-400 w-100 d-block">
-                                1/1
-                              </span>{" "}
-                            </span>
-                          </div>
-                        </div>
-                        <div className="product-card-cart">
-                          <a className="btn btn-primary w-100" href="#">
-                            Buy Now
-                          </a>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  {/* <!-- End Product Box --> */}
-                </div>
-                <div className="swiper-pagination mt-4  position-relative bottom-0"></div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      {/* <!-- End Search -->
-<!-- Notifications --> */}
-      <div
-        className="offcanvas offcanvas-end"
-        tabIndex={-1}
-        id="header_notification_bar"
-        aria-labelledby="header_notification_barLabel"
-      >
-        <div className="offcanvas-header border-bottom border-gray-300">
-          <h5 className="offcanvas-title" id="header_notification_barLabel">
-            Notification
-          </h5>
-          <button
-            type="button"
-            className="btn-close"
-            data-bs-dismiss="offcanvas"
-            aria-label="Close"
-          ></button>
-        </div>
-        <div className="offcanvas-body">
-          <div className="p-3 border border-gray-300 rounded-3 d-flex position-relative mb-3">
-            <div className="avatar">
-              <img
-                className="avatar-img rounded-circle"
-                src="assets/img/avatar-1.jpg"
-                title=""
-                alt=""
-              />
-            </div>
-            <div className="col ps-3 d-flex align-items-center">
-              <div className="col pe-3">
-                <h6 className="mb-1">
-                  <a href="#" className="stretched-link text-reset">
-                    Drunk Robots
-                  </a>
-                </h6>
-                <span>sold for 2.515 ETH</span>
-                <span className="fs-xs w-100 d-block">
-                  25 minutes 10 seconds ago
-                </span>
-              </div>
-              <div className="icon btn btn-border-mode p-0 rounded-3">
-                <i className="bi-bag-check"></i>
-              </div>
-            </div>
-          </div>
-          <div className="p-3 border border-gray-300 rounded-3 d-flex position-relative mb-3">
-            <div className="avatar">
-              <img
-                className="avatar-img rounded-circle"
-                src="assets/img/avatar-2.jpg"
-                title=""
-                alt=""
-              />
-            </div>
-            <div className="col ps-3 d-flex align-items-center">
-              <div className="col pe-3">
-                <h6 className="mb-1">
-                  <a href="#" className="stretched-link text-reset">
-                    Drunk Robots
-                  </a>
-                </h6>
-                <span>listed by @donsee_04</span>
-                <span className="fs-xs w-100 d-block">
-                  48 minutes 35 seconds ago
-                </span>
-              </div>
-              <div className="icon btn btn-border-mode p-0 rounded-3">
-                <i className="bi-check-lg"></i>
-              </div>
-            </div>
-          </div>
-          <div className="p-3 border border-gray-300 rounded-3 d-flex position-relative mb-3">
-            <div className="avatar">
-              <img
-                className="avatar-img rounded-circle"
-                src="assets/img/avatar-3.jpg"
-                title=""
-                alt=""
-              />
-            </div>
-            <div className="col ps-3 d-flex align-items-center">
-              <div className="col pe-3">
-                <h6 className="mb-1">
-                  <a href="#" className="stretched-link text-reset">
-                    Drunk Robots
-                  </a>
-                </h6>
-                <span>Bid by @obbabe_01</span>
-                <span className="fs-xs w-100 d-block">
-                  48 minutes 35 seconds ago
-                </span>
-              </div>
-              <div className="icon btn btn-border-mode p-0 rounded-3">
-                <i className="bi-pin"></i>
-              </div>
-            </div>
-          </div>
-          <div className="p-3 border border-gray-300 rounded-3 d-flex position-relative mb-3">
-            <div className="avatar">
-              <img
-                className="avatar-img rounded-circle"
-                src="assets/img/avatar-1.jpg"
-                title=""
-                alt=""
-              />
-            </div>
-            <div className="col ps-3 d-flex align-items-center">
-              <div className="col pe-3">
-                <h6 className="mb-1">
-                  <a href="#" className="stretched-link text-reset">
-                    Drunk Robots
-                  </a>
-                </h6>
-                <span>sold for 2.515 ETH</span>
-                <span className="fs-xs w-100 d-block">
-                  25 minutes 10 seconds ago
-                </span>
-              </div>
-              <div className="icon btn btn-border-mode p-0 rounded-3">
-                <i className="bi-bag-check"></i>
-              </div>
-            </div>
-          </div>
-          <div className="p-3 border border-gray-300 rounded-3 d-flex position-relative mb-3">
-            <div className="avatar">
-              <img
-                className="avatar-img rounded-circle"
-                src="assets/img/avatar-2.jpg"
-                title=""
-                alt=""
-              />
-            </div>
-            <div className="col ps-3 d-flex align-items-center">
-              <div className="col pe-3">
-                <h6 className="mb-1">
-                  <a href="#" className="stretched-link text-reset">
-                    Drunk Robots
-                  </a>
-                </h6>
-                <span>listed by @donsee_04</span>
-                <span className="fs-xs w-100 d-block">
-                  48 minutes 35 seconds ago
-                </span>
-              </div>
-              <div className="icon btn btn-border-mode p-0 rounded-3">
-                <i className="bi-check-lg"></i>
-              </div>
-            </div>
-          </div>
-          <div className="p-3 border border-gray-300 rounded-3 d-flex position-relative mb-3">
-            <div className="avatar">
-              <img
-                className="avatar-img rounded-circle"
-                src="assets/img/avatar-3.jpg"
-                title=""
-                alt=""
-              />
-            </div>
-            <div className="col ps-3 d-flex align-items-center">
-              <div className="col pe-3">
-                <h6 className="mb-1">
-                  <a href="#" className="stretched-link text-reset">
-                    Drunk Robots
-                  </a>
-                </h6>
-                <span>Bid by @obbabe_01</span>
-                <span className="fs-xs w-100 d-block">
-                  48 minutes 35 seconds ago
-                </span>
-              </div>
-              <div className="icon btn btn-border-mode p-0 rounded-3">
-                <i className="bi-pin"></i>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div className="offcanvas-footer d-flex p-3 border-top border-gray-300">
-          <a className="btn btn-mode mx-3 col" href="#">
-            Manage
-          </a>
-          <a className="btn btn-danger mx-3 col" href="#">
-            Clear All
-          </a>
-        </div>
-      </div>
-      {/* <!-- End Notifications -->
-        <!-- End Header -->
-        <!-- Main --> */}
       <main>
         {/* <!-- Section --> */}
         <section
@@ -678,210 +35,14 @@ const Home = () => {
                 </div>
               </div>
               <div className="col-12 border-bottom border-2 border-white border-opacity-10">
-                <img src="assets/img/home-banner.png" title="" alt="" />
+                <img src="assets/img/ai-img-7.png" title="" alt="" />
               </div>
             </div>
           </div>
         </section>
         {/* <!-- End Section -->
             <!-- Section --> */}
-        <section className="section">
-          <div className="container">
-            <div className="row justify-content-center section-heading">
-              <div className="col-lg-7 text-center">
-                <h6 className="text-primary">HOT STUFF</h6>
-                <h2 className="h1">Best Collection in this Month</h2>
-              </div>
-            </div>
-            <div className="swiper-hover-arrow position-relative swiper-center-scale">
-              <div
-                className="swiper swiper-container"
-                data-swiper-options='{
-                                  "slidesPerView": 2,
-                                  "spaceBetween": 0,
-                                  "loop": true,
-                                  "centeredSlides": true,
-                                  "pagination": {
-                                    "el": ".swiper-pagination",
-                                    "clickable": true
-                                    },
-                                  "navigation": {
-                                    "nextEl": ".swiper-next-02",
-                                    "prevEl": ".swiper-prev-02"
-                                  },
-                                  "breakpoints": {
-                                    "600": {
-                                      "slidesPerView": 2
-                                    },
-                                    "991": {
-                                      "slidesPerView": 3,
-                                      "spaceBetween": 0
-                                    },
-                                    "1200": {
-                                      "slidesPerView": 3.5,
-                                      "spaceBetween": 0
-                                    }
-                                  }
-                            }'
-              >
-                <div className="swiper-wrapper">
-                  {/* <!-- Product Box --> */}
-                  <div className="swiper-slide">
-                    <div className="card border-0 rounded-3">
-                      <img
-                        className="card-img rounded-3"
-                        src="assets/img/product-1.jpg"
-                        title=""
-                        alt=""
-                      />
-                      <div className="card-img-overlay d-flex flex-column bg-dark-gradient">
-                        <div className="mt-auto text-center p-3">
-                          <h4 className="text-white h3">Sacred Teardrops</h4>
-                          <p className="text-white text-opacity-85">
-                            Lorem Ipsum dolor sit amet, consectetur adipiscing
-                            elite.
-                          </p>
-                          <div>
-                            <a
-                              className="btn btn-gradient rounded-pill"
-                              href="#"
-                            >
-                              Live Now
-                            </a>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  {/* <!-- End Product Box -->
-                                <!-- Product Box --> */}
-                  <div className="swiper-slide">
-                    <div className="card border-0 rounded-3">
-                      <img
-                        className="card-img rounded-3"
-                        src="assets/img/product-2.jpg"
-                        title=""
-                        alt=""
-                      />
-                      <div className="card-img-overlay d-flex flex-column bg-dark-gradient">
-                        <div className="mt-auto text-center p-3">
-                          <h4 className="text-white h3">Sacred Teardrops</h4>
-                          <p className="text-white text-opacity-85">
-                            Lorem Ipsum dolor sit amet, consectetur adipiscing
-                            elite.
-                          </p>
-                          <div>
-                            <a
-                              className="btn btn-gradient rounded-pill"
-                              href="#"
-                            >
-                              Live Now
-                            </a>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  {/* <!-- End Product Box -->
-                                <!-- Product Box --> */}
-                  <div className="swiper-slide">
-                    <div className="card border-0 rounded-3">
-                      <img
-                        className="card-img rounded-3"
-                        src="assets/img/product-3.jpg"
-                        title=""
-                        alt=""
-                      />
-                      <div className="card-img-overlay d-flex flex-column bg-dark-gradient">
-                        <div className="mt-auto text-center p-3">
-                          <h4 className="text-white h3">Sacred Teardrops</h4>
-                          <p className="text-white text-opacity-85">
-                            Lorem Ipsum dolor sit amet, consectetur adipiscing
-                            elite.
-                          </p>
-                          <div>
-                            <a
-                              className="btn btn-gradient rounded-pill"
-                              href="#"
-                            >
-                              Live Now
-                            </a>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  {/* <!-- End Product Box -->
-                                <!-- Product Box --> */}
-                  <div className="swiper-slide">
-                    <div className="card border-0 rounded-3">
-                      <img
-                        className="card-img rounded-3"
-                        src="assets/img/product-4.jpg"
-                        title=""
-                        alt=""
-                      />
-                      <div className="card-img-overlay d-flex flex-column bg-dark-gradient">
-                        <div className="mt-auto text-center p-3">
-                          <h4 className="text-white h3">Sacred Teardrops</h4>
-                          <p className="text-white text-opacity-85">
-                            Lorem Ipsum dolor sit amet, consectetur adipiscing
-                            elite.
-                          </p>
-                          <div>
-                            <a
-                              className="btn btn-gradient rounded-pill"
-                              href="#"
-                            >
-                              Live Now
-                            </a>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  {/* <!-- End Product Box -->
-                                <!-- Product Box --> */}
-                  <div className="swiper-slide">
-                    <div className="card border-0 rounded-3">
-                      <img
-                        className="card-img rounded-3"
-                        src="assets/img/product-5.jpg"
-                        title=""
-                        alt=""
-                      />
-                      <div className="card-img-overlay d-flex flex-column bg-dark-gradient">
-                        <div className="mt-auto text-center p-3">
-                          <h4 className="text-white h3">Sacred Teardrops</h4>
-                          <p className="text-white text-opacity-85">
-                            Lorem Ipsum dolor sit amet, consectetur adipiscing
-                            elite.
-                          </p>
-                          <div>
-                            <a
-                              className="btn btn-gradient rounded-pill"
-                              href="#"
-                            >
-                              Live Now
-                            </a>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  {/* <!-- End Product Box --> */}
-                </div>
-                <div className="swiper-pagination mt-4  position-relative bottom-0"></div>
-              </div>
-              <div className="swiper-arrow-style-02 swiper-next swiper-next-02">
-                <i className="bi bi-chevron-right"></i>{" "}
-              </div>
-              <div className="swiper-arrow-style-02 swiper-prev swiper-prev-02">
-                <i className="bi bi-chevron-left"></i>
-              </div>
-            </div>
-          </div>
-        </section>
+
         {/* <!-- End Section -->
             <!-- Section --> */}
         <section className="section bg-effect">
@@ -3338,263 +2499,134 @@ const Home = () => {
         </section>
         {/* <!-- End Section -->
             <!-- Section --> */}
-        {/* <section className="section">
-                <div className="container">
-                    <div className="nav nav-pills user-steps-section" id="v-steps-tab" role="tablist" aria-orientation="vertical">
-                        <div className="user-steps-card active" data-bs-toggle="pill" role="tab" aria-selected="true">
-                            <div className="icon-xl user-steps-card-icon bg-primary text-white">
-                                <span>01</span>
-                                <i className="cf cf-esp"></i>
-                            </div>
-                            <div className="user-steps-card-body text-center pt-5">
-                                <h5>Create Your Collection</h5>
-                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
-                                <a className="btn btn-gradient" href="#">
-                                    Start Now
-                                    <span className="btn-icon bi-chevron-right"></span>
-                                </a>
-                            </div>
-                        </div>
-                        <div className="user-steps-card" data-bs-toggle="pill" role="tab" aria-selected="false">
-                            <div className="icon-xl user-steps-card-icon bg-primary text-white">
-                                <span>02</span>
-                                <i className="cf cf-esp"></i>
-                            </div>
-                            <div className="user-steps-card-body text-center pt-5">
-                                <h5>Create Your Collection</h5>
-                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
-                                <a className="btn btn-gradient" href="#">
-                                    Start Now
-                                    <span className="btn-icon bi-chevron-right"></span>
-                                </a>
-                            </div>
-                        </div>
-                        <div className="user-steps-card" data-bs-toggle="pill" role="tab" aria-selected="false">
-                            <div className="icon-xl user-steps-card-icon bg-primary text-white">
-                                <span>03</span>
-                                <i className="cf cf-esp"></i>
-                            </div>
-                            <div className="user-steps-card-body text-center pt-5">
-                                <h5>Create Your Collection</h5>
-                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
-                                <a className="btn btn-gradient" href="#">
-                                    Start Now
-                                    <span className="btn-icon bi-chevron-right"></span>
-                                </a>
-                            </div>
-                        </div>
-                        <div className="user-steps-card" data-bs-toggle="pill" role="tab" aria-selected="false">
-                            <div className="icon-xl user-steps-card-icon bg-primary text-white">
-                                <span>04</span>
-                                <i className="cf cf-esp"></i>
-                            </div>
-                            <div className="user-steps-card-body text-center pt-5">
-                                <h5>Create Your Collection</h5>
-                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
-                                <a className="btn btn-gradient" href="#">
-                                    Start Now
-                                    <span className="btn-icon bi-chevron-right"></span>
-                                </a>
-                            </div>
-                        </div>
-                        <div className="user-steps-card" data-bs-toggle="pill" role="tab" aria-selected="false">
-                            <div className="icon-xl user-steps-card-icon bg-primary text-white">
-                                <span>05</span>
-                                <i className="cf cf-esp"></i>
-                            </div>
-                            <div className="user-steps-card-body text-center pt-5">
-                                <h5>Create Your Collection</h5>
-                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
-                                <a className="btn btn-gradient" href="#">
-                                    Start Now
-                                    <span className="btn-icon bi-chevron-right"></span>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </section>  */}
-        {/* <!-- End Section -->
-            <!-- Section --> */}
-        <section className="section overflow-hidden">
+        <section className="section">
           <div className="container">
             <div className="row justify-content-center section-heading">
               <div className="col-lg-7 text-center">
-                <h6 className="text-primary text-uppercase">Resourcess</h6>
-                <h2 className="h1">Getting Started</h2>
+                <h6 className="text-primary text-uppercase">How it works</h6>
+                <h2 className="h1">How to use the platform </h2>
               </div>
             </div>
-            <div className="swiper-hover-arrow position-relative">
+            <div
+              className="nav nav-pills user-steps-section"
+              id="v-steps-tab"
+              role="tablist"
+              aria-orientation="vertical"
+            >
               <div
-                className="swiper swiper-container swiper-no-scroll"
-                data-swiper-options='{
-                                  "slidesPerView": 1.5,
-                                  "spaceBetween": 24,
-                                  "loop": true,
-                                  "centeredSlides": true,
-                                  "pagination": {
-                                    "el": ".swiper-pagination",
-                                    "clickable": true
-                                    },
-                                  "navigation": {
-                                    "nextEl": ".swiper-next-02",
-                                    "prevEl": ".swiper-prev-02"
-                                  },
-                                  "breakpoints": {
-                                    "600": {
-                                      "slidesPerView": 1.5
-                                    },
-                                    "991": {
-                                      "slidesPerView": 2.5,
-                                      "spaceBetween": 24
-                                    },
-                                    "1200": {
-                                      "slidesPerView": 3.5,
-                                      "spaceBetween": 24
-                                    }
-                                  }
-                            }'
+                className="user-steps-card active"
+                data-bs-toggle="pill"
+                role="tab"
+                aria-selected="true"
               >
-                <div className="swiper-wrapper">
-                  {/* <!-- Product Box --> */}
-                  <div className="swiper-slide">
-                    <div className="px-card p-3 rounded-3">
-                      <a href="#">
-                        <img
-                          className="rounded-3"
-                          src="assets/img/blog-1.jpg"
-                          title=""
-                          alt=""
-                        />
-                      </a>
-                      <div className="pt-4">
-                        <h6>
-                          <a className="text-reset" href="#">
-                            How to create an NFT?
-                          </a>
-                        </h6>
-                      </div>
-                    </div>
-                  </div>
-                  {/* <!-- End Product Box -->
-                                <!-- Product Box --> */}
-                  <div className="swiper-slide">
-                    <div className="px-card p-3 rounded-3">
-                      <a href="#">
-                        <img
-                          className="rounded-3"
-                          src="assets/img/blog-2.jpg"
-                          title=""
-                          alt=""
-                        />
-                      </a>
-                      <div className="pt-4">
-                        <h6>
-                          <a className="text-reset" href="#">
-                            How to create an NFT?
-                          </a>
-                        </h6>
-                      </div>
-                    </div>
-                  </div>
-                  {/* <!-- End Product Box -->
-                                <!-- Product Box --> */}
-                  <div className="swiper-slide">
-                    <div className="px-card p-3 rounded-3">
-                      <a href="#">
-                        <img
-                          className="rounded-3"
-                          src="assets/img/blog-3.jpg"
-                          title=""
-                          alt=""
-                        />
-                      </a>
-                      <div className="pt-4">
-                        <h6>
-                          <a className="text-reset" href="#">
-                            How to create an NFT?
-                          </a>
-                        </h6>
-                      </div>
-                    </div>
-                  </div>
-                  {/* <!-- End Product Box -->
-                                <!-- Product Box --> */}
-                  <div className="swiper-slide">
-                    <div className="px-card p-3 rounded-3">
-                      <a href="#">
-                        <img
-                          className="rounded-3"
-                          src="assets/img/blog-4.jpg"
-                          title=""
-                          alt=""
-                        />
-                      </a>
-                      <div className="pt-4">
-                        <h6>
-                          <a className="text-reset" href="#">
-                            How to create an NFT?
-                          </a>
-                        </h6>
-                      </div>
-                    </div>
-                  </div>
-                  {/* <!-- End Product Box -->
-                                <!-- Product Box --> */}
-                  <div className="swiper-slide">
-                    <div className="px-card p-3 rounded-3">
-                      <a href="#">
-                        <img
-                          className="rounded-3"
-                          src="assets/img/blog-5.jpg"
-                          title=""
-                          alt=""
-                        />
-                      </a>
-                      <div className="pt-4">
-                        <h6>
-                          <a className="text-reset" href="#">
-                            How to create an NFT?
-                          </a>
-                        </h6>
-                      </div>
-                    </div>
-                  </div>
-                  {/* <!-- End Product Box -->
-                                <!-- Product Box --> */}
-                  <div className="swiper-slide">
-                    <div className="px-card p-3 rounded-3">
-                      <a href="#">
-                        <img
-                          className="rounded-3"
-                          src="assets/img/blog-1.jpg"
-                          title=""
-                          alt=""
-                        />
-                      </a>
-                      <div className="pt-4">
-                        <h6>
-                          <a className="text-reset" href="#">
-                            How to create an NFT?
-                          </a>
-                        </h6>
-                      </div>
-                    </div>
-                  </div>
-                  {/* <!-- End Product Box --> */}
+                <div className="icon-xl user-steps-card-icon bg-primary text-white">
+                  <span>01</span>
+                  <i className="cf cf-esp"></i>
                 </div>
-                <div className="swiper-pagination mt-4  position-relative bottom-0"></div>
+                <div className="user-steps-card-body text-center pt-5">
+                  <h5>Register Your Assets</h5>
+                  <p>Tell us where it is located and its value.</p>
+                  <a className="btn btn-gradient" href="#">
+                    Start Now
+                    <span className="btn-icon bi-chevron-right"></span>
+                  </a>
+                </div>
               </div>
-              <div className="swiper-arrow-style-02 swiper-next swiper-next-02">
-                <i className="bi bi-chevron-right"></i>{" "}
+              <div
+                className="user-steps-card"
+                data-bs-toggle="pill"
+                role="tab"
+                aria-selected="false"
+              >
+                <div className="icon-xl user-steps-card-icon bg-primary text-white">
+                  <span>02</span>
+                  <i className="cf cf-esp"></i>
+                </div>
+                <div className="user-steps-card-body text-center pt-5">
+                  <h5>Verification</h5>
+                  <p>We verify the asset</p>
+                </div>
               </div>
-              <div className="swiper-arrow-style-02 swiper-prev swiper-prev-02">
-                <i className="bi bi-chevron-left"></i>
+              <div
+                className="user-steps-card"
+                data-bs-toggle="pill"
+                role="tab"
+                aria-selected="false"
+              >
+                <div className="icon-xl user-steps-card-icon bg-primary text-white">
+                  <span>03</span>
+                  <i className="cf cf-esp"></i>
+                </div>
+                <div className="user-steps-card-body text-center pt-5">
+                  <h5>Receive and mint your tokens</h5>
+                  <p>You get 100 tokens of your real estate nft</p>
+                </div>
+              </div>
+              <div
+                className="user-steps-card"
+                data-bs-toggle="pill"
+                role="tab"
+                aria-selected="false"
+              >
+                <div className="icon-xl user-steps-card-icon bg-primary text-white">
+                  <span>04</span>
+                  <i className="cf cf-esp"></i>
+                </div>
+                <div className="user-steps-card-body text-center pt-5">
+                  <h5>Buy and Sell fractions of your asset</h5>
+                  <p>Trade or auction portions of your asset</p>
+                  {/* <a className="btn btn-gradient" href="#">
+                    Start Now
+                    <span className="btn-icon bi-chevron-right"></span>
+                  </a> */}
+                </div>
+              </div>
+              <div
+                className="user-steps-card"
+                data-bs-toggle="pill"
+                role="tab"
+                aria-selected="false"
+              >
+                <div className="icon-xl user-steps-card-icon bg-primary text-white">
+                  <span>05</span>
+                  <i className="cf cf-esp"></i>
+                </div>
+                <div className="user-steps-card-body text-center pt-5">
+                  <h5>Get Paid for holding</h5>
+                  <p>
+                    You get monthly dividends if you hold a portion of the asset
+                  </p>
+                  <a className="btn btn-gradient" href="#">
+                    Start Now
+                    <span className="btn-icon bi-chevron-right"></span>
+                  </a>
+                </div>
+              </div>
+              <div
+                className="user-steps-card"
+                data-bs-toggle="pill"
+                role="tab"
+                aria-selected="false"
+              >
+                <div className="icon-xl user-steps-card-icon bg-primary text-white">
+                  <span>06</span>
+                  <i className="cf cf-esp"></i>
+                </div>
+                <div className="user-steps-card-body text-center pt-5">
+                  <h5>Claim asset</h5>
+                  <p>
+                    You can claim back your asset if you have monopoly of the
+                    tokens (all 100). This involves delisting the token
+                  </p>
+                  <a className="btn btn-gradient" href="#">
+                    Start Now
+                    <span className="btn-icon bi-chevron-right"></span>
+                  </a>
+                </div>
               </div>
             </div>
           </div>
         </section>
-        {/* <!-- End Section --> */}
       </main>
     </div>
   );
