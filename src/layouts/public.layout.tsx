@@ -93,9 +93,9 @@ function themeUtils() {
     document.querySelectorAll("[data-bs-theme-value]").forEach((toggle) => {
       toggle.addEventListener("click", () => {
         const theme = toggle.getAttribute("data-bs-theme-value");
-        localStorage.setItem("theme", theme);
-        setTheme(theme);
-        showActiveTheme(theme);
+        localStorage.setItem("theme", theme as string);
+        setTheme(theme as string);
+        showActiveTheme(theme as string);
       });
     });
   });
