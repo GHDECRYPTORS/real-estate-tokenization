@@ -1,4 +1,7 @@
+import { useState } from "react";
+
 const Home = () => {
+  const [activeTile, setActiveTile] = useState(1);
   return (
     <div className="wrapper">
       {/* <!-- Header --> */}
@@ -2514,10 +2517,14 @@ const Home = () => {
               aria-orientation="vertical"
             >
               <div
-                className="user-steps-card active"
                 data-bs-toggle="pill"
                 role="tab"
-                aria-selected="true"
+                aria-selected={activeTile == 1}
+                onClick={() => setActiveTile(1)}
+                className={`user-steps-card ${
+                  activeTile == 1 ? "active" : ""
+                }`}
+                tabIndex={activeTile == 1 ? 1 : -1}
               >
                 <div className="icon-xl user-steps-card-icon bg-primary text-white">
                   <span>01</span>
@@ -2533,10 +2540,14 @@ const Home = () => {
                 </div>
               </div>
               <div
-                className="user-steps-card"
                 data-bs-toggle="pill"
                 role="tab"
-                aria-selected="false"
+                aria-selected={activeTile == 2}
+                onClick={() => setActiveTile(2)}
+                className={`user-steps-card ${
+                  activeTile == 2 ? "active" : ""
+                }`}
+                tabIndex={activeTile == 2 ? 1 : -1}
               >
                 <div className="icon-xl user-steps-card-icon bg-primary text-white">
                   <span>02</span>
@@ -2548,10 +2559,14 @@ const Home = () => {
                 </div>
               </div>
               <div
-                className="user-steps-card"
                 data-bs-toggle="pill"
                 role="tab"
-                aria-selected="false"
+                aria-selected={activeTile == 3}
+                onClick={() => setActiveTile(3)}
+                className={`user-steps-card ${
+                  activeTile == 3 ? "active" : ""
+                }`}
+                tabIndex={activeTile == 3 ? 1 : -1}
               >
                 <div className="icon-xl user-steps-card-icon bg-primary text-white">
                   <span>03</span>
@@ -2563,10 +2578,14 @@ const Home = () => {
                 </div>
               </div>
               <div
-                className="user-steps-card"
                 data-bs-toggle="pill"
                 role="tab"
-                aria-selected="false"
+                aria-selected={activeTile == 4}
+                onClick={() => setActiveTile(4)}
+                className={`user-steps-card ${
+                  activeTile == 4 ? "active" : ""
+                }`}
+                tabIndex={activeTile == 4 ? 1 : -1}
               >
                 <div className="icon-xl user-steps-card-icon bg-primary text-white">
                   <span>04</span>
@@ -2582,10 +2601,14 @@ const Home = () => {
                 </div>
               </div>
               <div
-                className="user-steps-card"
                 data-bs-toggle="pill"
                 role="tab"
-                aria-selected="false"
+                aria-selected={activeTile == 5}
+                onClick={() => setActiveTile(5)}
+                className={`user-steps-card ${
+                  activeTile == 5 ? "active" : ""
+                }`}
+                tabIndex={activeTile == 5 ? 1 : -1}
               >
                 <div className="icon-xl user-steps-card-icon bg-primary text-white">
                   <span>05</span>
@@ -2603,10 +2626,14 @@ const Home = () => {
                 </div>
               </div>
               <div
-                className="user-steps-card"
                 data-bs-toggle="pill"
                 role="tab"
-                aria-selected="false"
+                aria-selected={activeTile == 6}
+                onClick={() => setActiveTile(6)}
+                className={`user-steps-card ${
+                  activeTile == 6 ? "active" : ""
+                }`}
+                tabIndex={activeTile == 6 ? 1 : -1}
               >
                 <div className="icon-xl user-steps-card-icon bg-primary text-white">
                   <span>06</span>

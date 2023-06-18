@@ -6,6 +6,7 @@ import { ReactNode } from "react";
 import PublicLayout from "./layouts/public.layout";
 import Explore from "./pages/Explore";
 import NotFound from "./pages/404";
+
 const Pages = {
   IndexPage: Home,
   AdminPage: () => <div>Hi I'am Admin Page</div>,
