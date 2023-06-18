@@ -9,6 +9,7 @@ import NotFound from "./pages/404";
 import Login from "./pages/Login";
 import SingleCollection from "./pages/collections/_id";
 import SingleCollectionToken from "./pages/collections/_token_id";
+import Profile from "./pages/Profile";
 const Pages = {
   IndexPage: Home,
   AdminPage: () => <div>Hi I'am Admin Page</div>,
@@ -17,7 +18,8 @@ const Pages = {
   NotFound,
   Explore,
   SingleCollection,
-  SingleCollectionToken
+  SingleCollectionToken,
+  Profile,
 };
 const Layouts = {
   AdminLayout: ({ children }: { children: ReactNode }) => (
@@ -43,8 +45,13 @@ const Routes = [
   {
     path: "/explore",
     Component: Pages.Explore,
-    // Private: true,
     Layout: Layouts.PublicLayout,
+  },
+  {
+    path: "/profile",
+    Component: Pages.Profile,
+    Layout: Layouts.PublicLayout,
+    // Private: true
   },
   {
     path: "/collections/:id",

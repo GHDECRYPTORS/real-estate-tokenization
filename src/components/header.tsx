@@ -84,8 +84,8 @@ function Header() {
                     </Link>
                   </li>
                   <li className="nav-item dropdown">
-                    <Link className="nav-link" to="/collections">
-                      Collections
+                    <Link className="nav-link" to="/login">
+                      Login
                     </Link>
                   </li>
                 </ul>

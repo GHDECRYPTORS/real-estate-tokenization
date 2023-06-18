@@ -66,16 +66,7 @@ const User: React.FC<UserProps> = ({ showUser, setShowUser }) => {
           <li className="mb-2">
             <Link
               className="btn btn-sm text-start btn-border-mode rounded-3 p-3 w-100"
-              to="#"
-            >
-              <i className="bi-person"></i>
-              <span className="ps-3">My Account</span>
-            </Link>
-          </li>
-          <li className="mb-2">
-            <Link
-              className="btn btn-sm text-start btn-border-mode rounded-3 p-3 w-100"
-              to="#"
+              to="/profile"
             >
               <i className="bi-gear"></i>
               <span className="ps-3">Setting</span>
@@ -84,22 +75,13 @@ const User: React.FC<UserProps> = ({ showUser, setShowUser }) => {
           <li className="mb-2">
             <Link
               className="btn btn-sm text-start btn-border-mode rounded-3 p-3 w-100"
-              to="#"
-            >
-              <i className="bi-bookmark"></i>
-              <span className="ps-3">Saved</span>
-            </Link>
-          </li>
-          <li className="mb-2">
-            <Link
-              className="btn btn-sm text-start btn-border-mode rounded-3 p-3 w-100"
-              to="#"
+              to="/activity"
             >
               <i className="bi-clock-history"></i>
               <span className="ps-3">Your Activity</span>
             </Link>
           </li>
-          <li className="mb-2">
+          {/* <li className="mb-2">
             <Link
               className="btn btn-sm text-start btn-border-mode rounded-3 p-3 w-100"
               to="#"
@@ -107,7 +89,7 @@ const User: React.FC<UserProps> = ({ showUser, setShowUser }) => {
               <i className="bi-bag-check"></i>
               <span className="ps-3">Report a Problem</span>
             </Link>
-          </li>
+          </li> */}
           <li className="mb-2">
             <Link
               className="btn btn-sm text-start btn-border-mode rounded-3 p-3 w-100"
