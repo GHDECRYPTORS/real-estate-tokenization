@@ -6,13 +6,20 @@ import { ReactNode } from "react";
 import PublicLayout from "./layouts/public.layout";
 import Explore from "./pages/Explore";
 import NotFound from "./pages/404";
+import Login from "./pages/Login";
+import SingleCollection from "./pages/collections/_id";
+import SingleCollectionToken from "./pages/collections/_token_id";
+import Profile from "./pages/Profile";
 const Pages = {
   IndexPage: Home,
   AdminPage: () => <div>Hi I'am Admin Page</div>,
-  LoginPage: () => <div>Please Login,This is Login Page</div>,
+  LoginPage: Login,
   AdminNewUser: () => <div>I'am New User Page,I'am Under Admin Page</div>,
   NotFound,
   Explore,
+  SingleCollection,
+  SingleCollectionToken,
+  Profile,
 };
 const Layouts = {
   AdminLayout: ({ children }: { children: ReactNode }) => (
@@ -33,31 +40,28 @@ const Routes = [
   {
     path: "/login",
     Component: Pages.LoginPage,
-    exact: true,
+    Layout: Layouts.PublicLayout,
   },
   {
     path: "/explore",
     Component: Pages.Explore,
-    // Private: true,
     Layout: Layouts.PublicLayout,
   },
   {
-    path: "/users",
-    Component: () => <div>User Component Index</div>,
-    Private: true,
+    path: "/profile",
+    Component: Pages.Profile,
     Layout: Layouts.PublicLayout,
-    modules: [
-      {
-        path: "/new_product",
-        Component: () => <div>User New Product</div>,
-        exact: true,
-      },
-      {
-        path: "/delete_product",
-        Component: () => <div>User Delete Product</div>,
-        exact: true,
-      },
-    ],
+    // Private: true
+  },
+  {
+    path: "/collections/:id",
+    Component: Pages.SingleCollection,
+    Layout: Layouts.PublicLayout,
+  },
+  {
+    path: "/collections/:id/:tokenId",
+    Component: Pages.SingleCollectionToken,
+    Layout: Layouts.PublicLayout,
   },
   {
     path: "",
