@@ -10,16 +10,18 @@ import Login from "./pages/Login";
 import SingleCollection from "./pages/collections/_id";
 import SingleCollectionToken from "./pages/collections/_token_id";
 import Profile from "./pages/Profile";
+import Createnft from "./pages/createnft";
 const Pages = {
-  IndexPage: Home,
-  AdminPage: () => <div>Hi I'am Admin Page</div>,
-  LoginPage: Login,
-  AdminNewUser: () => <div>I'am New User Page,I'am Under Admin Page</div>,
-  NotFound,
-  Explore,
-  SingleCollection,
-  SingleCollectionToken,
-  Profile,
+	IndexPage: Home,
+	AdminPage: () => <div>Hi I'am Admin Page</div>,
+	LoginPage: Login,
+	AdminNewUser: () => <div>I'am New User Page,I'am Under Admin Page</div>,
+	NotFound,
+	Explore,
+	SingleCollection,
+	SingleCollectionToken,
+	Profile,
+	Createnft,
 };
 const Layouts = {
   AdminLayout: ({ children }: { children: ReactNode }) => (
@@ -32,41 +34,46 @@ const Layouts = {
 };
 
 const Routes = [
-  {
-    path: "/",
-    Component: Pages.IndexPage,
-    Layout: Layouts.PublicLayout,
-  },
-  {
-    path: "/login",
-    Component: Pages.LoginPage,
-    Layout: Layouts.PublicLayout,
-  },
-  {
-    path: "/explore",
-    Component: Pages.Explore,
-    Layout: Layouts.PublicLayout,
-  },
-  {
-    path: "/profile",
-    Component: Pages.Profile,
-    Layout: Layouts.PublicLayout,
-    // Private: true
-  },
-  {
-    path: "/collections/:id",
-    Component: Pages.SingleCollection,
-    Layout: Layouts.PublicLayout,
-  },
-  {
-    path: "/collections/:id/:tokenId",
-    Component: Pages.SingleCollectionToken,
-    Layout: Layouts.PublicLayout,
-  },
-  {
-    path: "",
-    Component: Pages.NotFound,
-  },
+	{
+		path: "/",
+		Component: Pages.IndexPage,
+		Layout: Layouts.PublicLayout,
+	},
+	{
+		path: "/login",
+		Component: Pages.LoginPage,
+		Layout: Layouts.PublicLayout,
+	},
+	{
+		path: "/explore",
+		Component: Pages.Explore,
+		Layout: Layouts.PublicLayout,
+	},
+	{
+		path: "/profile",
+		Component: Pages.Profile,
+		Layout: Layouts.PublicLayout,
+		// Private: true
+	},
+	{
+		path: "/collections/:id",
+		Component: Pages.SingleCollection,
+		Layout: Layouts.PublicLayout,
+	},
+	{
+		path: "/collections/:id/:tokenId",
+		Component: Pages.SingleCollectionToken,
+		Layout: Layouts.PublicLayout,
+	},
+	{
+		path: "/createnft",
+		Component: Pages.Createnft,
+		Layout: Layouts.PublicLayout,
+	},
+	{
+		path: "",
+		Component: Pages.NotFound,
+	},
 ];
 
 const App = () => {

@@ -35,45 +35,7 @@ const Search: React.FC<SearchProps> = ({ showSearch, setShowSearch }) => {
         </form>
         <div className="pt-4">
           <h6 className="mb-3 text-uppercase fs-sm fw-500">Latest Search</h6>
-          <ul className="list-unstyled d-flex flex-wrap">
-            <li className="me-2 mb-2">
-              <a className="btn btn-sm btn-border-mode rounded-3" href="#">
-                Latest NFT's{" "}
-                <span className="btn-icon bi-graph-up-arrow"></span>{" "}
-              </a>
-            </li>
-            <li className="me-2 mb-2">
-              <a className="btn btn-sm btn-border-mode rounded-3" href="#">
-                Top NFT's <span className="btn-icon bi-graph-up-arrow"></span>{" "}
-              </a>
-            </li>
-            <li className="me-2 mb-2">
-              <a className="btn btn-sm btn-border-mode rounded-3" href="#">
-                Low <span className="btn-icon bi-graph-up-arrow"></span>{" "}
-              </a>
-            </li>
-            <li className="me-2 mb-2">
-              <a className="btn btn-sm btn-border-mode rounded-3" href="#">
-                Offers <span className="btn-icon bi-graph-up-arrow"></span>{" "}
-              </a>
-            </li>
-            <li className="me-2 mb-2">
-              <a className="btn btn-sm btn-border-mode rounded-3" href="#">
-                Top Sale <span className="btn-icon bi-graph-up-arrow"></span>{" "}
-              </a>
-            </li>
-            <li className="me-2 mb-2">
-              <a className="btn btn-sm btn-border-mode rounded-3" href="#">
-                Authors<span className="btn-icon bi-graph-up-arrow"></span>{" "}
-              </a>
-            </li>
-            <li className="me-2 mb-2">
-              <a className="btn btn-sm btn-border-mode rounded-3" href="#">
-                Best Seller
-                <span className="btn-icon bi-graph-up-arrow"></span>{" "}
-              </a>
-            </li>
-          </ul>
+          
         </div>
         <div className="pt-4">
           <h6 className="mb-3 text-uppercase fs-sm fw-500">Top Nft's</h6>
