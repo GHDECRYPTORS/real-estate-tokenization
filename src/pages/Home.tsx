@@ -21,7 +21,7 @@ const Home = () => {
             <div className="row align-items-center justify-content-center">
               <div className="col-lg-7 text-center pb-7">
                 <h6 className="mb-3 fs-sm fw-400 dark-text text-opacity-75">
-                  The NEFT marketplace with everything for everyone{" "}
+                  The NFT marketplace with everything for everyone{" "}
                 </h6>
                 <h1 className=" display-4">
                   Discover Collect And Sell Remarkable NFTs.
