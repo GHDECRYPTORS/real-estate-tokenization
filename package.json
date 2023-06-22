@@ -20,7 +20,8 @@
     "react-helmet": "^6.1.0",
     "react-redux": "^8.1.0",
     "react-router-dom": "^6.13.0",
-    "serve": "^14.2.0"
+    "serve": "^14.2.0",
+    "web3": "^4.0.1"
   },
   "devDependencies": {
     "@types/react": "^18.0.37",
