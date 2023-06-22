@@ -15,6 +15,8 @@ function Login() {
 	const LoginUser = async () => {
 		open();
 
+
+		//Also check for the chainName in the If Statement , because else, any chain that's connected will also  validate the statement within the if block 
 		if (isConnected && typeof window.ethereum !== "undefined") {
 			try {
 				const nonceResponse = await fetch(
