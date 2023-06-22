@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import Web3 from "web3";
 
 const web3 = new Web3(Web3.givenProvider);
-const SERVER_URL = "http://localhost:8080/v1";
+const SERVER_URL = "https://real-estate-backend.azurewebsites.net/1";
 
 function App() {
   const [address, setAddress] = useState(null);

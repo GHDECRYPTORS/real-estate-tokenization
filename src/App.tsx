@@ -12,6 +12,36 @@ import RouterCombiner from "./route.combiner";
 import SingleCollection from "./pages/collections/_id";
 import SingleCollectionToken from "./pages/collections/_token_id";
 import { ChainContext, chainClass } from "./chain.resolver";
+import {
+  EthereumClient,
+  w3mConnectors,
+  w3mProvider,
+} from "@web3modal/ethereum";
+import { Web3Modal } from "@web3modal/react";
+import { configureChains, createConfig, WagmiConfig } from "wagmi";
+import { auroraTestnet } from "wagmi/chains";
+import { hederaMainnet, hederaTestnet } from "./services/chains";
+
+const chain = import.meta.env.VITE_CHAIN_NAME || "aurora-testnet";
+
+const aurorachains =  [auroraTestnet] as Array<
+  typeof auroraTestnet
+  >;
+  const hederachains =  [hederaMainnet, hederaTestnet, auroraTestnet] as Array<
+  typeof auroraTestnet
+  >;
+
+const chains = chain === "aurora-testnet" ? aurorachains : hederachains;
+
+const projectId = "02c135931686e1628630c41236d10acf";
+
+const { publicClient } = configureChains(chains, [w3mProvider({ projectId })]);
+const wagmiConfig = createConfig({
+  autoConnect: true,
+  connectors: w3mConnectors({ projectId, version: 2, chains }),
+  publicClient,
+});
+const ethereumClient = new EthereumClient(wagmiConfig, chains);
 
 const Pages = {
   IndexPage: Home,
@@ -83,14 +113,17 @@ const App = () => {
   return (
     <div>
       <ChainContext.Provider value={chainClass}>
-        <Router>
-          <RouterCombiner
-            routes={Routes}
-            PrivateRoute={PrivateRoute}
-            auth={auth}
-            PageNotFound={Pages.NotFound}
-          />
-        </Router>
+        <WagmiConfig config={wagmiConfig}>
+          <Web3Modal projectId={projectId} ethereumClient={ethereumClient} />
+          <Router>
+            <RouterCombiner
+              routes={Routes}
+              PrivateRoute={PrivateRoute}
+              auth={auth}
+              PageNotFound={Pages.NotFound}
+            />
+          </Router>
+        </WagmiConfig>
       </ChainContext.Provider>
     </div>
   );
