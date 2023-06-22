@@ -16,7 +16,10 @@ function Header() {
   const [showUser, setShowUser] = useState(false);
   return (
     <>
-      <header className="main-header fixed-top headroom border-bottom border-gray-200 @@classes">
+      <header
+        className="main-header fixed-top headroom border-bottom border-gray-200 @@classes"
+        style={{ zIndex: 20 }}
+      >
         <nav className="navbar navbar-expand-lg">
           <div className="container align-items-center">
             <div className="logo">
