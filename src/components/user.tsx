@@ -1,9 +1,26 @@
+import { ethers } from "ethers";
+import { useEffect } from "react";
 import { Link } from "react-router-dom";
+import { useAccount } from "wagmi";
+import { ellipsify } from "./ellipsify";
+
 interface UserProps {
   showUser: boolean;
   setShowUser: (show: boolean) => void;
 }
 const User: React.FC<UserProps> = ({ showUser, setShowUser }) => {
+  const { address, isConnected } = useAccount();
+  const provider = new ethers.providers.Web3Provider(window.ethereum);
+  useEffect(() => {
+    (async () => {
+      if (address != null) {
+        const balanceWei = await provider.getBalance(address);
+        const balanceEth = ethers.utils.formatEther(balanceWei);
+        console.log(balanceEth);
+      }
+    })();
+  }, [address]);
+
   return (
     <div
       className={`offcanvas offcanvas-end ${showUser ? "show" : ""}`}
@@ -24,7 +41,7 @@ const User: React.FC<UserProps> = ({ showUser, setShowUser }) => {
             </div>
             <div className="col ps-3">
               <h6 className="mb-0">Jupiter</h6>
-              <span className="fs-xs fw-400">@jupiter_0202</span>
+              <span className="fs-xs fw-400">{ellipsify(address, 20)}</span>
             </div>
           </div>
         </div>
