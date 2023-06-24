@@ -13,7 +13,7 @@ interface UserProps {
 
 const User: React.FC<UserProps> = ({ showUser, setShowUser }) => {
   const { address, isConnected } = useAccount();
-  const [balance, setBalance] = useState("");
+  const [balance, setBalance] = useState("---");
   const provider = new ethers.providers.Web3Provider(window.ethereum);
   useEffect(() => {
     (async () => {
@@ -45,7 +45,9 @@ const User: React.FC<UserProps> = ({ showUser, setShowUser }) => {
             </div>
             <div className="col ps-3">
               <h6 className="mb-0">Jupiter</h6>
-              <span className="fs-xs fw-400">{ellipsify(address, 20)}</span>
+              <span className="fs-xs fw-400">
+                {ellipsify(address || "", 20)}
+              </span>
             </div>
           </div>
         </div>
