@@ -30,7 +30,8 @@
     "serve": "^14.2.0",
     "viem": "^1.1.4",
     "wagmi": "^1.2.1",
-    "web3": "^4.0.1"
+    "web3": "^4.0.1",
+    "web3.storage": "^4.5.4"
   },
   "devDependencies": {
     "@types/react": "^18.0.37",
