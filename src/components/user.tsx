@@ -1,9 +1,30 @@
+import { Formatter } from "@ethersproject/providers";
+import { ethers } from "ethers";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import { useAccount } from "wagmi";
+import { ellipsify } from "./ellipsify";
+import numberFormat from "./formatter";
+
 interface UserProps {
   showUser: boolean;
   setShowUser: (show: boolean) => void;
 }
+
 const User: React.FC<UserProps> = ({ showUser, setShowUser }) => {
+  const { address, isConnected } = useAccount();
+  const [balance, setBalance] = useState("");
+  const provider = new ethers.providers.Web3Provider(window.ethereum);
+  useEffect(() => {
+    (async () => {
+      if (address != null) {
+        const balanceWei = await provider.getBalance(address);
+        const balanceEth = ethers.utils.formatEther(balanceWei);
+        setBalance(numberFormat.format(+balanceEth));
+      }
+    })();
+  }, [address, showUser]);
+
   return (
     <div
       className={`offcanvas offcanvas-end ${showUser ? "show" : ""}`}
@@ -24,7 +45,7 @@ const User: React.FC<UserProps> = ({ showUser, setShowUser }) => {
             </div>
             <div className="col ps-3">
               <h6 className="mb-0">Jupiter</h6>
-              <span className="fs-xs fw-400">@jupiter_0202</span>
+              <span className="fs-xs fw-400">{ellipsify(address, 20)}</span>
             </div>
           </div>
         </div>
@@ -58,7 +79,7 @@ const User: React.FC<UserProps> = ({ showUser, setShowUser }) => {
                   <i className="cf cf-etc h4 fw-400 m-0"></i>
                 </div>
                 <div className="col ps-3">
-                  <h4 className="m-0">3,89 ETH</h4>
+                  <h4 className="m-0">{balance}</h4>
                 </div>
               </div>
             </Link>

@@ -4,10 +4,15 @@ import Search from "./search";
 import { Link } from "react-router-dom";
 import { Dropdown } from "react-bootstrap";
 import { useEffect, useState } from "react";
+import { useAccount } from "wagmi";
+
 import User from "./user";
 function Header() {
+  const { address, isConnected } = useAccount();
   const [theme, setTheme] = useState(window.getTheme());
   useEffect(() => {
+    console.log(address);
+    console.log(isConnected);
     window.setTheme(theme as "dark" | "light" | "auto");
   }, [theme]);
   const [showNotifications, setShowNotifications] = useState(false);
@@ -61,7 +66,7 @@ function Header() {
                     </div>
                     <div className="col ps-3">
                       <h6 className="mb-0">Jupiter</h6>
-                      <span className="fs-xs fw-400">@jupiter_0202</span>
+                      <span className="fs-xs fw-400">{address}</span>
                     </div>
                   </div>
                 </div>
