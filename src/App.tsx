@@ -20,18 +20,19 @@ import {
 import { Web3Modal } from "@web3modal/react";
 import { configureChains, createConfig, WagmiConfig } from "wagmi";
 import { auroraTestnet } from "wagmi/chains";
-import { hederaMainnet, hederaTestnet } from "./services/chains";
+// import { hederaMainnet, hederaTestnet } from "./services/chains";
 
-const chain = import.meta.env.VITE_CHAIN_NAME || "aurora-testnet";
+// const chain = import.meta.env.VITE_CHAIN_NAME || "aurora-testnet";
+const chain = "aurora";
 
-const aurorachains =  [auroraTestnet] as Array<
-  typeof auroraTestnet
-  >;
-  const hederachains =  [hederaMainnet, hederaTestnet, auroraTestnet] as Array<
-  typeof auroraTestnet
-  >;
+// const aurorachains = [auroraTestnet];
+//   const chains = aurorachains;
+  // const hederachains =  [hederaMainnet, hederaTestnet, auroraTestnet] as Array<
+  // typeof auroraTestnet
+  // >;
 
-const chains = chain === "aurora-testnet" ? aurorachains : hederachains;
+// const chains = chain === "aurora-testnet" ? aurorachains : hederachains;
+const chains = [auroraTestnet];
 
 const projectId = "02c135931686e1628630c41236d10acf";
 
@@ -111,21 +112,34 @@ const Routes = [
 const App = () => {
   const auth = false; /* Its Only Use For Now,I Handle It With ReduxStore */
   return (
-    <div>
-      <ChainContext.Provider value={chainClass}>
-        <WagmiConfig config={wagmiConfig}>
-          <Web3Modal projectId={projectId} ethereumClient={ethereumClient} />
-          <Router>
-            <RouterCombiner
-              routes={Routes}
-              PrivateRoute={PrivateRoute}
-              auth={auth}
-              PageNotFound={Pages.NotFound}
-            />
-          </Router>
-        </WagmiConfig>
-      </ChainContext.Provider>
-    </div>
-  );
+		<div>
+			{/* <ChainContext.Provider value={chainClass}>
+				
+			</ChainContext.Provider> */}
+
+			{chain === "aurora" ? (
+				<WagmiConfig config={wagmiConfig}>
+					<Web3Modal projectId={projectId} ethereumClient={ethereumClient} />
+					<Router>
+						<RouterCombiner
+							routes={Routes}
+							PrivateRoute={PrivateRoute}
+							auth={auth}
+							PageNotFound={Pages.NotFound}
+						/>
+					</Router>
+				</WagmiConfig>
+			) : (
+				<Router>
+					<RouterCombiner
+						routes={Routes}
+						PrivateRoute={PrivateRoute}
+						auth={auth}
+						PageNotFound={Pages.NotFound}
+					/>
+				</Router>
+			)}
+		</div>
+	);
 };
 export default App;
