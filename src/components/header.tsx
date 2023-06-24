@@ -81,7 +81,7 @@ function Header() {
                 </Link>
               </div>
               {/* <!-- Notification --> */}
-              {!isConnected && (
+              {isConnected && (
                 <div className='d-none d-lg-block h-col h-notification'>
                   <Link
                     className='h-notification-icon h-icon'
