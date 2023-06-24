@@ -2,33 +2,54 @@
 
 import React, { useState } from "react";
 import { useAppDispatch, useAppSelector } from "../store/hooks";
-import { selectUserInstance } from "../store/slices/user.slice";
+import {
+	selectUserInstance,
+	AuthenticateUser,
+} from "../store/slices/user.slice";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
-
-
 function Profile() {
-  const { userData }: any = useAppSelector(selectUserInstance);
-  const dispatch = useAppDispatch();
-  const [userName, setUserName] = useState("");
-  const navigate = useNavigate();
+	const { accessToken, user }: any = useAppSelector(selectUserInstance);
+	const dispatch = useAppDispatch();
+	const [userName, setUserName] = useState<any>("");
+	const navigate = useNavigate();
 
-
-
-  const AuthUrl = axios.create({
+	const AuthUrl = axios.create({
 		baseURL: "https://real-estate-backend.azurewebsites.net/v1",
 		headers: {
 			Authorization: `Bearer ${
-				typeof window !== "undefined" ? userData?.access_token : ""
+				typeof window !== "undefined" ? accessToken : ""
 			}`,
 			"Content-Type": "application/json",
 		},
-  });
-  
-  // const UpdateUserName = async () => {
+	});
 
-  // }
+	const postUserName = async (username: string) => {
+		return AuthUrl.post(`/user/set-username/${username}`);
+	};
+
+	const UpdateUserName = async () => {
+		try {
+			const response = await postUserName(userName);
+			console.log("response", response);
+
+			if (response?.data?.statusCode === 200) {
+				dispatch(
+					AuthenticateUser({
+						username: userName,
+						accessToken: accessToken,
+						id: user?._id,
+						just_signed_up: user?.just_signed_up,
+					})
+        );
+        setUserName("")
+				navigate("/");
+			}
+		} catch (error) {
+			console.log("error", error);
+		}
+	};
 
 	return (
 		<main>
@@ -72,7 +93,7 @@ function Profile() {
 													type="text"
 													name="username"
 													className="form-control"
-													placeholder="username"
+													placeholder="Update your username"
 													value={userName}
 													onChange={(e) => setUserName(e.target.value)}
 												/>
@@ -83,7 +104,8 @@ function Profile() {
 												className={`btn btn-primary me-3 ${
 													userName.length < 8 && "disabled"
 												}`}
-												disabled={userName.length < 8}>
+												disabled={userName.length < 8}
+												onClick={UpdateUserName}>
 												Save Changes
 											</button>
 											{userName.length > 1 && userName !== "" && (

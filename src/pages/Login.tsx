@@ -11,7 +11,7 @@ import { useNavigate } from "react-router-dom";
 
 function Login() {
 	const { open, close } = useWeb3Modal();
-	const { address, isConnected } = useAccount();
+	const { address, isConnected, isConnecting } = useAccount();
 	const navigate = useNavigate();
 	const dispatch = useAppDispatch();
 
@@ -42,7 +42,15 @@ function Login() {
 
 						if (response?.data?.statusCode === 200) {
 							console.log("responseData", response?.data?.data);
-							dispatch(AuthenticateUser(response?.data?.data));
+							dispatch(
+								AuthenticateUser({
+									accessToken: response?.data?.data?.access_token,
+									id: response?.data?.data?.user?._id,
+									username: response?.data?.data?.user?.username,
+									just_signed_up: response?.data?.data?.user?.just_signed_up,
+								})
+							);
+							// dispatch(AuthenticateUser(response?.data?.data));
 							navigate("/");
 						} else {
 							console.error("Error");
@@ -66,11 +74,17 @@ function Login() {
 									<p className="small mb-4">Connect your Wallet to continue.</p>
 									{/* <form> */}
 									<div className="pb-3">
-										<button
-											className="w-100 btn btn-primary"
-											onClick={LoginUser}>
-											Connect Wallet
-										</button>
+										{isConnecting ? (
+											<button className="w-100 btn btn-primary">
+												Connecting...
+											</button>
+										) : (
+											<button
+												className="w-100 btn btn-primary"
+												onClick={LoginUser}>
+												Connect Wallet
+											</button>
+										)}
 									</div>
 								</div>
 							</div>

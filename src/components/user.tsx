@@ -24,7 +24,7 @@ const User: React.FC<UserProps> = ({ showUser, setShowUser }) => {
 		address: address,
 	});
 
-	const { userData }: any = useAppSelector(selectUserInstance);
+	const { user }: any = useAppSelector(selectUserInstance);
 
 	useEffect(() => {
 		console.log("address", address);
@@ -56,9 +56,7 @@ const User: React.FC<UserProps> = ({ showUser, setShowUser }) => {
 							/>
 						</div>
 						<div className="col ps-3">
-							<h6 className="mb-0">
-								{ellipsify(userData?.user?.username || "", 20)}
-							</h6>
+							<h6 className="mb-0">{ellipsify(user?.username || "", 20)}</h6>
 							{/* <span className="fs-xs fw-400">
 								{ellipsify(address || "", 20)}
 							</span> */}
@@ -79,7 +77,7 @@ const User: React.FC<UserProps> = ({ showUser, setShowUser }) => {
 							className="btn btn-sm text-start btn-border-mode rounded-3 p-3 w-100"
 							to="#">
 							<i className="bi-subtract"></i>
-							<span className="text-truncate ps-3">{userData?.user?._id}</span>
+							<span className="text-truncate ps-3">{user?._id}</span>
 						</Link>
 					</li>
 					<li className="mb-2">

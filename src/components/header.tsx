@@ -46,7 +46,7 @@ function Header() {
 								/>
 							</Link>
 						</div>
-
+						
 						<div className="header-end d-flex justify-content-end">
 							{/* <!-- Search --> */}
 							<div className="d-none d-lg-block h-col h-search-toggle">
