@@ -113,10 +113,7 @@ const App = () => {
   const auth = false; /* Its Only Use For Now,I Handle It With ReduxStore */
   return (
 		<div>
-			{/* <ChainContext.Provider value={chainClass}>
-				
-			</ChainContext.Provider> */}
-
+	
 			{chain === "aurora" ? (
 				<WagmiConfig config={wagmiConfig}>
 					<Web3Modal projectId={projectId} ethereumClient={ethereumClient} />

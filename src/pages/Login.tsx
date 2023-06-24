@@ -2,99 +2,84 @@
 
 import { useWeb3Modal } from "@web3modal/react";
 import { ethers } from "ethers";
-
 import { useAccount } from "wagmi";
 import { useEffect, useState } from "react";
-
-const SERVER_URL = "https://real-estate-backend.azurewebsites.net/v1";
+import { useAppDispatch } from "../store/hooks";
+import { AuthenticateUser } from "../store/slices/user.slice";
+import { getNonce, postLogin } from "../services/userServices";
+import { useNavigate } from "react-router-dom";
 
 function Login() {
-  const { open, close } = useWeb3Modal();
-  const { address, isConnected } = useAccount();
-  const [useraddress, setUserAddress] = useState<any>("");
+	const { open, close } = useWeb3Modal();
+	const { address, isConnected } = useAccount();
+	const navigate = useNavigate();
+	const dispatch = useAppDispatch();
 
-  
+	const LoginUser = async () => {
+		await open();
+		// Also check for the chainName in the If Statement , because else, any chain that's connected will also  validate the statement within the if block
+	};
+	useEffect(() => {
+		(async () => {
+			if (isConnected && typeof window.ethereum !== "undefined") {
+				try {
+					console.log("Before", address);
+					const nonceResponse = await getNonce(address);
+					console.log("After", address);
+					const { message } = nonceResponse.data;
+					const provider = new ethers.providers.Web3Provider(window.ethereum);
+					const signer = provider.getSigner();
+					const signature = await signer.signMessage(message);
 
+					if (signature) {
+						const formdata = {
+							address,
+							signature,
+						};
+						const response = await postLogin(formdata);
 
-  const LoginUser = async () => {
-    await open();
-    // Also check for the chainName in the If Statement , because else, any chain that's connected will also  validate the statement within the if block
-  };
-  useEffect(() => {
-    (async () => {
-      if (isConnected && typeof window.ethereum !== "undefined") {
-        try {
-          console.log("Before", address);
-          const nonceResponse = await fetch(
-            `${SERVER_URL}/auth/nonce/${address}`,
-            {
-              method: "GET",
-              headers: { "Content-Type": "application/json" },
-            }
-          );
-          console.log("After", address);
-          const { message } = await nonceResponse.json();
-          console.log("Before Message", message);
+						console.log("response", response);
 
-          const provider = new ethers.providers.Web3Provider(window.ethereum)
-          const signer = provider.getSigner();
-
-			const signature = await signer.signMessage(message);
-			
-			console.log(signature)
-
-		if (signature) {
-		  const response = await fetch(`${SERVER_URL}/auth/login`, {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ address, signature }),
-          });
-
-			if (response.ok) {
-			  console.log("response", response)
-            // const { address } = await response.json();
-            // setAddress(address);
-          } else {
-            console.error(response.statusText);
-          }
-		
-	}
-
-        
-        } catch (e: any) {
-          console.error(e.message);
-        }
-      }
-    })();
-  }, [isConnected]);
-  return (
-    <main>
-      <section className="section">
-        <div className="container">
-          <div className="row gy-5 justify-content-center">
-            <div className="col-md-6 col-lg-5 col-xxl-4">
-              <div className="card">
-                <div className="card-body p-4 p-xl-5">
-                  <h3 className="mb-1">Login</h3>
-                  <p className="small mb-4">Connect your Wallet to continue.</p>
-                  {/* <form> */}
-                  <div className="pb-3">
-                    {address}
-                    <button
-                      className="w-100 btn btn-primary"
-                      onClick={LoginUser}
-                    >
-                      Connect Wallet
-                    </button>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-    </main>
-  );
+						if (response?.data?.statusCode === 200) {
+							console.log("responseData", response?.data?.data);
+							dispatch(AuthenticateUser(response?.data?.data));
+							navigate("/");
+						} else {
+							console.error("Error");
+						}
+					}
+				} catch (e: any) {
+					console.error(e.message);
+				}
+			}
+		})();
+	}, [isConnected]);
+	return (
+		<main>
+			<section className="section">
+				<div className="container">
+					<div className="row gy-5 justify-content-center">
+						<div className="col-md-6 col-lg-5 col-xxl-4">
+							<div className="card">
+								<div className="card-body p-4 p-xl-5">
+									<h3 className="mb-1">Login</h3>
+									<p className="small mb-4">Connect your Wallet to continue.</p>
+									{/* <form> */}
+									<div className="pb-3">
+										<button
+											className="w-100 btn btn-primary"
+											onClick={LoginUser}>
+											Connect Wallet
+										</button>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</section>
+		</main>
+	);
 }
 
 export default Login;
