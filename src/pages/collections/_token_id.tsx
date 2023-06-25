@@ -181,7 +181,7 @@ function SingleCollectionToken() {
       : url;
   };
   const ethValue = (value: any) => {
-    return ethers.utils.formatEther(value);
+    return ethers.utils.formatEther(value.toString());
   };
 
   return (

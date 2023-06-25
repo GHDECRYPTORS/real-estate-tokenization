@@ -60,16 +60,16 @@ const Createnft = () => {
 
     const files = [new File([blob], "hello.json")];
     const cid = await client.put(files, { wrapWithDirectory: false });
-    console.log("stored files with cid:", cid);
+
     const provider = new ethers.providers.Web3Provider(window.ethereum);
     const signer = provider.getSigner();
     const contract = new ethers.Contract(deployerContract, deployer, signer);
     const address = await signer.getAddress();
-    console.log(address);
+
     const mintNFTR = await contract.mintNFT(
       nft_name,
       nft_symbol,
-      unitPrice,
+      ethers.utils.parseEther(unitPrice.toString()),
       `ipfs://${cid}`,
       address.trim()
     );

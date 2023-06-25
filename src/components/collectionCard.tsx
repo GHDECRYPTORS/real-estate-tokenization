@@ -12,7 +12,7 @@ function CollectionCard({ collection }: any) {
 			: url;
     };
     
-    const ethvalue = ethers.utils.formatEther(collection?.unitPrice);
+    const ethvalue = ethers.utils.formatEther((collection?.unitPrice).toString());
     const address = collection?.address;
 
 	return (
