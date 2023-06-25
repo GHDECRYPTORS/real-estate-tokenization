@@ -4,7 +4,6 @@ import React, { ChangeEvent, FormEvent, useRef, useState } from "react";
 import { Web3Storage } from "web3.storage";
 import { ethers } from "ethers";
 import deployer from "../../deployer_abi.json";
-import { Toast } from "react-bootstrap";
 const apiKey = import.meta.env.VITE_WEB3_STORAGE_KEY;
 const deployerContract = import.meta.env.VITE_NFT_DEPLOYER;
 const Createnft = () => {
