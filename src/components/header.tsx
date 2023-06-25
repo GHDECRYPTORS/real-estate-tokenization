@@ -1,6 +1,5 @@
 /** @format */
 
-import { useAccount, useBalance } from "wagmi";
 import { useEffect, useState } from "react";
 
 import { Dropdown } from "react-bootstrap";
@@ -9,9 +8,10 @@ import { Link } from "react-router-dom";
 import Notifications from "./notifications";
 import Search from "./search";
 import User from "./user";
+import { useAccount } from "wagmi";
 
 function Header() {
-  const { address, isConnected } = useAccount();
+  const { isConnected } = useAccount();
   const [theme, setTheme] = useState(window.getTheme());
   useEffect(() => {
     window.setTheme(theme as "dark" | "light" | "auto");
@@ -81,7 +81,7 @@ function Header() {
                 </Link>
               </div>
               {/* <!-- Notification --> */}
-              {isConnected && (
+              {false && (
                 <div className='d-none d-lg-block h-col h-notification'>
                   <Link
                     className='h-notification-icon h-icon'

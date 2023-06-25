@@ -1,4 +1,4 @@
-import { ChainContext, chainClass } from "./chain.resolver";
+// import { ChainContext, chainClass } from "./chain.resolver";
 import {
   EthereumClient,
   w3mConnectors,

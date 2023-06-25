@@ -1,11 +1,12 @@
 // import React from 'react'
 
-import { useEffect } from "react";
-import { ethers } from "ethers";
 import { Navigate, redirect, useParams } from "react-router-dom";
-import { useNavigate } from "react-router-dom";
+
 // import deployer from "../../../../deployer_abi.json";
 import deployer from "../../../deployer_abi.json";
+import { ethers } from "ethers";
+import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 const deployerContract = import.meta.env.VITE_NFT_DEPLOYER;
 // import Accordion from "react-bootstrap/Accordion";
 function SingleCollection() {
