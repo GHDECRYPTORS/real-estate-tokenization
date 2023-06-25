@@ -6,8 +6,7 @@ import { useEffect, useState } from "react";
 // export default SingleCollection;
 import { ethers } from "ethers";
 import { getSingleCollection } from "../../services/collectionsServices";
-import { ellipsify } from "../../components/ellipsify";
-import houseNFTABI from "../../../nft_abi.json";
+import getUniqueOwners from "../../helpers/uniqueHolders";
 // import Accordion from "react-bootstrap/Accordion";
 
 function SingleCollection() {
@@ -15,35 +14,6 @@ function SingleCollection() {
   const { address } = params;
   const [collection, setCollection] = useState<any>(null);
   const [tokenHolders, setTokenHolders] = useState("---");
-
-  async function getUniqueOwners(contractAddress: string, tokenIdRange: any) {
-    try {
-      const provider = new ethers.providers.Web3Provider(window.ethereum);
-
-      const contract = new ethers.Contract(
-        contractAddress,
-        houseNFTABI,
-        provider
-      );
-
-      //   const owners = new Set();
-      let ownerArr = [];
-      for (let i = tokenIdRange.start; i <= tokenIdRange.end; i++) {
-        const tokenId = i.toString();
-
-        ownerArr.push(contract.ownerOf(tokenId));
-        // console.log(tokenId)
-      }
-      let holders = await Promise.all(ownerArr);
-      //   console.log(holders);
-      const owners = new Set(holders);
-
-      const uniqueOwners = Array.from(owners);
-      return uniqueOwners;
-    } catch (error) {
-      console.error("Error occurred while fetching unique owners:", error);
-    }
-  }
 
   useEffect(() => {
     const getCollection = async () => {
@@ -115,11 +85,11 @@ function SingleCollection() {
                   <h6 className="fw-400 m-0">{tokenHolders}</h6>
                   <div className="vr position-absolute top-0 bottom-0 end-0"></div>
                 </div>
-                <div className="col-4 col-sm-3 col-md-auto position-relative">
+                {/* <div className="col-4 col-sm-3 col-md-auto position-relative">
                   <span className="fs-xs">VOL</span>
                   <h6 className="fw-400 m-0">96.27 ETH</h6>
                   <div className="vr position-absolute top-0 bottom-0 end-0"></div>
-                </div>
+                </div> */}
                 <div className="col-4 col-sm-3 col-md-auto position-relative">
                   <span className="fs-xs">Floor</span>
                   <h6 className="fw-400 m-0">

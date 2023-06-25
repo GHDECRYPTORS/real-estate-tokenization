@@ -180,7 +180,7 @@ function CollectionCard({ collection }: any) {
 				<div className="product-card-cart">
 					<Link className="dropdown-item" to={`/collections/${address}`}>
 						<a className="btn btn-primary w-100" href="#">
-							Buy Now
+							View Now
 						</a>
 					</Link>
 				</div>
