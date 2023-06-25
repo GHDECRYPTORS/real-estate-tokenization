@@ -8,11 +8,19 @@ import { ethers } from "ethers";
 import { getSingleCollection } from "../../services/collectionsServices";
 import getUniqueOwners from "../../helpers/uniqueHolders";
 import getTokenOwner from "../../helpers/getTokenOwner";
+import houseNFTABI from "../../../nft_abi.json";
+import { useAccount } from "wagmi";
 
 // import Accordion from "react-bootstrap/Accordion";
 function SingleCollectionToken() {
   const [activeoffer, setActiveOffer] = useState(false);
+  const [isRented, setIsRented] = useState(false);
+  const [durationTime, setDurationTime] = useState("0");
+  const [instantBuy, setInstantBuy] = useState(false);
   const [tokenOwner, setTokenOwner] = useState("");
+  const [offerAmount, setOfferAmount] = useState("");
+  const { address: userAddress } = useAccount();
+
   const [activeproperties, setActiveProperties] = useState(false);
   const [activecolldetails, setActiveCollDetails] = useState(false);
   const [activetokendetails, setActiveTokenDetails] = useState(false);
@@ -28,22 +36,105 @@ function SingleCollectionToken() {
       setCollection(response?.data?.data);
     };
     getCollection();
-  }, []);
+  }, [userAddress]);
+
+  async function getInstantBuy() {
+    try {
+      const provider = new ethers.providers.Web3Provider(window.ethereum);
+      const signer = provider.getSigner();
+
+      const contract = new ethers.Contract(
+        address as string,
+        houseNFTABI,
+        signer
+      );
+
+      const isInstantBuy = await contract.instantBuyEnabled(tokenId);
+      return isInstantBuy;
+    } catch (error) {
+      console.error("Error occurred while buying the token:", error);
+    }
+  }
+  async function isRentedF() {
+    try {
+      const provider = new ethers.providers.Web3Provider(window.ethereum);
+
+      const contract = new ethers.Contract(
+        address as string,
+        houseNFTABI,
+        provider
+      );
+
+      const isRented = await contract.isRented(tokenId);
+      return isRented;
+    } catch (error) {
+      console.error("Error occurred while checking if token is rented", error);
+    }
+  }
+
+  async function makeOffer() {
+    try {
+      const provider = new ethers.providers.Web3Provider(window.ethereum);
+
+      const signer = provider.getSigner();
+      const contract = new ethers.Contract(
+        address as string,
+        houseNFTABI,
+        signer
+      );
+      const placedBid = await contract.placeBid(tokenId, {
+        value: ethers.utils.parseUnits(offerAmount, "ether"),
+      });
+      return placedBid;
+    } catch (error) {
+      console.error("Error occurred while making an offer", error);
+    }
+  }
+  async function createAuction() {
+    try {
+      const provider = new ethers.providers.Web3Provider(window.ethereum);
+
+      const signer = provider.getSigner();
+      const contract = new ethers.Contract(
+        address as string,
+        houseNFTABI,
+        signer
+      );
+      const createAuctionTx = await contract.createAuction(
+        tokenId,
+        durationTime
+      );
+      return createAuctionTx;
+    } catch (error) {
+      console.error("Error occurred while making an offer", error);
+    }
+  }
 
   useEffect(() => {
     getTokenOwner(address as string, tokenId)
       .then((owner) => setTokenOwner(owner))
       .catch((e) => console.log(`Error: ${e.message}`));
-  }, []);
+
+    isRentedF()
+      .then((iRented) => console.log(iRented))
+      .catch((e) => console.log(`Error: ${e.message}`));
+  }, [userAddress]);
+
+  useEffect(() => {});
+
+  useEffect(() => {
+    getInstantBuy()
+      .then((e) => setInstantBuy(e))
+      .catch((e) => console.log(e.message));
+  }, [userAddress]);
 
   useEffect(() => {
     getUniqueOwners(address as string, { start: 0, end: 99 })
       .then((owners) => {
-        console.log(owners);
         setTokenHolders(owners.length);
       })
       .catch((e) => console.log(`Error while fetching owners ${e.message}`));
-  }, []);
+  }, [userAddress]);
 
   const ipfsTohttp = (url: string) => {
     if (url == null) return "";
@@ -111,6 +202,27 @@ function SingleCollectionToken() {
                   </a>
                 </div>
               </div>
+              {tokenOwner == userAddress && (
+                <div className="border border-gray-300 p-3 rounded-3 mt-3">
+                  <p className="mb-23 pb-3 border-bottom border-gray-300">
+                    MODIFY
+                  </p>
+                  <input
+                    type="text"
+                    value={durationTime}
+                    placeholder="Enter duration in seconds"
+                    className="border p-2 mb-4 rounded-0 shadow-none form-control form-control-sm flex-full"
+                    onInput={(e) => setDurationTime(e.currentTarget.value)}
+                  />
+                  <a
+                    className="btn btn-lg btn-gradient w-100"
+                    href="#"
+                    onClick={(e) => createAuction()}
+                  >
+                    <i className="bi-tags"></i> Create Auction
+                  </a>
+                </div>
+              )}
             </div>
             <div className="col-lg-5 col-xxl-4">
               <div className="d-flex fs-sm pb-2">
@@ -139,8 +251,20 @@ function SingleCollectionToken() {
               <div className="border border-gray-300 p-3 rounded-3 mt-3">
                 <p className="mb-23 pb-3 border-bottom border-gray-300">
                   SALE ENDS AT
-                  <span className="text-mode fw-500">December 25, 2023</span>
+                  <span className="text-mode fw-500"> December 25, 2023</span>
                 </p>
+                {isRented && (
+                  <div className="pt-2">
+                    <label className="pb-2">RENTED PROPERTY </label>
+                    <div className="d-flex align-items-center">
+                      <span className="h4 m-0 pe-3">
+                        {/* <i className="cf cf-cash"></i> */}
+                        Receives rent every end of the month
+                      </span>
+                      {/* <span>$65.00</span> */}
+                    </div>
+                  </div>
+                )}
                 <div className="pt-2">
                   <label className="pb-2">FIXED PRICE</label>
                   <div className="d-flex align-items-center">
@@ -153,10 +277,33 @@ function SingleCollectionToken() {
                     {/* <span>$65.00</span> */}
                   </div>
                 </div>
+
                 <div className="pt-3">
-                  <a className="btn btn-lg btn-gradient w-100" href="#">
-                    <i className="bi-tags"></i> Make offer
-                  </a>
+                  {tokenOwner != "" && tokenOwner != userAddress ? (
+                    instantBuy ? (
+                      <a className="btn btn-lg btn-gradient w-100" href="#">
+                        <i className="bi-cart"></i> Buy
+                      </a>
+                    ) : (
+                      <>
+                        <input
+                          type="text"
+                          placeholder="Enter amount"
+                          className="border p-2 mb-4 rounded-0 shadow-none form-control form-control-sm flex-full"
+                          onInput={(e) => setOfferAmount(e.currentTarget.value)}
+                        />
+                        <a
+                          className="btn btn-lg btn-gradient w-100"
+                          href="#"
+                          onClick={(e) => makeOffer()}
+                        >
+                          <i className="bi-tags"></i> Make offer
+                        </a>
+                      </>
+                    )
+                  ) : (
+                    <></>
+                  )}
                 </div>
               </div>
               <div className="accordion-style-01 mt-3">
