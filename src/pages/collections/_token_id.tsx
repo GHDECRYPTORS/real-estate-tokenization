@@ -94,6 +94,22 @@ function SingleCollectionToken() {
       console.error("Error occurred while making an offer", error);
     }
   }
+  async function acceptAuction() {
+    try {
+      const provider = new ethers.providers.Web3Provider(window.ethereum);
+
+      const signer = provider.getSigner();
+      const contract = new ethers.Contract(
+        address as string,
+        houseNFTABI,
+        signer
+      );
+      const acceptAuction = await contract.finalizeAuction(tokenId);
+      return acceptAuction;
+    } catch (error) {
+      console.error("Error occurred while making an offer", error);
+    }
+  }
   async function createAuction() {
     try {
       const provider = new ethers.providers.Web3Provider(window.ethereum);
@@ -224,27 +240,39 @@ function SingleCollectionToken() {
                   </a>
                 </div>
               </div>
-              {tokenOwner == userAddress && (
-                <div className="border border-gray-300 p-3 rounded-3 mt-3">
-                  <p className="mb-23 pb-3 border-bottom border-gray-300">
-                    MODIFY
-                  </p>
-                  <input
-                    type="text"
-                    value={durationTime}
-                    placeholder="Enter duration in seconds"
-                    className="border p-2 mb-4 rounded-0 shadow-none form-control form-control-sm flex-full"
-                    onInput={(e) => setDurationTime(e.currentTarget.value)}
-                  />
-                  <a
-                    className="btn btn-lg btn-gradient w-100"
-                    href="#"
-                    onClick={(e) => createAuction()}
-                  >
-                    <i className="bi-tags"></i> Create Auction
-                  </a>
-                </div>
-              )}
+
+              <div className="border border-gray-300 p-3 rounded-3 mt-3">
+                <p className="mb-23 pb-3 border-bottom border-gray-300">
+                  AUCTION
+                </p>
+                {tokenOwner == userAddress && (
+                  <>
+                    {" "}
+                    <input
+                      type="text"
+                      value={durationTime}
+                      placeholder="Enter duration in seconds"
+                      className="border p-2 mb-4 rounded-0 shadow-none form-control form-control-sm flex-full"
+                      onInput={(e) => setDurationTime(e.currentTarget.value)}
+                    />
+                    <a
+                      className="btn btn-lg btn-gradient w-100"
+                      href="#"
+                      onClick={(e) => createAuction()}
+                    >
+                      <i className="bi-tags"></i> Create Auction
+                    </a>
+                  </>
+                )}
+
+                <a
+                  className="btn btn-lg btn-gradient w-100 mt-4"
+                  href="#"
+                  onClick={(e) => acceptAuction()}
+                >
+                  <i className="bi-tags"></i> End Auction
+                </a>
+              </div>
             </div>
             <div className="col-lg-5 col-xxl-4">
               <div className="d-flex fs-sm pb-2">
