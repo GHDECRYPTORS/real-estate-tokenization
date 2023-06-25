@@ -6,22 +6,21 @@ import { useEffect, useState } from "react";
 import { ellipsify } from "../../components/ellipsify";
 import { ethers } from "ethers";
 import { getSingleCollection } from "../../services/collectionsServices";
-import getUniqueOwners from "../../helpers/uniqueHolders";
 import getTokenOwner from "../../helpers/getTokenOwner";
-import houseNFTABI from "../../../nft_abi.json";
+import getUniqueOwners from "../../helpers/uniqueHolders";
 import { useAccount } from "wagmi";
+import houseNFTABI from "../../../nft_abi.json";
 
 // import Accordion from "react-bootstrap/Accordion";
 function SingleCollectionToken() {
   const [activeoffer, setActiveOffer] = useState(false);
+  const { address: userAddress } = useAccount();
   const [isRented, setIsRented] = useState(false);
   const [durationTime, setDurationTime] = useState("0");
+  const [offerAmount, setOfferAmount] = useState("");
   const [instantBuy, setInstantBuy] = useState(false);
   const [tokenOwner, setTokenOwner] = useState("");
-  const [offerAmount, setOfferAmount] = useState("");
-  const { address: userAddress } = useAccount();
-
-  const [activeproperties, setActiveProperties] = useState(false);
+  // const [activeproperties, setActiveProperties] = useState(false);
   const [activecolldetails, setActiveCollDetails] = useState(false);
   const [activetokendetails, setActiveTokenDetails] = useState(false);
   const [tokenHolders, setTokenHolders] = useState("---");

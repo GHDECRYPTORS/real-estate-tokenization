@@ -10,6 +10,7 @@ import Createnft from "./pages/createnft";
 import Explore from "./pages/Explore";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
+import MyTokens from "./pages/MyTokens";
 import NotFound from "./pages/404";
 import PrivateRoute from "./private.routes";
 import Profile from "./pages/Profile";
@@ -29,9 +30,9 @@ const chain = "aurora";
 
 // const aurorachains = [auroraTestnet];
 //   const chains = aurorachains;
-  // const hederachains =  [hederaMainnet, hederaTestnet, auroraTestnet] as Array<
-  // typeof auroraTestnet
-  // >;
+// const hederachains =  [hederaMainnet, hederaTestnet, auroraTestnet] as Array<
+// typeof auroraTestnet
+// >;
 
 // const chains = chain === "aurora-testnet" ? aurorachains : hederachains;
 const chains = [auroraTestnet];
@@ -57,6 +58,7 @@ const Pages = {
   SingleCollectionToken,
   Profile,
   Createnft,
+  MyTokens,
 };
 const Layouts = {
   AdminLayout: ({ children }: { children: ReactNode }) => (
@@ -69,77 +71,81 @@ const Layouts = {
 };
 
 const Routes = [
-	{
-		path: "/",
-		Component: Pages.IndexPage,
-		Layout: Layouts.PublicLayout,
-	},
-	{
-		path: "/login",
-		Component: Pages.LoginPage,
-		Layout: Layouts.PublicLayout,
-	},
-	{
-		path: "/explore",
-		Component: Pages.Explore,
-		Layout: Layouts.PublicLayout,
-	},
-	{
-		path: "/profile",
-		Component: Pages.Profile,
-		Layout: Layouts.PublicLayout,
-		// Private: true
-	},
-	{
-		path: "/collections/:address",
-		Component: Pages.SingleCollection,
-		Layout: Layouts.PublicLayout,
-	},
-	{
-		path: "/collections/:address/:tokenId",
-		Component: Pages.SingleCollectionToken,
-		Layout: Layouts.PublicLayout,
-	},
-	{
-		path: "/createnft",
-		Component: Pages.Createnft,
-		Layout: Layouts.PublicLayout,
-	},
-	{
-		path: "",
-		Component: Pages.NotFound,
-	},
+  {
+    path: "/",
+    Component: Pages.IndexPage,
+    Layout: Layouts.PublicLayout,
+  },
+  {
+    path: "/login",
+    Component: Pages.LoginPage,
+    Layout: Layouts.PublicLayout,
+  },
+  {
+    path: "/explore",
+    Component: Pages.Explore,
+    Layout: Layouts.PublicLayout,
+  },
+  {
+    path: "/profile",
+    Component: Pages.Profile,
+    Layout: Layouts.PublicLayout,
+    // Private: true
+  },
+  {
+    path: "/collections/:address",
+    Component: Pages.SingleCollection,
+    Layout: Layouts.PublicLayout,
+  },
+  {
+    path: "/collections/:address/:tokenId",
+    Component: Pages.SingleCollectionToken,
+    Layout: Layouts.PublicLayout,
+  },
+  {
+    path: "/createnft",
+    Component: Pages.Createnft,
+    Layout: Layouts.PublicLayout,
+  },
+  {
+    path: "/my-tokens",
+    Component: Pages.MyTokens,
+    Layout: Layouts.PublicLayout,
+  },
+  {
+    path: "",
+    Component: Pages.NotFound,
+  },
 ];
 
 const App = () => {
   const auth = false; /* Its Only Use For Now,I Handle It With ReduxStore */
   return (
-		<div>
-	
-			{chain === "aurora" ? (
-				<WagmiConfig config={wagmiConfig}>
-					<Web3Modal projectId={projectId} ethereumClient={ethereumClient} />
-					<Router>
-						<RouterCombiner
-							routes={Routes}
-							PrivateRoute={PrivateRoute}
-							auth={auth}
-							PageNotFound={Pages.NotFound}
-						/>
-					</Router>
-				</WagmiConfig>
-			) : (
-				<Router>
-					<RouterCombiner
-						routes={Routes}
-						PrivateRoute={PrivateRoute}
-						auth={auth}
-						PageNotFound={Pages.NotFound}
-					/>
-				</Router>
-			)}
-		</div>
-	);
+    <div>
+      {chain === "aurora" ? (
+        <WagmiConfig config={wagmiConfig}>
+          <Web3Modal projectId={projectId} ethereumClient={ethereumClient} />
+          <Router>
+            <RouterCombiner
+              routes={Routes}
+              PrivateRoute={PrivateRoute}
+              auth={auth}
+              PageNotFound={Pages.NotFound}
+            />
+          </Router>
+        </WagmiConfig>
+      ) : (
+        <Router>
+          <RouterCombiner
+            routes={Routes}
+            PrivateRoute={PrivateRoute}
+            auth={auth}
+            PageNotFound={Pages.NotFound}
+          />
+        </Router>
+      )}
+    </div>
+  );
 };
 const ipfsTohttp = (url: string) => {
   if (url == null) return "";

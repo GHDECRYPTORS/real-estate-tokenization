@@ -3,10 +3,14 @@
 import { Link, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 
+import { ellipsify } from "../../components/ellipsify";
 // export default SingleCollection;
 import { ethers } from "ethers";
 import { getSingleCollection } from "../../services/collectionsServices";
 import getUniqueOwners from "../../helpers/uniqueHolders";
+
+// import houseNFTABI from "../../../nft_abi.json";
+
 // import Accordion from "react-bootstrap/Accordion";
 
 function SingleCollection() {
@@ -22,7 +26,7 @@ function SingleCollection() {
     };
 
     getCollection();
-  }, [collection]);
+  }, []);
 
   useEffect(() => {
     getUniqueOwners(address as string, { start: 0, end: 99 })
@@ -46,53 +50,52 @@ function SingleCollection() {
   return (
     <main>
       <div
-        className="section bg-cover h-px-150px bg-no-repeat bg-center"
-        style={{ backgroundImage: "url(/assets/img/ai-img-7.png)" }}
-      ></div>
+        className='section bg-cover h-px-150px bg-no-repeat bg-center'
+        style={{ backgroundImage: "url(/assets/img/ai-img-7.png)" }}></div>
 
-      <section className="pb-3 mt-10">
-        <div className="container mt-n10">
-          <div className="avatar avatar-xxl mb-4">
+      <section className='pb-3 mt-10'>
+        <div className='container mt-n10'>
+          <div className='avatar avatar-xxl mb-4'>
             <img
               src={ipfsTohttp(collection?.tokenURI)}
-              title=""
-              alt=""
-              className="border border-3 border-gray-400 rounded-3"
+              title=''
+              alt=''
+              className='border border-3 border-gray-400 rounded-3'
             />
           </div>
-          <div className="row">
-            <div className="col-md-8">
-              <div className="d-flex h3 mb-2">
+          <div className='row'>
+            <div className='col-md-8'>
+              <div className='d-flex h3 mb-2'>
                 {collection?.name}{" "}
-                <i className="bi-patch-check-fill text-primary ms-2"></i>{" "}
+                <i className='bi-patch-check-fill text-primary ms-2'></i>{" "}
               </div>
-              <div className="fs-sm pb-2">By {collection?.name} Deployer </div>
-              <p className="d-flex align-items-center fs-sm">
-                Created Jan 2023 <span className="vr mx-2 my-1"></span>Chain
+              <div className='fs-sm pb-2'>By {collection?.name} Deployer </div>
+              <p className='d-flex align-items-center fs-sm'>
+                Created Jan 2023 <span className='vr mx-2 my-1'></span>Chain
                 Aurora Testnet
               </p>
-              <p className="fs-sm">
+              <p className='fs-sm'>
                 {collection?.name} is a RealEstate NFT project with 100 tokens.
               </p>
-              <div className="row g-3 gx-md-5 gx-lg-6">
-                <div className="col-4 col-sm-3 col-md-auto position-relative">
-                  <span className="fs-xs">Items</span>
-                  <h6 className="fw-400 m-0">100</h6>
-                  <div className="vr position-absolute top-0 bottom-0 end-0"></div>
+              <div className='row g-3 gx-md-5 gx-lg-6'>
+                <div className='col-4 col-sm-3 col-md-auto position-relative'>
+                  <span className='fs-xs'>Items</span>
+                  <h6 className='fw-400 m-0'>100</h6>
+                  <div className='vr position-absolute top-0 bottom-0 end-0'></div>
                 </div>
-                <div className="col-4 col-sm-3 col-md-auto position-relative">
-                  <span className="fs-xs">Owners</span>
-                  <h6 className="fw-400 m-0">{tokenHolders}</h6>
-                  <div className="vr position-absolute top-0 bottom-0 end-0"></div>
+                <div className='col-4 col-sm-3 col-md-auto position-relative'>
+                  <span className='fs-xs'>Owners</span>
+                  <h6 className='fw-400 m-0'>{tokenHolders}</h6>
+                  <div className='vr position-absolute top-0 bottom-0 end-0'></div>
                 </div>
-                {/* <div className="col-4 col-sm-3 col-md-auto position-relative">
-                  <span className="fs-xs">VOL</span>
-                  <h6 className="fw-400 m-0">96.27 ETH</h6>
-                  <div className="vr position-absolute top-0 bottom-0 end-0"></div>
-                </div> */}
-                <div className="col-4 col-sm-3 col-md-auto position-relative">
-                  <span className="fs-xs">Floor</span>
-                  <h6 className="fw-400 m-0">
+                <div className='col-4 col-sm-3 col-md-auto position-relative'>
+                  <span className='fs-xs'>VOL</span>
+                  <h6 className='fw-400 m-0'>96.27 ETH</h6>
+                  <div className='vr position-absolute top-0 bottom-0 end-0'></div>
+                </div>
+                <div className='col-4 col-sm-3 col-md-auto position-relative'>
+                  <span className='fs-xs'>Floor</span>
+                  <h6 className='fw-400 m-0'>
                     {" "}
                     {collection?.unitPrice
                       ? ethValue(collection?.unitPrice)
@@ -102,49 +105,45 @@ function SingleCollection() {
                 </div>
               </div>
             </div>
-            <div className="col-md-4">
-              <div className="nav justify-content-md-end">
+            <div className='col-md-4'>
+              <div className='nav justify-content-md-end'>
                 <a
-                  data-bs-toggle="tooltip"
-                  data-bs-original-title="wishlist"
-                  className="me-2 btn btn-border-mode p-0 icon-md rounded-3"
-                  href="#"
-                >
-                  <i className="fi-heart"></i>
+                  data-bs-toggle='tooltip'
+                  data-bs-original-title='wishlist'
+                  className='me-2 btn btn-border-mode p-0 icon-md rounded-3'
+                  href='#'>
+                  <i className='fi-heart'></i>
                 </a>
                 <a
-                  data-bs-toggle="tooltip"
-                  data-bs-original-title="Share"
-                  className="me-2 btn btn-border-mode p-0 icon-md rounded-3"
-                  href="#"
-                >
-                  <i className="fi-share"></i>
+                  data-bs-toggle='tooltip'
+                  data-bs-original-title='Share'
+                  className='me-2 btn btn-border-mode p-0 icon-md rounded-3'
+                  href='#'>
+                  <i className='fi-share'></i>
                 </a>
                 <a
-                  data-bs-toggle="tooltip"
-                  data-bs-original-title="Refresh"
-                  className="me-2 btn btn-border-mode p-0 icon-md rounded-3"
-                  href="#"
-                >
-                  <i className="bi-arrow-repeat"></i>
+                  data-bs-toggle='tooltip'
+                  data-bs-original-title='Refresh'
+                  className='me-2 btn btn-border-mode p-0 icon-md rounded-3'
+                  href='#'>
+                  <i className='bi-arrow-repeat'></i>
                 </a>
                 <a
-                  data-bs-toggle="tooltip"
-                  data-bs-original-title="Report"
-                  className="me-2 btn btn-border-mode p-0 icon-md rounded-3"
-                  href="#"
-                >
-                  <i className="bi-flag"></i>
+                  data-bs-toggle='tooltip'
+                  data-bs-original-title='Report'
+                  className='me-2 btn btn-border-mode p-0 icon-md rounded-3'
+                  href='#'>
+                  <i className='bi-flag'></i>
                 </a>
               </div>
             </div>
           </div>
-          <ul className="list-menu-02 mt-5 fs-lg">
+          <ul className='list-menu-02 mt-5 fs-lg'>
             <li>
-              <a href="#">Items</a>
+              <a href='#'>Items</a>
             </li>
             <li>
-              <a className="active" href="#">
+              <a className='active' href='#'>
                 Activity
               </a>
             </li>
@@ -152,79 +151,77 @@ function SingleCollection() {
         </div>
       </section>
 
-      <section className="pb-6 pt-3">
-        <div className="container">
-          <ul className="list-menu-01 pb-4">
+      <section className='pb-6 pt-3'>
+        <div className='container'>
+          <ul className='list-menu-01 pb-4'>
             <li>
-              <a className="btn btn-border-mode rounded-pill active" href="#">
+              <a className='btn btn-border-mode rounded-pill active' href='#'>
                 All Categories
               </a>
             </li>
             <li>
-              <a className="btn btn-border-mode rounded-pill" href="#">
+              <a className='btn btn-border-mode rounded-pill' href='#'>
                 Art
               </a>
             </li>
             <li>
-              <a className="btn btn-border-mode rounded-pill" href="#">
+              <a className='btn btn-border-mode rounded-pill' href='#'>
                 Game
               </a>
             </li>
             <li>
-              <a className="btn btn-border-mode rounded-pill" href="#">
+              <a className='btn btn-border-mode rounded-pill' href='#'>
                 Virtual Worlds
               </a>
             </li>
             <li>
-              <a className="btn btn-border-mode rounded-pill" href="#">
+              <a className='btn btn-border-mode rounded-pill' href='#'>
                 Photography
               </a>
             </li>
           </ul>
           {new Array(100).fill(0).map((_, index) => (
             // <div>index</div>
-            <div className="activity-table rounded-3 mb-8" key={index}>
+            <div className='activity-table rounded-3' key={index}>
               <Link
                 to={`/collections/${address}/${index}`}
-                style={{ textDecoration: "none" }}
-              >
-                <div className="row activity-row g-0">
-                  <div className="col-7 col-sm-4 p-3">
-                    <div className="d-flex align-items-center">
-                      <div className="avatar-sm">
+                style={{ textDecoration: "none" }}>
+                <div className='row activity-row g-0'>
+                  <div className='col-7 col-sm-4 p-3'>
+                    <div className='d-flex align-items-center'>
+                      <div className='avatar-sm'>
                         <img
-                          className="avatar-img rounded-circle"
+                          className='avatar-img rounded-circle'
                           src={ipfsTohttp(collection?.tokenURI)}
-                          title=""
-                          alt=""
+                          title=''
+                          alt=''
                         />
                       </div>
-                      <div className="col ps-3">
-                        <h6 className="m-0">{collection?.name}</h6>
-                        <span>#{index}</span>
-                        {/* <span>{ellipsify(collection?.address || "", 20)}</span> */}
+                      <div className='col ps-3'>
+                        <h6 className='m-0'>{collection?.name}</h6>
+                        <span>{ellipsify(collection?.address || "", 20)}</span>
                       </div>
                     </div>
                   </div>
-                  <div className="col-5 col-sm-8 p-3">
-                    <div className="d-flex">
-                      <div className="col">
-                        <h6 className="m-0">
-                          <i className="cf cf-etc fw-400 pe-1"></i>{" "}
+                  <div className='col-5 col-sm-8 p-3'>
+                    <div className='d-flex'>
+                      <div className='col'>
+                        <h6 className='m-0'>
+                          <i className='cf cf-etc fw-400 pe-1'></i>{" "}
                           {collection?.unitPrice
                             ? ethValue(collection?.unitPrice)
                             : 0}
                         </h6>
-                        <span className="fs-xs w-100">0% &lt; floor</span>{" "}
+                        <span className='fs-xs w-100'>55% &lt; floor</span>{" "}
                       </div>{" "}
-                      <div className="col d-none d-md-flex flex-column">
+                      <div className='col d-none d-md-flex flex-column'>
                         <span>
                           Rented
-                          <a className="h6 m-0" href="#"></a>
+                          <a className='h6 m-0' href='#'></a>
                         </span>
                         <span>{collection?.isRented ? "Yes" : "No"}</span>
                       </div>
-                      <div className="col d-none d-md-flex flex-column">
+                      <div className='col d-none d-md-flex flex-column'>
                         <span>Updated Time Frame</span>
                         <span>
                           {new Date(collection?.updated_at).toLocaleString()}

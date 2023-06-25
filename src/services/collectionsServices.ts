@@ -1,6 +1,5 @@
 /** @format */
 
-
 import axios from "axios";
 
 const AuthUrl = axios.create({
@@ -19,4 +18,8 @@ export const getSingleCollection = async (address: any) => {
 
 export const getAuctions = async () => {
 	return AuthUrl.get(`/auctions/`);
+}
+
+export const getMyTokens = async (address: any) => {
+	return AuthUrl.get(`/tokens/${address}`);
 }
