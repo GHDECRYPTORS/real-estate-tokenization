@@ -213,7 +213,7 @@ function SingleCollection() {
           </ul>
           {new Array(100).fill(0).map((_, index) => (
             // <div>index</div>
-            <div className="activity-table rounded-3" key={index}>
+            <div className="activity-table rounded-3 mb-8" key={index}>
               <Link
                 to={`/collections/${address}/${index}`}
                 style={{ textDecoration: "none" }}
@@ -231,7 +231,8 @@ function SingleCollection() {
                       </div>
                       <div className="col ps-3">
                         <h6 className="m-0">{collection?.name}</h6>
-                        <span>{ellipsify(collection?.address || "", 20)}</span>
+                        <span>#{index}</span>
+                        {/* <span>{ellipsify(collection?.address || "", 20)}</span> */}
                       </div>
                     </div>
                   </div>
@@ -244,7 +245,7 @@ function SingleCollection() {
                             ? ethValue(collection?.unitPrice)
                             : 0}
                         </h6>
-                        <span className="fs-xs w-100">55% &lt; floor</span>{" "}
+                        <span className="fs-xs w-100">0% &lt; floor</span>{" "}
                       </div>{" "}
                       <div className="col d-none d-md-flex flex-column">
                         <span>

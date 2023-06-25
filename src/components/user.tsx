@@ -58,7 +58,9 @@ const User: React.FC<UserProps> = ({ showUser, setShowUser }) => {
               />
             </div>
             <div className="col ps-3">
-              <h6 className="mb-0">{ellipsify(address || "", 20)}</h6>
+              <h6 className="mb-0">
+                {user.username ?? ellipsify(address || "", 20)}
+              </h6>
             </div>
           </div>
         </div>
