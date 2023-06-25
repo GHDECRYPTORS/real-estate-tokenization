@@ -5,7 +5,8 @@ import { useContext, useEffect, useState } from "react";
 
 import { ChainContext } from "../chain.resolver";
 import ProductCard from "../components/productCard";
-import { getCollections } from "../services/collectionsServices";
+
+// import { getCollections } from "../services/collectionsServices";
 //  const [collections, setCollections] = useState<any[]>([]);
 
 // import ProductCard from "../components/productCard";
@@ -42,7 +43,7 @@ function Explore() {
     if (search) {
       context.searchCollections(search).then((res) => {
         setCollections(
-          res.map((x:any) => ({
+          res.map((x: any) => ({
             ...x,
             tokenURI: ipfsTohttp(x.tokenURI as string),
           }))
@@ -50,17 +51,17 @@ function Explore() {
         setLoading(false);
       });
     } else {
+      // context.getCollections().then((res) => {
       context.getCollections().then((res) => {
-        context.getCollections().then((res) => {
-          setCollections(
-            res.map((x) => ({
-              ...x,
-              tokenURI: ipfsTohttp(x.tokenURI as string),
-            }))
-          );
-          setLoading(false);
-        });
+        setCollections(
+          res.map((x) => ({
+            ...x,
+            tokenURI: ipfsTohttp(x.tokenURI as string),
+          }))
+        );
+        setLoading(false);
       });
+      // });
     }
   }, []);
 

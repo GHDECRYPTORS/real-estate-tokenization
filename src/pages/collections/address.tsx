@@ -1,11 +1,12 @@
 /** @format */
 
+import { Link, useParams } from "react-router-dom";
+import  { useEffect, useState } from "react";
+
+import { ellipsify } from "../../components/ellipsify";
 // export default SingleCollection;
 import { ethers } from "ethers";
-import React, { useState, useEffect } from "react";
-import { Link, useParams } from "react-router-dom";
 import { getSingleCollection } from "../../services/collectionsServices";
-import { ellipsify } from "../../components/ellipsify";
 // import Accordion from "react-bootstrap/Accordion";
 
 function SingleCollection() {

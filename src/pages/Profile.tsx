@@ -1,13 +1,14 @@
-/** @format */
-import React, { useState } from "react";
-import { useAppDispatch, useAppSelector } from "../store/hooks";
 import {
-	selectUserInstance,
 	AuthenticateUser,
+	selectUserInstance,
 } from "../store/slices/user.slice";
-import { useNavigate } from "react-router-dom";
+import { useAppDispatch, useAppSelector } from "../store/hooks";
+
 import axios from "axios";
 import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
+/** @format */
+import  { useState } from "react";
 
 function Profile() {
 	const { accessToken, user }: any = useAppSelector(selectUserInstance);

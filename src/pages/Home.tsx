@@ -5,8 +5,8 @@ import { useContext, useEffect, useState } from "react";
 import { ChainContext } from "../chain.resolver";
 import CollectionCard from "../components/collectionCard";
 import { Link } from "react-router-dom";
-import ProductCard from "../components/productCard";
-import UserCard from "../components/userCard";
+// import ProductCard from "../components/productCard";
+// import UserCard from "../components/userCard";
 import { getCollections } from "../services/collectionsServices";
 
 const Home = () => {
