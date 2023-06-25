@@ -60,7 +60,7 @@ function SingleCollection() {
         console.log(owners);
         setTokenHolders(owners.length);
       })
-      .catch((e) => alert(`Erro while fetching owners ${e.message}`));
+      .catch((e) => console.log(`Error while fetching owners ${e.message}`));
   }, []);
 
   const ipfsTohttp = (url: string) => {
@@ -211,55 +211,60 @@ function SingleCollection() {
               </a>
             </li>
           </ul>
-          <div className="activity-table rounded-3">
-            <Link to={`/collections/${address}/1`}>
-              <div className="row activity-row g-0">
-                <div className="col-7 col-sm-4 p-3">
-                  <div className="d-flex align-items-center">
-                    <div className="avatar-sm">
-                      <img
-                        className="avatar-img rounded-circle"
-                        src={ipfsTohttp(collection?.tokenURI)}
-                        title=""
-                        alt=""
-                      />
+          {new Array(100).fill(0).map((_, index) => (
+            // <div>index</div>
+            <div className="activity-table rounded-3" key={index}>
+              <Link
+                to={`/collections/${address}/${index}`}
+                style={{ textDecoration: "none" }}
+              >
+                <div className="row activity-row g-0">
+                  <div className="col-7 col-sm-4 p-3">
+                    <div className="d-flex align-items-center">
+                      <div className="avatar-sm">
+                        <img
+                          className="avatar-img rounded-circle"
+                          src={ipfsTohttp(collection?.tokenURI)}
+                          title=""
+                          alt=""
+                        />
+                      </div>
+                      <div className="col ps-3">
+                        <h6 className="m-0">{collection?.name}</h6>
+                        <span>{ellipsify(collection?.address || "", 20)}</span>
+                      </div>
                     </div>
-                    <div className="col ps-3">
-                      <h6 className="m-0">{collection?.name}</h6>
-                      <span>{ellipsify(collection?.address || "", 20)}</span>
+                  </div>
+                  <div className="col-5 col-sm-8 p-3">
+                    <div className="d-flex">
+                      <div className="col">
+                        <h6 className="m-0">
+                          <i className="cf cf-etc fw-400 pe-1"></i>{" "}
+                          {collection?.unitPrice
+                            ? ethValue(collection?.unitPrice)
+                            : 0}
+                        </h6>
+                        <span className="fs-xs w-100">55% &lt; floor</span>{" "}
+                      </div>{" "}
+                      <div className="col d-none d-md-flex flex-column">
+                        <span>
+                          Rented
+                          <a className="h6 m-0" href="#"></a>
+                        </span>
+                        <span>{collection?.isRented ? "Yes" : "No"}</span>
+                      </div>
+                      <div className="col d-none d-md-flex flex-column">
+                        <span>Updated Time Frame</span>
+                        <span>
+                          {new Date(collection?.updated_at).toLocaleString()}
+                        </span>
+                      </div>
                     </div>
                   </div>
                 </div>
-                <div className="col-5 col-sm-8 p-3">
-                  <div className="d-flex">
-                    <div className="col">
-                      <h6 className="m-0">
-                        <i className="cf cf-etc fw-400 pe-1"></i>{" "}
-                        {collection?.unitPrice
-                          ? ethValue(collection?.unitPrice)
-                          : 0}
-                      </h6>
-                      <span className="fs-xs w-100">55% &lt; floor</span>{" "}
-                    </div>{" "}
-                    <div className="col d-none d-md-flex flex-column">
-                      <span>
-                        Rented
-                        <a className="h6 m-0" href="#"></a>
-                      </span>
-                      <span>{collection?.isRented ? "Yes" : "No"}</span>
-                    </div>
-                    <div className="col d-none d-md-flex flex-column">
-                      <span>Updated Time Frame</span>
-                      <span>
-                        {new Date(collection?.updated_at).toLocaleString()}
-                      </span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </Link>
+              </Link>
 
-            {/* <div className="row activity-row g-0">
+              {/* <div className="row activity-row g-0">
 							<div className="col-7 col-sm-4 p-3">
 								<div className="d-flex align-items-center">
 									<div className="avatar-sm">
@@ -792,7 +797,8 @@ function SingleCollection() {
 								</div>
 							</div>
 						</div> */}
-          </div>
+            </div>
+          ))}
         </div>
       </section>
     </main>
