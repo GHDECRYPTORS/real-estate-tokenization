@@ -9,7 +9,7 @@ import PublicLayout from "./layouts/public.layout";
 import { ReactNode } from "react";
 import { BrowserRouter as Router } from "react-router-dom";
 import RouterCombiner from "./route.combiner";
-import SingleCollection from "./pages/collections/_id";
+import SingleCollection from "./pages/collections/address";
 import SingleCollectionToken from "./pages/collections/_token_id";
 import { ChainContext, chainClass } from "./chain.resolver";
 import {
@@ -89,7 +89,7 @@ const Routes = [
     // Private: true
   },
   {
-    path: "/collections/:id",
+    path: "/collections/:address",
     Component: Pages.SingleCollection,
     Layout: Layouts.PublicLayout,
   },

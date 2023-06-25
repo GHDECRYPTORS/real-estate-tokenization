@@ -1,8 +1,10 @@
 /** @format */
 
-import React, { useState } from "react";
+import React, { useState, useContext, useEffect } from "react";
 
 import ProductCard from "../components/productCard";
+import { getCollections } from "../services/collectionsServices";
+//  const [collections, setCollections] = useState<any[]>([]);
 
 function Explore() {
   const [activeStatus, setActiveStatus] = useState(false);
