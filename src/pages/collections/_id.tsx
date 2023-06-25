@@ -1,6 +1,29 @@
 // import React from 'react'
+
+import { useEffect } from "react";
+import { ethers } from "ethers";
+import { Navigate, redirect, useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+// import deployer from "../../../../deployer_abi.json";
+import deployer from "../../../deployer_abi.json";
+const deployerContract = import.meta.env.VITE_NFT_DEPLOYER;
 // import Accordion from "react-bootstrap/Accordion";
 function SingleCollection() {
+  const params = useParams();
+
+  const navigate = useNavigate();
+  // console.log();
+  useEffect(() => {
+    if (!ethers.utils.isAddress(params.id)) {
+      navigate("/");
+    }
+    (async () => {
+      let provider = new ethers.providers.Web3Provider(window.ethereum);
+      const signer = provider.getSigner();
+      const contract = new ethers.Contract(deployerContract, deployer, signer);
+      // const contract.
+    })();
+  }, []);
   return (
     <main>
       <div
