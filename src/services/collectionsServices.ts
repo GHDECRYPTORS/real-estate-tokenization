@@ -12,6 +12,10 @@ const AuthUrl = axios.create({
 export const getCollections = async () => {
 	return AuthUrl.get(`/collections/`);
 };
+export const getSingleCollection = async (address: any) => {
+	return AuthUrl.get(`/collections/${address}`);
+};
+
 
 export const getAuctions = async () => {
 	return AuthUrl.get(`/auctions/`);

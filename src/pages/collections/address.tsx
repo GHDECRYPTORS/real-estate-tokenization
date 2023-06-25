@@ -1,13 +1,38 @@
-
+/** @format */
 
 // export default SingleCollection;
-import React, { useState } from "react";
+import { ethers } from "ethers";
+import React, { useState, useEffect } from "react";
 import { Link, useParams } from "react-router-dom";
+import { getSingleCollection } from "../../services/collectionsServices";
+import { ellipsify } from "../../components/ellipsify";
 // import Accordion from "react-bootstrap/Accordion";
 
 function SingleCollection() {
-		const params = useParams();
-		const { address } = params;
+	const params = useParams();
+	const { address } = params;
+	const [collection, setCollection] = useState<any>(null);
+
+	useEffect(() => {
+		const getCollection = async () => {
+			const response = await getSingleCollection(address);
+			console.log("response", response?.data?.data);
+			setCollection(response?.data?.data);
+		};
+		getCollection();
+	}, [collection]);
+
+	const ipfsTohttp = (url: string) => {
+		if (url == null) return "";
+		url = url.trim();
+		return url.startsWith("ipfs://")
+			? `https://ipfs.io/ipfs/${url.replace("ipfs://", "")}`
+			: url;
+	};
+	const ethValue = (value: any) => {
+		return ethers.utils.formatEther(value);
+	};
+
 	return (
 		<main>
 			<div
@@ -18,7 +43,7 @@ function SingleCollection() {
 				<div className="container mt-n10">
 					<div className="avatar avatar-xxl mb-4">
 						<img
-							src="/assets/img/avatar-3.jpg"
+							src={ipfsTohttp(collection?.tokenURI)}
 							title=""
 							alt=""
 							className="border border-3 border-gray-400 rounded-3"
@@ -27,40 +52,45 @@ function SingleCollection() {
 					<div className="row">
 						<div className="col-md-8">
 							<div className="d-flex h3 mb-2">
-								PLUR Official{" "}
+								{collection?.name}{" "}
 								<i className="bi-patch-check-fill text-primary ms-2"></i>{" "}
 							</div>
-							<div className="fs-sm pb-2">By PLUR Deployer </div>
+							<div className="fs-sm pb-2">By {collection?.name} Deployer </div>
 							<p className="d-flex align-items-center fs-sm">
 								Created Jan 2023 <span className="vr mx-2 my-1"></span>Chain
-								Ethereum
+								Aurora Testnet
 							</p>
 							<p className="fs-sm">
-								Project PLUR is a 3D NFT project with 8585 tokens. Inspired by
-								hip-hop culture, Peace Love Unity Respect, commonly shortened to
-								PLUR. We hope to pass this spirit on to our community and become
-								a spiritual force for us. The world needs a little noise, and
-								here we are!
+								{collection?.name} is a RealEstate NFT project with 1000
+								tokens.We hope to pass this spirit on to our community and
+								become a spiritual force for us. The world needs a little noise,
+								and here we are!
 							</p>
 							<div className="row g-3 gx-md-5 gx-lg-6">
 								<div className="col-4 col-sm-3 col-md-auto position-relative">
 									<span className="fs-xs">Items</span>
-									<h6 className="fw-400 m-0">8.59K</h6>
+									<h6 className="fw-400 m-0">8K</h6>
 									<div className="vr position-absolute top-0 bottom-0 end-0"></div>
 								</div>
 								<div className="col-4 col-sm-3 col-md-auto position-relative">
 									<span className="fs-xs">Owners</span>
-									<h6 className="fw-400 m-0">2.39K</h6>
+									<h6 className="fw-400 m-0">2.19K</h6>
 									<div className="vr position-absolute top-0 bottom-0 end-0"></div>
 								</div>
 								<div className="col-4 col-sm-3 col-md-auto position-relative">
 									<span className="fs-xs">VOL</span>
-									<h6 className="fw-400 m-0">96.27 Ξ</h6>
+									<h6 className="fw-400 m-0">96.27 ETH</h6>
 									<div className="vr position-absolute top-0 bottom-0 end-0"></div>
 								</div>
 								<div className="col-4 col-sm-3 col-md-auto position-relative">
 									<span className="fs-xs">Floor</span>
-									<h6 className="fw-400 m-0">0.0421 Ξ</h6>
+									<h6 className="fw-400 m-0">
+										{" "}
+										{collection?.unitPrice
+											? ethValue(collection?.unitPrice)
+											: 0}
+										ETH
+									</h6>
 									<div className="vr position-absolute top-0 bottom-0 end-0"></div>
 								</div>
 								<div className="col-4 col-sm-3 col-md-auto position-relative">
@@ -152,14 +182,14 @@ function SingleCollection() {
 									<div className="avatar-sm">
 										<img
 											className="avatar-img rounded-circle"
-											src="/assets/img/avatar-1.jpg"
+											src={ipfsTohttp(collection?.tokenURI)}
 											title=""
 											alt=""
 										/>
 									</div>
 									<div className="col ps-3">
-										<h6 className="m-0">Wiggles-V</h6>
-										<span>@0xe4e_bfed</span>
+										<h6 className="m-0">{collection?.name}</h6>
+										<span>{ellipsify(collection?.address || "", 20)}</span>
 									</div>
 								</div>
 							</div>
@@ -167,27 +197,30 @@ function SingleCollection() {
 								<div className="d-flex">
 									<div className="col">
 										<h6 className="m-0">
-											<i className="cf cf-etc fw-400 pe-1"></i> 0.1548
+											<i className="cf cf-etc fw-400 pe-1"></i>{" "}
+											{collection?.unitPrice
+												? ethValue(collection?.unitPrice)
+												: 0}
 										</h6>
 										<span className="fs-xs w-100">55% &lt; floor</span>{" "}
 									</div>{" "}
 									<div className="col d-none d-md-flex flex-column">
 										<span>
-											From{" "}
-											<a className="h6 m-0" href="#">
-												@jungle04
-											</a>
+											Rented
+											<a className="h6 m-0" href="#"></a>
 										</span>
-										<span>2,499 items</span>
+										<span>{collection?.isRented ? "Yes" : "No"}</span>
 									</div>
 									<div className="col d-none d-md-flex flex-column">
-										<span>6m ago</span>
-										<span>Expiry: 27m</span>
+										<span>Updated Time Frame</span>
+										<span>
+											{new Date(collection?.updated_at).toLocaleString()}
+										</span>
 									</div>
 								</div>
 							</div>
 						</div>
-						<div className="row activity-row g-0">
+						{/* <div className="row activity-row g-0">
 							<div className="col-7 col-sm-4 p-3">
 								<div className="d-flex align-items-center">
 									<div className="avatar-sm">
@@ -719,7 +752,7 @@ function SingleCollection() {
 									</div>
 								</div>
 							</div>
-						</div>
+						</div> */}
 					</div>
 				</div>
 			</section>
