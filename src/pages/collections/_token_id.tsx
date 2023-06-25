@@ -152,7 +152,7 @@ function SingleCollectionToken() {
 
   useEffect(() => {
     getUniqueOwners(address as string, { start: 0, end: 99 })
-      .then((owners) => {
+      .then((owners: any) => {
         setTokenHolders(owners.length);
       })
       .catch((e) => console.log(`Error while fetching owners ${e.message}`));
