@@ -1,15 +1,17 @@
-/** @format */
+// /** @format */
 
-import { Formatter } from "@ethersproject/providers";
-import { ethers } from "ethers";
-import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { LogoutUser, selectUserInstance } from "../store/slices/user.slice";
 import { useAccount, useBalance, useDisconnect } from "wagmi";
-import { ellipsify } from "./ellipsify";
-import numberFormat from "./formatter";
-import { useNavigate } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../store/hooks";
-import { selectUserInstance, LogoutUser } from "../store/slices/user.slice";
+
+import { Link } from "react-router-dom";
+import { ellipsify } from "./ellipsify";
+// import { Formatter } from @ethersproject/providers";
+// import { ethers } from "ethers";
+import { useEffect, } from "react";
+// import numberFormat from "./formatter";
+import { useNavigate } from "react-router-dom";
+
 interface UserProps {
 	showUser: boolean;
 	setShowUser: (show: boolean) => void;

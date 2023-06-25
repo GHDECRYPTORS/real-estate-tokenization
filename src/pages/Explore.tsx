@@ -1,19 +1,78 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 /** @format */
 
-import React, { useState, useContext, useEffect } from "react";
+import { useContext, useEffect, useState } from "react";
 
+import { ChainContext } from "../chain.resolver";
 import ProductCard from "../components/productCard";
 import { getCollections } from "../services/collectionsServices";
 //  const [collections, setCollections] = useState<any[]>([]);
 
+// import ProductCard from "../components/productCard";
+// import context from "react-bootstrap/esm/AccordionContext";
+
+const ipfsTohttp = (url: string) => {
+  if (url == null) return "";
+  url = url.trim();
+  return url.startsWith("ipfs://")
+    ? `https://ipfs.io/ipfs/${url.replace("ipfs://", "")}`
+    : url;
+};
 function Explore() {
-  const [activeStatus, setActiveStatus] = useState(false);
-  const [activePrice, setActivePrice] = useState(false);
-  const [activeQuantity, setActiveQuantity] = useState(false);
-  const [activeCollections, setActiveCollections] = useState(false);
-  const [activeChains, setActiveChains] = useState(false);
-  const [activeCategory, setActiveCategory] = useState(false);
-  const [activeCurrency, setActiveCurrency] = useState(false);
+  const [buyNowEnabled, setBuyNowEnabled] = useState(false);
+  const [auctionEnabled, setAuctionEnabled] = useState(false);
+  const [activeStatus, setActiveStatus] = useState(false); // ["all", "buyNow", "auction"
+  const [searchValue, setSearchValue] = useState("");
+  const context = useContext(ChainContext);
+  const [showButton, setShowButton] = useState(false);
+  const [loading, setLoading] = useState(true);
+  const [collections, setCollections] = useState<any[]>([]);
+
+  useEffect(() => {
+    setShowButton(true);
+  }, [auctionEnabled, buyNowEnabled]);
+
+  const search = () => {
+    window.location.href = `/explore?search=${searchValue}`;
+  };
+
+  useEffect(() => {
+    const urlParams = new URLSearchParams(window.location.search);
+    const search = urlParams.get("search");
+    if (search) {
+      context.searchCollections(search).then((res) => {
+        setCollections(
+          res.map((x:any) => ({
+            ...x,
+            tokenURI: ipfsTohttp(x.tokenURI as string),
+          }))
+        );
+        setLoading(false);
+      });
+    } else {
+      context.getCollections().then((res) => {
+        context.getCollections().then((res) => {
+          setCollections(
+            res.map((x) => ({
+              ...x,
+              tokenURI: ipfsTohttp(x.tokenURI as string),
+            }))
+          );
+          setLoading(false);
+        });
+      });
+    }
+  }, []);
+
+  const filter = async () => {
+    // get all the filters and then call the api
+    if (buyNowEnabled) {
+      // call the api with buy now filter
+    }
+    if (auctionEnabled) {
+      // call the api with auction filter
+    }
+  };
 
   return (
     <main>
@@ -41,8 +100,12 @@ function Explore() {
                   type='text'
                   placeholder='Search Here'
                   className='border-0 rounded-0 shadow-none form-control form-control-sm flex-full bg-transparent'
+                  onChange={(e) => setSearchValue(e.target.value)}
                 />
-                <button className='btn icon-md btn-border-mode p-0 search-btn rounded-3'>
+                <button
+                  className='btn icon-md btn-border-mode p-0 search-btn rounded-3'
+                  onClick={() => search()}
+                  type='button'>
                   <i className='bi bi-search'></i>
                 </button>
               </form>
@@ -100,11 +163,14 @@ function Explore() {
                         <div className='accordion-body'>
                           <ul className='sidebar-check-list'>
                             <li>
-                              <div className='form-check'>
+                              <div
+                                className='form-check'
+                                onClick={() => setBuyNowEnabled(true)}>
                                 <input
                                   className='form-check-input'
                                   type='checkbox'
                                   id='checkbox_01'
+                                  defaultChecked={buyNowEnabled}
                                 />
                                 <label
                                   className='form-check-label'
@@ -114,11 +180,14 @@ function Explore() {
                               </div>
                             </li>
                             <li>
-                              <div className='form-check'>
+                              <div
+                                className='form-check'
+                                onClick={() => setAuctionEnabled(true)}>
                                 <input
                                   className='form-check-input'
                                   type='checkbox'
                                   id='checkbox_02'
+                                  defaultChecked={auctionEnabled}
                                 />
                                 <label
                                   className='form-check-label'
@@ -127,410 +196,20 @@ function Explore() {
                                 </label>
                               </div>
                             </li>
-                            <li>
-                              <div className='form-check'>
-                                <input
-                                  className='form-check-input'
-                                  type='checkbox'
-                                  id='checkbox_03'
-                                />
-                                <label
-                                  className='form-check-label'
-                                  htmlFor='checkbox_03'>
-                                  New
-                                </label>
-                              </div>
-                            </li>
-                            <li>
-                              <div className='form-check'>
-                                <input
-                                  className='form-check-input'
-                                  type='checkbox'
-                                  id='checkbox_04'
-                                />
-                                <label
-                                  className='form-check-label'
-                                  htmlFor='checkbox_04'>
-                                  Has Offers
-                                </label>
-                              </div>
-                            </li>
                           </ul>
-                        </div>
-                      </div>
-                    </div>
-                    <div className='accordion-item'>
-                      <h2
-                        className='accordion-header'
-                        id='ex_sidebar-heading_02'>
-                        <button
-                          className={`accordion-button ${
-                            activePrice ? "" : "collapsed"
-                          } `}
-                          onClick={() => setActivePrice(!activePrice)}
-                          type='button'
-                          data-bs-toggle='collapse'
-                          data-bs-target='#ex_sidebar_02'
-                          aria-expanded='false'
-                          aria-controls='ex_sidebar_02'>
-                          Price
-                        </button>
-                      </h2>
-                      <div
-                        id='ex_sidebar_02'
-                        className={`accordion-collapse collapse ${
-                          activePrice ? "show" : ""
-                        } `}
-                        aria-labelledby='ex_sidebar-heading_02'>
-                        <div className='accordion-body'>
-                          <select className='form-select mb-3'>
-                            <option>USD</option>
-                            <option>ETH</option>
-                            <option>SOL</option>
-                          </select>
-                          <div className='d-flex mb-3'>
-                            <input
-                              type='text'
-                              name='min'
-                              className='form-control'
-                              placeholder='Min'
-                            />
-                            <span className='fw-600 m-3 lh-1'>to</span>
-                            <input
-                              type='text'
-                              name='max'
-                              className='form-control'
-                              placeholder='Max'
-                            />
-                          </div>
-                          <button className='btn btn-primary w-100'>
-                            Apply
-                          </button>
-                        </div>
-                      </div>
-                    </div>
-                    <div className='accordion-item'>
-                      <h2
-                        className='accordion-header'
-                        id='ex_sidebar-heading_03'>
-                        <button
-                          className={`accordion-button ${
-                            activeQuantity ? "" : "collapsed"
-                          } `}
-                          onClick={() => setActiveQuantity(!activeQuantity)}
-                          type='button'
-                          data-bs-toggle='collapse'
-                          data-bs-target='#ex_sidebar_03'
-                          aria-expanded='false'
-                          aria-controls='ex_sidebar_03'>
-                          Quantity
-                        </button>
-                      </h2>
-                      <div
-                        id='ex_sidebar_03'
-                        className={`accordion-collapse collapse ${
-                          activeQuantity ? "show" : ""
-                        } `}
-                        aria-labelledby='ex_sidebar-heading_03'>
-                        <div className='accordion-body'>
-                          <ul className='sidebar-check-list'>
-                            <li>
-                              <div className='form-check'>
-                                <input
-                                  className='form-check-input'
-                                  type='radio'
-                                  name='radio_sidebar'
-                                  id='radio_sidebar1'
-                                />
-                                <label
-                                  className='form-check-label'
-                                  htmlFor='radio_sidebar1'>
-                                  All items
-                                </label>
-                              </div>
-                            </li>
-                            <li>
-                              <div className='form-check'>
-                                <input
-                                  className='form-check-input'
-                                  type='radio'
-                                  name='radio_sidebar'
-                                  id='radio_sidebar2'
-                                  defaultChecked
-                                />
-                                <label
-                                  className='form-check-label'
-                                  htmlFor='radio_sidebar2'>
-                                  Single items
-                                </label>
-                              </div>
-                            </li>
-                            <li>
-                              <div className='form-check'>
-                                <input
-                                  className='form-check-input'
-                                  type='radio'
-                                  name='radio_sidebar'
-                                  id='radio_sidebar3'
-                                />
-                                <label
-                                  className='form-check-label'
-                                  htmlFor='radio_sidebar3'>
-                                  Bundles
-                                </label>
-                              </div>
-                            </li>
-                          </ul>
-                        </div>
-                      </div>
-                    </div>
-                    <div className='accordion-item'>
-                      <h2
-                        className='accordion-header'
-                        id='ex_sidebar-heading_04'>
-                        <button
-                          className={`accordion-button ${
-                            activeCollections ? "" : "collapsed"
-                          } `}
-                          onClick={() =>
-                            setActiveCollections(!activeCollections)
-                          }
-                          type='button'
-                          data-bs-toggle='collapse'
-                          data-bs-target='#ex_sidebar_04'
-                          aria-expanded='false'
-                          aria-controls='ex_sidebar_04'>
-                          Collections
-                        </button>
-                      </h2>
-                      <div
-                        id='ex_sidebar_04'
-                        className={`accordion-collapse collapse ${
-                          activeCollections ? "show" : ""
-                        } `}
-                        aria-labelledby='ex_sidebar-heading_04'>
-                        <div className='accordion-body'>
-                          <ul className='sidebar-check-list'>
-                            <li>
-                              <div className='form-check'>
-                                <input
-                                  className='form-check-input'
-                                  type='checkbox'
-                                  id='checkbox_05'
-                                />
-                                <label
-                                  className='form-check-label d-flex'
-                                  htmlFor='checkbox_05'>
-                                  <em className='text-truncate pe-2 fst-normal'>
-                                    CryptoPunks
-                                  </em>
-                                  <em className='ms-auto fst-normal fs-sm'>
-                                    9,998
-                                  </em>
-                                </label>
-                              </div>
-                            </li>
-                            <li>
-                              <div className='form-check'>
-                                <input
-                                  className='form-check-input'
-                                  type='checkbox'
-                                  id='checkbox_06'
-                                />
-                                <label
-                                  className='form-check-label d-flex'
-                                  htmlFor='checkbox_06'>
-                                  <em className='text-truncate pe-2 fst-normal'>
-                                    Mutant Hound Collars
-                                  </em>
-                                  <em className='ms-auto fst-normal fs-sm'>
-                                    4,598
-                                  </em>
-                                </label>
-                              </div>
-                            </li>
-                            <li>
-                              <div className='form-check'>
-                                <input
-                                  className='form-check-input'
-                                  type='checkbox'
-                                  id='checkbox_07'
-                                />
-                                <label
-                                  className='form-check-label d-flex'
-                                  htmlFor='checkbox_07'>
-                                  <em className='text-truncate pe-2 fst-normal'>
-                                    Mutant Hounds
-                                  </em>
-                                  <em className='ms-auto fst-normal fs-sm'>
-                                    3,598
-                                  </em>
-                                </label>
-                              </div>
-                            </li>
-                            <li>
-                              <div className='form-check'>
-                                <input
-                                  className='form-check-input'
-                                  type='checkbox'
-                                  id='checkbox_08'
-                                />
-                                <label
-                                  className='form-check-label d-flex'
-                                  htmlFor='checkbox_08'>
-                                  <em className='text-truncate pe-2 fst-normal'>
-                                    The Captainz
-                                  </em>
-                                  <em className='ms-auto fst-normal fs-sm'>
-                                    5,598
-                                  </em>
-                                </label>
-                              </div>
-                            </li>
-                          </ul>
-                        </div>
-                      </div>
-                    </div>
-                    <div className='accordion-item'>
-                      <h2
-                        className='accordion-header'
-                        id='ex_sidebar-heading_05'>
-                        <button
-                          className={`accordion-button ${
-                            activeChains ? "" : "collapsed"
-                          } `}
-                          onClick={() => setActiveChains(!activeChains)}
-                          type='button'
-                          data-bs-toggle='collapse'
-                          data-bs-target='#ex_sidebar_05'
-                          aria-expanded='false'
-                          aria-controls='ex_sidebar_05'>
-                          Chains
-                        </button>
-                      </h2>
-                      <div
-                        id='ex_sidebar_05'
-                        className={`accordion-collapse collapse ${
-                          activeChains ? "show" : ""
-                        } `}
-                        aria-labelledby='ex_sidebar-heading_05'>
-                        <div className='accordion-body'>
-                          <ul className='sidebar-check-list'>
-                            <li>
-                              <div className='form-check'>
-                                <input
-                                  className='form-check-input'
-                                  type='checkbox'
-                                  id='checkbox_09'
-                                />
-                                <label
-                                  className='form-check-label d-flex'
-                                  htmlFor='checkbox_09'>
-                                  Hedera
-                                </label>
-                              </div>
-                            </li>
-                            <li>
-                              <div className='form-check'>
-                                <input
-                                  className='form-check-input'
-                                  type='checkbox'
-                                  id='checkbox_10'
-                                />
-                                <label
-                                  className='form-check-label d-flex'
-                                  htmlFor='checkbox_10'>
-                                  Aurora
-                                </label>
-                              </div>
-                            </li>
-                          </ul>
-                        </div>
-                      </div>
-                    </div>
-                    <div className='accordion-item'>
-                      <h2
-                        className='accordion-header'
-                        id='ex_sidebar-heading_06'>
-                        <button
-                          className={`accordion-button ${
-                            activeCategory ? "" : "collapsed"
-                          } `}
-                          onClick={() => setActiveCategory(!activeCategory)}
-                          type='button'
-                          data-bs-toggle='collapse'
-                          data-bs-target='#ex_sidebar_06'
-                          aria-expanded='false'
-                          aria-controls='ex_sidebar_06'>
-                          Category
-                        </button>
-                      </h2>
-                      <div
-                        id='ex_sidebar_06'
-                        className={`accordion-collapse collapse ${
-                          activeCategory ? "show" : ""
-                        } `}
-                        aria-labelledby='ex_sidebar-heading_06'>
-                        <div className='accordion-body'>
-                          <ul className='sidebar-check-list'>
-                            <li>
-                              <div className='form-check'>
-                                <input
-                                  className='form-check-input'
-                                  type='checkbox'
-                                  id='checkbox_14'
-                                />
-                                <label
-                                  className='form-check-label d-flex'
-                                  htmlFor='checkbox_14'>
-                                  Real Estate
-                                </label>
-                              </div>
-                            </li>
-                          </ul>
-                        </div>
-                      </div>
-                    </div>
-                    <div className='accordion-item'>
-                      <h2
-                        className='accordion-header'
-                        id='ex_sidebar-heading_07'>
-                        <button
-                          className={`accordion-button ${
-                            activeCurrency ? "" : "collapsed"
-                          } `}
-                          onClick={() => setActiveCurrency(!activeCurrency)}
-                          type='button'
-                          data-bs-toggle='collapse'
-                          data-bs-target='#ex_sidebar_07'
-                          aria-expanded='false'
-                          aria-controls='ex_sidebar_07'>
-                          Currency
-                        </button>
-                      </h2>
-                      <div
-                        id='ex_sidebar_07'
-                        className={`accordion-collapse collapse ${
-                          activeCurrency ? "show" : ""
-                        } `}
-                        aria-labelledby='ex_sidebar-heading_07'>
-                        <div className='accordion-body'>
-                          <ul className='sidebar-check-list'>
-                            <li>
-                              <div className='form-check'>
-                                <input
-                                  className='form-check-input'
-                                  type='checkbox'
-                                  id='checkbox_19'
-                                />
-                                <label
-                                  className='form-check-label d-flex'
-                                  htmlFor='checkbox_19'>
-                                  ETH
-                                </label>
-                              </div>
-                            </li>
-                          </ul>
+
+                          {/* button */}
+
+                          {showButton && (
+                            <div className='pt-7 text-center'>
+                              <button
+                                className='btn btn-primary'
+                                type='button'
+                                onClick={() => filter()}>
+                                Filter
+                              </button>
+                            </div>
+                          )}
                         </div>
                       </div>
                     </div>
@@ -539,66 +218,21 @@ function Explore() {
               </div>
             </div>
             <div className='col'>
-              <div className='row pb-3 align-items-center'>
-                <div className='col-7'>
-                  <button
-                    className='btn btn-border-mode rounded-pill d-lg-none'
-                    type='button'
-                    data-bs-toggle='offcanvas'
-                    data-bs-target='#explor_sidbar_filter'
-                    aria-controls='explor_sidbar_filter'>
-                    {" "}
-                    <i className='btn-icon bi-funnel-fill'></i> Filter
-                  </button>
-                  <p className='m-0 d-none d-lg-block'>Total 2000 Items</p>
-                </div>
-                <div className='col-5 d-flex justify-content-end'>
-                  <div className='dropdown'>
-                    <button
-                      className='btn btn-border-mode dropdown-toggle rounded-pill'
-                      type='button'
-                      data-bs-toggle='dropdown'
-                      aria-expanded='false'>
-                      Sort by
-                    </button>
-                    <ul className='dropdown-menu'>
-                      <li>
-                        <a className='dropdown-item active' href='#'>
-                          Recently added
-                        </a>
-                      </li>
-                      <li>
-                        <a className='dropdown-item' href='#'>
-                          Price: Low to High
-                        </a>
-                      </li>
-                      <li>
-                        <a className='dropdown-item' href='#'>
-                          Price: High to Low
-                        </a>
-                      </li>
-                      <li>
-                        <a className='dropdown-item' href='#'>
-                          Auction ending soon
-                        </a>
-                      </li>
-                    </ul>
-                  </div>
-                </div>
-              </div>
               <div className='row g-3'>
-                {[1, 2, 3, 4, 5, 6, 7, 8, 9].map((x: number) => (
-                  <div className='col-sm-6 col-lg-4' key={x}>
-                    <ProductCard />
+                {collections.map((x: any) => (
+                  <div className='col-sm-6 col-lg-4' key={x.address}>
+                    <ProductCard product={x} />
                   </div>
                 ))}
               </div>
-              <div className='pt-7 text-center'>
-                <button className='btn btn-primary' type='button'>
-                  <span className='spinner-border spinner-border-sm'></span>
-                  Loading...
-                </button>
-              </div>
+              {loading && (
+                <div className='pt-7 text-center'>
+                  <button className='btn btn-primary' type='button'>
+                    <span className='spinner-border spinner-border-sm'></span>
+                    Loading...
+                  </button>
+                </div>
+              )}
             </div>
           </div>
         </div>

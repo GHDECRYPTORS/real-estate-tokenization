@@ -1,11 +1,12 @@
 /** @format */
 
+import { useContext, useEffect, useState } from "react";
+
+import { ChainContext } from "../chain.resolver";
 import { Link } from "react-router-dom";
 import ProductCard from "../components/productCard";
 import CollectionCard from "../components/collectionCard";
 import UserCard from "../components/userCard";
-import { useState, useContext, useEffect } from "react";
-import { ChainContext } from "../chain.resolver";
 import { getCollections} from "../services/collectionsServices";
 
 const Home = () => {

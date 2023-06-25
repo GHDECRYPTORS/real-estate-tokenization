@@ -1,3 +1,11 @@
+// import { ChainContext, chainClass } from "./chain.resolver";
+import {
+  EthereumClient,
+  w3mConnectors,
+  w3mProvider,
+} from "@web3modal/ethereum";
+import { WagmiConfig, configureChains, createConfig } from "wagmi";
+
 import Createnft from "./pages/createnft";
 import Explore from "./pages/Explore";
 import Home from "./pages/Home";
@@ -11,15 +19,9 @@ import { BrowserRouter as Router } from "react-router-dom";
 import RouterCombiner from "./route.combiner";
 import SingleCollection from "./pages/collections/address";
 import SingleCollectionToken from "./pages/collections/_token_id";
-import { ChainContext, chainClass } from "./chain.resolver";
-import {
-  EthereumClient,
-  w3mConnectors,
-  w3mProvider,
-} from "@web3modal/ethereum";
 import { Web3Modal } from "@web3modal/react";
-import { configureChains, createConfig, WagmiConfig } from "wagmi";
 import { auroraTestnet } from "wagmi/chains";
+
 // import { hederaMainnet, hederaTestnet } from "./services/chains";
 
 // const chain = import.meta.env.VITE_CHAIN_NAME || "aurora-testnet";
@@ -67,46 +69,46 @@ const Layouts = {
 };
 
 const Routes = [
-  {
-    path: "/",
-    Component: Pages.IndexPage,
-    Layout: Layouts.PublicLayout,
-  },
-  {
-    path: "/login",
-    Component: Pages.LoginPage,
-    Layout: Layouts.PublicLayout,
-  },
-  {
-    path: "/explore",
-    Component: Pages.Explore,
-    Layout: Layouts.PublicLayout,
-  },
-  {
-    path: "/profile",
-    Component: Pages.Profile,
-    Layout: Layouts.PublicLayout,
-    // Private: true
-  },
-  {
-    path: "/collections/:address",
-    Component: Pages.SingleCollection,
-    Layout: Layouts.PublicLayout,
-  },
-  {
-    path: "/collections/:id/:tokenId",
-    Component: Pages.SingleCollectionToken,
-    Layout: Layouts.PublicLayout,
-  },
-  {
-    path: "/createnft",
-    Component: Pages.Createnft,
-    Layout: Layouts.PublicLayout,
-  },
-  {
-    path: "",
-    Component: Pages.NotFound,
-  },
+	{
+		path: "/",
+		Component: Pages.IndexPage,
+		Layout: Layouts.PublicLayout,
+	},
+	{
+		path: "/login",
+		Component: Pages.LoginPage,
+		Layout: Layouts.PublicLayout,
+	},
+	{
+		path: "/explore",
+		Component: Pages.Explore,
+		Layout: Layouts.PublicLayout,
+	},
+	{
+		path: "/profile",
+		Component: Pages.Profile,
+		Layout: Layouts.PublicLayout,
+		// Private: true
+	},
+	{
+		path: "/collections/:address",
+		Component: Pages.SingleCollection,
+		Layout: Layouts.PublicLayout,
+	},
+	{
+		path: "/collections/:address/:tokenId",
+		Component: Pages.SingleCollectionToken,
+		Layout: Layouts.PublicLayout,
+	},
+	{
+		path: "/createnft",
+		Component: Pages.Createnft,
+		Layout: Layouts.PublicLayout,
+	},
+	{
+		path: "",
+		Component: Pages.NotFound,
+	},
 ];
 
 const App = () => {
@@ -139,4 +141,13 @@ const App = () => {
 		</div>
 	);
 };
+const ipfsTohttp = (url: string) => {
+  if (url == null) return "";
+  url = url.trim();
+  return url.startsWith("ipfs://")
+    ? `https://ipfs.io/ipfs/${url.replace("ipfs://", "")}`
+    : url;
+};
+window.ipfsTohttp = ipfsTohttp;
+
 export default App;
