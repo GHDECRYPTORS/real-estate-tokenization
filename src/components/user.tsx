@@ -75,7 +75,7 @@ const User: React.FC<UserProps> = ({ showUser, setShowUser }) => {
 							className="btn btn-sm text-start btn-border-mode rounded-3 p-3 w-100"
 							to="#">
 							<i className="bi-subtract"></i>
-							<span className="text-truncate ps-3">{user?._id}</span>
+							<span className="text-truncate ps-3">{user._id}</span>
 						</Link>
 					</li>
 					<li className="mb-2">

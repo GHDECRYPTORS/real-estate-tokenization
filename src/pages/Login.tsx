@@ -43,7 +43,14 @@ function Login() {
 
             if (response?.data?.statusCode === 200) {
               console.log("responseData", response?.data?.data);
-              dispatch(AuthenticateUser(response?.data?.data));
+              dispatch(
+								AuthenticateUser({
+									username: response?.data?.data?.user?.username,
+									accessToken: response?.data?.data?.access_token,
+									id: response?.data?.data?.user?._id,
+									just_signed_up: response?.data?.data?.user?.just_signed_up,
+								})
+							);
               navigate("/");
             } else {
               console.error("Error");
