@@ -1,12 +1,17 @@
 /** @format */
 
+import { Link, useParams } from "react-router-dom";
+import  { useEffect, useState } from "react";
+
+import { ellipsify } from "../../components/ellipsify";
 // export default SingleCollection;
 import { ethers } from "ethers";
-import React, { useState, useEffect } from "react";
-import { Link, useParams } from "react-router-dom";
 import { getSingleCollection } from "../../services/collectionsServices";
+<<<<<<< HEAD
 import { ellipsify } from "../../components/ellipsify";
 import houseNFTABI from "../../../nft_abi.json";
+=======
+>>>>>>> e4c1c4890342ee74dad85b6a65afc48dd7a37a43
 // import Accordion from "react-bootstrap/Accordion";
 
 function SingleCollection() {

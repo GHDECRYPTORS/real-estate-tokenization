@@ -18,7 +18,7 @@ interface UserProps {
 }
 
 const User: React.FC<UserProps> = ({ showUser, setShowUser }) => {
-  const { address, isConnected } = useAccount();
+  const { address } = useAccount();
   const dispatch = useAppDispatch();
   const { disconnect } = useDisconnect();
   const navigate = useNavigate();

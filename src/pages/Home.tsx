@@ -3,11 +3,11 @@
 import { useContext, useEffect, useState } from "react";
 
 import { ChainContext } from "../chain.resolver";
-import { Link } from "react-router-dom";
-import ProductCard from "../components/productCard";
 import CollectionCard from "../components/collectionCard";
-import UserCard from "../components/userCard";
-import { getCollections} from "../services/collectionsServices";
+import { Link } from "react-router-dom";
+// import ProductCard from "../components/productCard";
+// import UserCard from "../components/userCard";
+import { getCollections } from "../services/collectionsServices";
 
 const Home = () => {
 	const [activeTile, setActiveTile] = useState(1);
@@ -313,80 +313,80 @@ const Home = () => {
 				</section>
 				{/* <!-- End Section -->
             <!-- Section --> */}
-				<section className="section bg-effect">
-					<div className="bg-ef-1"></div>
-					<div className="bg-ef-3"></div>
-					<div className="bg-ef-4"></div>
-					<div className="bg-ef-2"></div>
-					<div className="bg-ef-center"></div>
-					<div className="container position-relative">
-						<div className="row justify-content-center section-heading">
-							<div className="col-lg-7 text-center">
-								<h6 className="text-primary text-uppercase">Collection</h6>
-								<h2 className="h1">Top Collections of</h2>
-							</div>
-						</div>
-						<ul
-							className="nav nav-pills justify-content-lg-center mb-3 overflow-x-auto mw-100 flex-nowrap pb-3"
-							id="collections-tab"
-							role="tablist">
-							<li className="nav-item" role="presentation">
-								<button
-									className="btn btn-border-mode text-uppercase mx-lg-3 me-3 rounded-pill active"
-									id="pills-top_sellers-tab"
-									data-bs-toggle="pill"
-									data-bs-target="#pills-top_sellers"
-									type="button"
-									role="tab"
-									aria-controls="pills-top_sellers"
-									aria-selected="true">
-									Top Sellers
-								</button>
-							</li>
-							<li className="nav-item" role="presentation">
-								<button
-									className="btn btn-border-mode text-uppercase mx-lg-3 me-3 rounded-pill"
-									id="pills-creators-tab"
-									data-bs-toggle="pill"
-									data-bs-target="#pills-creators"
-									type="button"
-									role="tab"
-									aria-controls="pills-creators"
-									aria-selected="false">
-									Top Creators
-								</button>
-							</li>
-							<li className="nav-item" role="presentation">
-								<button
-									className="btn btn-border-mode text-uppercase mx-lg-3 me-3 rounded-pill"
-									id="pills-buyers-tab"
-									data-bs-toggle="pill"
-									data-bs-target="#pills-buyers"
-									type="button"
-									role="tab"
-									aria-controls="pills-buyers"
-									aria-selected="false">
-									Top Buyers
-								</button>
-							</li>
-						</ul>
-						<div className="tab-content" id="collections-tabContent">
-							<div
-								className="tab-pane fade show active"
-								id="pills-top_sellers"
-								role="tabpanel"
-								aria-labelledby="pills-top_sellers-tab"
-								tabIndex={0}>
-								<div className="row g-3">
-									{[1, 2, 3, 4, 5, 6].map((x: number) => (
-										<UserCard key={x} />
-									))}
-								</div>
-							</div>
-						</div>
-					</div>
-				</section>
-				{/* <!-- End Section -->
+        {/* <section className='section bg-effect'>
+          <div className='bg-ef-1'></div>
+          <div className='bg-ef-3'></div>
+          <div className='bg-ef-4'></div>
+          <div className='bg-ef-2'></div>
+          <div className='bg-ef-center'></div>
+          <div className='container position-relative'>
+            <div className='row justify-content-center section-heading'>
+              <div className='col-lg-7 text-center'>
+                <h6 className='text-primary text-uppercase'>Collection</h6>
+                <h2 className='h1'>Top Collections of</h2>
+              </div>
+            </div>
+            <ul
+              className='nav nav-pills justify-content-lg-center mb-3 overflow-x-auto mw-100 flex-nowrap pb-3'
+              id='collections-tab'
+              role='tablist'>
+              <li className='nav-item' role='presentation'>
+                <button
+                  className='btn btn-border-mode text-uppercase mx-lg-3 me-3 rounded-pill active'
+                  id='pills-top_sellers-tab'
+                  data-bs-toggle='pill'
+                  data-bs-target='#pills-top_sellers'
+                  type='button'
+                  role='tab'
+                  aria-controls='pills-top_sellers'
+                  aria-selected='true'>
+                  Top Sellers
+                </button>
+              </li>
+              <li className='nav-item' role='presentation'>
+                <button
+                  className='btn btn-border-mode text-uppercase mx-lg-3 me-3 rounded-pill'
+                  id='pills-creators-tab'
+                  data-bs-toggle='pill'
+                  data-bs-target='#pills-creators'
+                  type='button'
+                  role='tab'
+                  aria-controls='pills-creators'
+                  aria-selected='false'>
+                  Top Creators
+                </button>
+              </li>
+              <li className='nav-item' role='presentation'>
+                <button
+                  className='btn btn-border-mode text-uppercase mx-lg-3 me-3 rounded-pill'
+                  id='pills-buyers-tab'
+                  data-bs-toggle='pill'
+                  data-bs-target='#pills-buyers'
+                  type='button'
+                  role='tab'
+                  aria-controls='pills-buyers'
+                  aria-selected='false'>
+                  Top Buyers
+                </button>
+              </li>
+            </ul>
+            <div className='tab-content' id='collections-tabContent'>
+              <div
+                className='tab-pane fade show active'
+                id='pills-top_sellers'
+                role='tabpanel'
+                aria-labelledby='pills-top_sellers-tab'
+                tabIndex={0}>
+                <div className='row g-3'>
+                  {[1, 2, 3, 4, 5, 6].map((x: number) => (
+                    <UserCard key={x} />
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+        </section> */}
+        {/* <!-- End Section -->
             <!-- Section --> */}
 				<section className="section">
 					<div className="container">

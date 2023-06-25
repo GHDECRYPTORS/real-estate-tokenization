@@ -1,10 +1,12 @@
 /** @format */
 
-import React, { useState, useEffect } from "react";
-import { ethers } from "ethers";
-import { Link, useParams, useNavigate } from "react-router-dom";
-import { getSingleCollection } from "../../services/collectionsServices";
+import { Link, useParams } from "react-router-dom";
+import  { useEffect, useState } from "react";
+
 import { ellipsify } from "../../components/ellipsify";
+import { ethers } from "ethers";
+import { getSingleCollection } from "../../services/collectionsServices";
+
 // import Accordion from "react-bootstrap/Accordion";
 function SingleCollectionToken() {
   const [activeoffer, setActiveOffer] = useState(false);
@@ -15,7 +17,7 @@ function SingleCollectionToken() {
   const params = useParams();
   const { address } = params;
   const [collection, setCollection] = useState<any>(null);
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
   useEffect(() => {
     const getCollection = async () => {
       const response = await getSingleCollection(address);

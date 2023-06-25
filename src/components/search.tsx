@@ -8,7 +8,7 @@ interface SearchProps {
   setShowSearch: (show: boolean) => void;
 }
 const Search: React.FC<SearchProps> = ({ showSearch, setShowSearch }) => {
-  const [loading, setLoading] = useState(true);
+  const [_, setLoading] = useState(true);
   const [collections, setCollections] = useState([]);
   const [searchValue, setSearchValue] = useState("");
   const context = useContext(ChainContext);
@@ -18,8 +18,8 @@ const Search: React.FC<SearchProps> = ({ showSearch, setShowSearch }) => {
         setCollections(
           res.map((x) => ({
             ...x,
-            tokenURI: ipfsTohttp(x.tokenURI as string),
-          }))
+            tokenURI: window.ipfsTohttp(x.tokenURI as string),
+          })) as never[]
         );
         setLoading(false);
       });
@@ -48,7 +48,7 @@ const Search: React.FC<SearchProps> = ({ showSearch, setShowSearch }) => {
             type='text'
             placeholder='Search Here'
             className='border-0 rounded-0 shadow-none form-control form-control-sm flex-full'
-            onInput={(e) => setSearchValue(e.target.value)}
+            onInput={(e) => setSearchValue(e.currentTarget.value)}
           />
           <button
             className='btn icon-md btn-border-mode p-0 search-btn rounded-3'

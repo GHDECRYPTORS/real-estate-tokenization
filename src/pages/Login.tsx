@@ -1,17 +1,17 @@
 /** @format */
 
 import { getNonce, postLogin } from "../services/userServices";
-import { useEffect, useState } from "react";
 
 import { AuthenticateUser } from "../store/slices/user.slice";
 import { ethers } from "ethers";
 import { useAccount } from "wagmi";
 import { useAppDispatch } from "../store/hooks";
+import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useWeb3Modal } from "@web3modal/react";
 
 function Login() {
-  const { open, close } = useWeb3Modal();
+  const { open } = useWeb3Modal();
   const { address, isConnected } = useAccount();
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
@@ -44,13 +44,13 @@ function Login() {
             if (response?.data?.statusCode === 200) {
               console.log("responseData", response?.data?.data);
               dispatch(
-								AuthenticateUser({
-									username: response?.data?.data?.user?.username,
-									accessToken: response?.data?.data?.access_token,
-									id: response?.data?.data?.user?._id,
-									just_signed_up: response?.data?.data?.user?.just_signed_up,
-								})
-							);
+                AuthenticateUser({
+                  username: response?.data?.data?.user?.username,
+                  accessToken: response?.data?.data?.access_token,
+                  id: response?.data?.data?.user?._id,
+                  just_signed_up: response?.data?.data?.user?.just_signed_up,
+                })
+              );
               navigate("/");
             } else {
               console.error("Error");
