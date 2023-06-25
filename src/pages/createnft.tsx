@@ -2,12 +2,21 @@
 
 import React, { ChangeEvent, FormEvent, useRef, useState } from "react";
 import { Web3Storage } from "web3.storage";
+import { ethers } from "ethers";
+import deployer from "../../deployer_abi.json";
+import { Toast } from "react-bootstrap";
 const apiKey = import.meta.env.VITE_WEB3_STORAGE_KEY;
+const deployerContract = import.meta.env.VITE_NFT_DEPLOYER;
 const Createnft = () => {
   const [nft_name, setNFTName] = useState("");
+  const [nft_symbol, setNFTSymbol] = useState("");
   const [nft_description, setNFTDescription] = useState("");
   const [previewUrl, setPreviewUrl] = useState("");
   const [unitPrice, setUnitPrice] = useState(0);
+  const createItem = "Create your item";
+  const loading = "Loading...";
+
+  const [loadingPlace, setLoadingPlace] = useState(createItem);
   const imageDom = useRef(document.getElementById("root") as HTMLElement);
   const handleImageChange = (event: any) => {
     const file = event.target.files[0];
@@ -46,21 +55,47 @@ const Createnft = () => {
     const files = [new File([blob], "hello.json")];
     const cid = await client.put(files, { wrapWithDirectory: false });
     console.log("stored files with cid:", cid);
+    let provider = new ethers.providers.Web3Provider(window.ethereum);
+    const signer = provider.getSigner();
+    const contract = new ethers.Contract(deployerContract, deployer, signer);
+    const mintNFTR = await contract.mintNFT(
+      nft_name,
+      nft_symbol,
+      unitPrice,
+      `ipfs://${cid}`
+    );
+    alert(`NFT created, view on blockexplorer ${mintNFTR.hash}`);
+
+    // const contract = new web3.eth.Contract(contractABI, contractAddress);
+
     return cid;
   }
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    if (loadingPlace == loading) {
+      return;
+    }
     if (nft_name.trim() == "") {
-      alert("NFT name is null");
+      alert("NFT name can not be empty");
+      return;
+    }
+    if (nft_symbol.trim() == "") {
+      alert("NFT symbol can not be empty");
       return;
     }
     if (nft_description.trim() == "") {
-      alert("NFT description is null");
+      alert("NFT description can not be empty");
       return;
     }
 
-    await uploadMetaData();
+    try {
+      setLoadingPlace(loading);
+      await uploadMetaData();
+    } catch (error) {
+    } finally {
+      setLoadingPlace(createItem);
+    }
   };
 
   return (
@@ -124,6 +159,9 @@ const Createnft = () => {
                             name="nft_symbol"
                             className="form-control"
                             placeholder="Enter Symbol"
+                            onInput={(e: ChangeEvent<HTMLInputElement>) =>
+                              setNFTSymbol(e.target.value)
+                            }
                           />
                         </div>{" "}
                         <div className="col-12">
@@ -151,8 +189,11 @@ const Createnft = () => {
                           ></textarea>
                         </div>
                         <div className="col-12">
-                          <button className="w-100 btn btn-primary">
-                            Create your item
+                          <button
+                            className="w-100 btn btn-primary "
+                            disabled={loading === loadingPlace}
+                          >
+                            {loadingPlace}
                           </button>
                         </div>
                       </div>
