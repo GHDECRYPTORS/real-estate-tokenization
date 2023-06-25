@@ -7,6 +7,7 @@ import { ellipsify } from "../../components/ellipsify";
 // export default SingleCollection;
 import { ethers } from "ethers";
 import { getSingleCollection } from "../../services/collectionsServices";
+import getUniqueOwners from "../../helpers/uniqueHolders";
 
 // import houseNFTABI from "../../../nft_abi.json";
 

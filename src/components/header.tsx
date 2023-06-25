@@ -57,6 +57,13 @@ function Header() {
                     Explore
                   </Link>
                 </li>
+                {isConnected && (
+                  <li className='nav-item dropdown'>
+                    <Link className='nav-link' to='/my-tokens'>
+                      My Tokens
+                    </Link>
+                  </li>
+                )}
                 {!isConnected && (
                   <li className='nav-item dropdown'>
                     <Link className='nav-link' to='/login'>
