@@ -1,10 +1,11 @@
 /** @format */
 
+import { useContext, useState } from "react";
+
+import { ChainContext } from "../chain.resolver";
 import { Link } from "react-router-dom";
 import ProductCard from "../components/productCard";
 import UserCard from "../components/userCard";
-import { useState, useContext } from "react";
-import { ChainContext } from "../chain.resolver";
 
 const Home = () => {
   const [activeTile, setActiveTile] = useState(1);
@@ -66,7 +67,7 @@ const Home = () => {
                 <h2 className="h1">Explore New NFTs</h2>
               </div>
             </div>
-            <div className="row gy-4 section-heading">
+            {/* <div className="row gy-4 section-heading">
               <div className="col-6 col-lg-auto">
                 <div className="dropdown">
                   <button
@@ -162,7 +163,7 @@ const Home = () => {
                   </ul>
                 </div>
               </div>
-            </div>
+            </div> */}
             <div className="row g-3">
               {[1, 2, 3, 4, 5, 6, 7, 8].map((x: number) => (
                 <div className="col-sm-6 col-lg-3" key={x}>
