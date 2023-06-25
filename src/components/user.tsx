@@ -16,27 +16,26 @@ interface UserProps {
 }
 
 const User: React.FC<UserProps> = ({ showUser, setShowUser }) => {
-  const { address, isConnected } = useAccount();
-  const dispatch = useAppDispatch();
-  const { disconnect } = useDisconnect();
-  const navigate = useNavigate();
+	const { address, isConnected } = useAccount();
+	const dispatch = useAppDispatch();
+	const { disconnect } = useDisconnect();
+	const navigate = useNavigate();
 	const { data, isLoading } = useBalance({
 		address: address,
 	});
 
-	const { userData }: any = useAppSelector(selectUserInstance);
+	const { user }: any = useAppSelector(selectUserInstance);
 
 	useEffect(() => {
 		console.log("address", address);
-  }, [address, showUser]);
-  
+	}, [address, showUser]);
 
-  const DisConnectUser = async () => {
-    disconnect();
-    setShowUser(false);
-    dispatch(LogoutUser());
-    navigate("/");
-  }
+	const DisConnectUser = async () => {
+		disconnect();
+		setShowUser(false);
+		dispatch(LogoutUser());
+		navigate("/");
+	};
 
 	return (
 		<div
@@ -56,12 +55,7 @@ const User: React.FC<UserProps> = ({ showUser, setShowUser }) => {
 							/>
 						</div>
 						<div className="col ps-3">
-							<h6 className="mb-0">
-								{ellipsify(userData?.user?.username || "", 20)}
-							</h6>
-							{/* <span className="fs-xs fw-400">
-								{ellipsify(address || "", 20)}
-							</span> */}
+							<h6 className="mb-0">{ellipsify(user?.username || "", 20)}</h6>
 						</div>
 					</div>
 				</div>
@@ -79,7 +73,7 @@ const User: React.FC<UserProps> = ({ showUser, setShowUser }) => {
 							className="btn btn-sm text-start btn-border-mode rounded-3 p-3 w-100"
 							to="#">
 							<i className="bi-subtract"></i>
-							<span className="text-truncate ps-3">{userData?.user?._id}</span>
+							<span className="text-truncate ps-3">{user?._id}</span>
 						</Link>
 					</li>
 					<li className="mb-2">
