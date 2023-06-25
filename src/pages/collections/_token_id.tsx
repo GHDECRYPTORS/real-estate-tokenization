@@ -29,6 +29,7 @@ function SingleCollectionToken() {
   const { address, tokenId } = params;
   const [collection, setCollection] = useState<any>(null);
   // const navigate = useNavigate();
+  console.log(collection);
   useEffect(() => {
     const getCollection = async () => {
       const response = await getSingleCollection(address);
@@ -65,10 +66,13 @@ function SingleCollectionToken() {
         provider
       );
 
-      const isRented = await contract.isRented(tokenId);
+      const isRented = await contract.isRented(+(tokenId as string));
       return isRented;
-    } catch (error) {
-      console.error("Error occurred while checking if token is rented", error);
+    } catch (error: any) {
+      console.error(
+        "Error occurred while checking if token is rented",
+        error.message
+      );
     }
   }
 
@@ -105,6 +109,24 @@ function SingleCollectionToken() {
         durationTime
       );
       return createAuctionTx;
+    } catch (error) {
+      console.error("Error occurred while making an offer", error);
+    }
+  }
+  async function buyNFT() {
+    try {
+      const provider = new ethers.providers.Web3Provider(window.ethereum);
+
+      const signer = provider.getSigner();
+      const contract = new ethers.Contract(
+        address as string,
+        houseNFTABI,
+        signer
+      );
+      const buyNFTTX = await contract.instantBuy(tokenId, {
+        value: collection?.unitPrice ? ethValue(collection?.unitPrice) : 0,
+      });
+      return buyNFTTX;
     } catch (error) {
       console.error("Error occurred while making an offer", error);
     }
@@ -281,7 +303,11 @@ function SingleCollectionToken() {
                 <div className="pt-3">
                   {tokenOwner != "" && tokenOwner != userAddress ? (
                     instantBuy ? (
-                      <a className="btn btn-lg btn-gradient w-100" href="#">
+                      <a
+                        className="btn btn-lg btn-gradient w-100"
+                        href="#"
+                        onClick={(e) => buyNFT()}
+                      >
                         <i className="bi-cart"></i> Buy
                       </a>
                     ) : (
