@@ -8,6 +8,7 @@ import {
 } from "../store/slices/user.slice";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import { toast } from "react-toastify";
 
 function Profile() {
 	const { accessToken, user }: any = useAppSelector(selectUserInstance);
@@ -35,6 +36,7 @@ function Profile() {
 			console.log("response", response);
 
 			if (response?.data?.statusCode === 200) {
+				toast.success("Username Updated");
 				dispatch(
 					AuthenticateUser({
 						username: userName,
@@ -42,8 +44,8 @@ function Profile() {
 						id: user?._id,
 						just_signed_up: user?.just_signed_up,
 					})
-        );
-        setUserName("")
+				);
+				setUserName("");
 				navigate("/");
 			}
 		} catch (error) {

@@ -16,10 +16,10 @@ interface UserProps {
 }
 
 const User: React.FC<UserProps> = ({ showUser, setShowUser }) => {
-  const { address, isConnected } = useAccount();
-  const dispatch = useAppDispatch();
-  const { disconnect } = useDisconnect();
-  const navigate = useNavigate();
+	const { address, isConnected } = useAccount();
+	const dispatch = useAppDispatch();
+	const { disconnect } = useDisconnect();
+	const navigate = useNavigate();
 	const { data, isLoading } = useBalance({
 		address: address,
 	});
@@ -28,15 +28,14 @@ const User: React.FC<UserProps> = ({ showUser, setShowUser }) => {
 
 	useEffect(() => {
 		console.log("address", address);
-  }, [address, showUser]);
-  
+	}, [address, showUser]);
 
-  const DisConnectUser = async () => {
-    disconnect();
-    setShowUser(false);
-    dispatch(LogoutUser());
-    navigate("/");
-  }
+	const DisConnectUser = async () => {
+		disconnect();
+		setShowUser(false);
+		dispatch(LogoutUser());
+		navigate("/");
+	};
 
 	return (
 		<div
@@ -57,9 +56,6 @@ const User: React.FC<UserProps> = ({ showUser, setShowUser }) => {
 						</div>
 						<div className="col ps-3">
 							<h6 className="mb-0">{ellipsify(user?.username || "", 20)}</h6>
-							{/* <span className="fs-xs fw-400">
-								{ellipsify(address || "", 20)}
-							</span> */}
 						</div>
 					</div>
 				</div>

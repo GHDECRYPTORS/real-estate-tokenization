@@ -8,6 +8,7 @@ import { useAppDispatch } from "../store/hooks";
 import { AuthenticateUser } from "../store/slices/user.slice";
 import { getNonce, postLogin } from "../services/userServices";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 function Login() {
 	const { open, close } = useWeb3Modal();
@@ -42,6 +43,7 @@ function Login() {
 
 						if (response?.data?.statusCode === 200) {
 							console.log("responseData", response?.data?.data);
+							toast.success("Login Successful");
 							dispatch(
 								AuthenticateUser({
 									accessToken: response?.data?.data?.access_token,
@@ -50,14 +52,16 @@ function Login() {
 									just_signed_up: response?.data?.data?.user?.just_signed_up,
 								})
 							);
+							
 							// dispatch(AuthenticateUser(response?.data?.data));
 							navigate("/");
 						} else {
 							console.error("Error");
+							toast.error("Login Failed");
 						}
 					}
 				} catch (e: any) {
-					console.error(e.message);
+					toast.error(e.message);
 				}
 			}
 		})();

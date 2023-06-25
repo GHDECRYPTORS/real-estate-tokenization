@@ -1,7 +1,7 @@
 /** @format */
 
 import React, { ChangeEvent, FormEvent, useRef, useState } from "react";
-import { Web3Storage } from "web3.storage";
+// import { Web3Storage } from "web3.storage";
 const apiKey = import.meta.env.VITE_WEB3_STORAGE_KEY;
 const Createnft = () => {
   const [nft_name, setNFTName] = useState("");
@@ -22,32 +22,32 @@ const Createnft = () => {
       reader.readAsDataURL(file);
     }
   };
-  function makeStorageClient() {
-    return new Web3Storage({ token: apiKey });
-  }
+  // function makeStorageClient() {
+  //   return new Web3Storage({ token: apiKey });
+  // }
 
-  async function uploadMetaData() {
-    const client = makeStorageClient();
-    const imageFile = imageDom.current.files;
+  // async function uploadMetaData() {
+  //   const client = makeStorageClient();
+  //   const imageFile = imageDom.current.files;
 
-    if (imageFile?.length != 1) {
-      alert("Please select one image");
-      return;
-    }
-    const cidImage = await client.put(imageFile, { wrapWithDirectory: false });
+  //   if (imageFile?.length != 1) {
+  //     alert("Please select one image");
+  //     return;
+  //   }
+  //   const cidImage = await client.put(imageFile, { wrapWithDirectory: false });
 
-    const obj = {
-      image: `ipfs://${cidImage}`,
-      name: nft_name,
-      description: nft_description,
-    };
-    const blob = new Blob([JSON.stringify(obj)], { type: "application/json" });
+  //   const obj = {
+  //     image: `ipfs://${cidImage}`,
+  //     name: nft_name,
+  //     description: nft_description,
+  //   };
+  //   const blob = new Blob([JSON.stringify(obj)], { type: "application/json" });
 
-    const files = [new File([blob], "hello.json")];
-    const cid = await client.put(files, { wrapWithDirectory: false });
-    console.log("stored files with cid:", cid);
-    return cid;
-  }
+  //   const files = [new File([blob], "hello.json")];
+  //   const cid = await client.put(files, { wrapWithDirectory: false });
+  //   console.log("stored files with cid:", cid);
+  //   return cid;
+  // }
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -60,7 +60,7 @@ const Createnft = () => {
       return;
     }
 
-    await uploadMetaData();
+    // await uploadMetaData();
   };
 
   return (
@@ -96,7 +96,7 @@ const Createnft = () => {
                               </p>
                             </div>
                             <input
-                              ref={imageDom}
+                              // ref={imageDom}
                               className="position-absolute top-0 end-0 start-0 bottom-0 opacity-0"
                               type="file"
                               name="nft_image"
