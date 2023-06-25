@@ -1,16 +1,75 @@
 /** @format */
 
-import ProductCard from "../components/productCard";
-import { useState } from "react";
+import { useContext, useEffect, useState } from "react";
 
+import { ChainContext } from "../chain.resolver";
+import ProductCard from "../components/productCard";
+
+// import ProductCard from "../components/productCard";
+// import context from "react-bootstrap/esm/AccordionContext";
+
+const ipfsTohttp = (url: string) => {
+  if (url == null) return "";
+  url = url.trim();
+  return url.startsWith("ipfs://")
+    ? `https://ipfs.io/ipfs/${url.replace("ipfs://", "")}`
+    : url;
+};
 function Explore() {
-  const [activeStatus, setActiveStatus] = useState(false);
-  const [activePrice, setActivePrice] = useState(false);
-  const [activeQuantity, setActiveQuantity] = useState(false);
-  // const [activeCollections, setActiveCollections] = useState(false);
-  const [activeChains, setActiveChains] = useState(false);
-  // const [activeCategory, setActiveCategory] = useState(false);
-  // const [activeCurrency, setActiveCurrency] = useState(false);
+  const [buyNowEnabled, setBuyNowEnabled] = useState(false);
+  const [auctionEnabled, setAuctionEnabled] = useState(false);
+  const [activeStatus, setActiveStatus] = useState(false); // ["all", "buyNow", "auction"
+  const [searchValue, setSearchValue] = useState("");
+  const context = useContext(ChainContext);
+  const [showButton, setShowButton] = useState(false);
+  const [loading, setLoading] = useState(true);
+  const [collections, setCollections] = useState([]);
+
+  useEffect(() => {
+    setShowButton(true);
+  }, [auctionEnabled, buyNowEnabled]);
+
+  const search = () => {
+    window.location.href = `/explore?search=${searchValue}`;
+  };
+
+  useEffect(() => {
+    const urlParams = new URLSearchParams(window.location.search);
+    const search = urlParams.get("search");
+    if (search) {
+      context.searchCollections(search).then((res) => {
+        setCollections(
+          res.map((x) => ({
+            ...x,
+            tokenURI: ipfsTohttp(x.tokenURI as string),
+          }))
+        );
+        setLoading(false);
+      });
+    } else {
+      context.getCollections().then((res) => {
+        context.getCollections().then((res) => {
+          setCollections(
+            res.map((x) => ({
+              ...x,
+              tokenURI: ipfsTohttp(x.tokenURI as string),
+            }))
+          );
+          setLoading(false);
+        });
+      });
+    }
+  }, []);
+
+  const filter = async () => {
+    // get all the filters and then call the api
+    if (buyNowEnabled) {
+      // call the api with buy now filter
+    }
+    if (auctionEnabled) {
+      // call the api with auction filter
+    }
+  };
 
   return (
     <main>
@@ -38,8 +97,12 @@ function Explore() {
                   type='text'
                   placeholder='Search Here'
                   className='border-0 rounded-0 shadow-none form-control form-control-sm flex-full bg-transparent'
+                  onInput={(e) => setSearchValue(e.target.value)}
                 />
-                <button className='btn icon-md btn-border-mode p-0 search-btn rounded-3'>
+                <button
+                  className='btn icon-md btn-border-mode p-0 search-btn rounded-3'
+                  onClick={() => search()}
+                  type='button'>
                   <i className='bi bi-search'></i>
                 </button>
               </form>
@@ -97,11 +160,14 @@ function Explore() {
                         <div className='accordion-body'>
                           <ul className='sidebar-check-list'>
                             <li>
-                              <div className='form-check'>
+                              <div
+                                className='form-check'
+                                onClick={() => setBuyNowEnabled(true)}>
                                 <input
                                   className='form-check-input'
                                   type='checkbox'
                                   id='checkbox_01'
+                                  defaultChecked={buyNowEnabled}
                                 />
                                 <label
                                   className='form-check-label'
@@ -111,11 +177,14 @@ function Explore() {
                               </div>
                             </li>
                             <li>
-                              <div className='form-check'>
+                              <div
+                                className='form-check'
+                                onClick={() => setAuctionEnabled(true)}>
                                 <input
                                   className='form-check-input'
                                   type='checkbox'
                                   id='checkbox_02'
+                                  defaultChecked={auctionEnabled}
                                 />
                                 <label
                                   className='form-check-label'
@@ -124,21 +193,20 @@ function Explore() {
                                 </label>
                               </div>
                             </li>
-                            <li>
-                              <div className='form-check'>
-                                <input
-                                  className='form-check-input'
-                                  type='checkbox'
-                                  id='checkbox_03'
-                                />
-                                <label
-                                  className='form-check-label'
-                                  htmlFor='checkbox_03'>
-                                  All
-                                </label>
-                              </div>
-                            </li>
                           </ul>
+
+                          {/* button */}
+
+                          {showButton && (
+                            <div className='pt-7 text-center'>
+                              <button
+                                className='btn btn-primary'
+                                type='button'
+                                onClick={() => filter()}>
+                                Filter
+                              </button>
+                            </div>
+                          )}
                         </div>
                       </div>
                     </div>
@@ -148,18 +216,20 @@ function Explore() {
             </div>
             <div className='col'>
               <div className='row g-3'>
-                {[1, 2, 3, 4, 5, 6, 7, 8, 9].map((x: number) => (
-                  <div className='col-sm-6 col-lg-4' key={x}>
-                    <ProductCard />
+                {collections.map((x: any) => (
+                  <div className='col-sm-6 col-lg-4' key={x.address}>
+                    <ProductCard product={x} />
                   </div>
                 ))}
               </div>
-              <div className='pt-7 text-center'>
-                <button className='btn btn-primary' type='button'>
-                  <span className='spinner-border spinner-border-sm'></span>
-                  Loading...
-                </button>
-              </div>
+              {loading && (
+                <div className='pt-7 text-center'>
+                  <button className='btn btn-primary' type='button'>
+                    <span className='spinner-border spinner-border-sm'></span>
+                    Loading...
+                  </button>
+                </div>
+              )}
             </div>
           </div>
         </div>

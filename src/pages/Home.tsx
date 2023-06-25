@@ -1,6 +1,6 @@
 /** @format */
 
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 
 import { ChainContext } from "../chain.resolver";
 import { Link } from "react-router-dom";
@@ -9,43 +9,57 @@ import UserCard from "../components/userCard";
 
 const Home = () => {
   const [activeTile, setActiveTile] = useState(1);
+  const [loading, setLoading] = useState(true);
+  const [collections, setCollections] = useState([]);
   const context = useContext(ChainContext);
   context.viewAddress();
+  useEffect(() => {
+    context.getCollections().then((res) => {
+      context.getCollections().then((res) => {
+        setCollections(
+          res.map((x) => ({
+            ...x,
+            tokenURI: ipfsTohttp(x.tokenURI as string),
+          }))
+        );
+        setLoading(false);
+      });
+    });
+  }, []);
+
   return (
-    <div className="wrapper">
+    <div className='wrapper'>
       <main>
         {/* <!-- Section --> */}
         <section
-          className="section bg-effect pb-0 bg-no-repeat bg-bottom-center"
-          style={{ backgroundImage: "url(assets/img/effect/bg-01.png)" }}
-        >
-          <div className="bg-ef-1"></div>
-          <div className="bg-ef-2"></div>
-          <div className="bg-ef-3"></div>
-          <div className="bg-ef-4"></div>
-          <div className="container position-relative pt-7">
-            <div className="row align-items-center justify-content-center">
-              <div className="col-lg-7 text-center pb-7">
-                <h6 className="mb-3 fs-sm fw-400 dark-text text-opacity-75">
+          className='section bg-effect pb-0 bg-no-repeat bg-bottom-center'
+          style={{ backgroundImage: "url(assets/img/effect/bg-01.png)" }}>
+          <div className='bg-ef-1'></div>
+          <div className='bg-ef-2'></div>
+          <div className='bg-ef-3'></div>
+          <div className='bg-ef-4'></div>
+          <div className='container position-relative pt-7'>
+            <div className='row align-items-center justify-content-center'>
+              <div className='col-lg-7 text-center pb-7'>
+                <h6 className='mb-3 fs-sm fw-400 dark-text text-opacity-75'>
                   The RealTokens marketplace with everything for everyone{" "}
                 </h6>
-                <h1 className=" display-4">
+                <h1 className=' display-4'>
                   Discover, Collect And Sell Remarkable RealEstate NFTs.
                 </h1>
-                <div className="pt-4">
+                <div className='pt-4'>
                   <Link
-                    to="/explore"
-                    className="btn btn-gradient rounded-pill me-2"
-                  >
+                    to='/explore'
+                    className='btn btn-gradient rounded-pill me-2'>
                     Start Collecting
                   </Link>
-                  <Link to="/createnft" className="btn btn-mode rounded-pill">
+                  <Link to='/createnft' className='btn btn-mode rounded-pill'>
                     Create NFT
                   </Link>
                 </div>
               </div>
-              <div className="col-12 border-bottom border-2 border-white border-opacity-10">
-                <img src="assets/img/ai-img-7.png" title="" alt="" />
+              <div className='col-12 border-bottom border-2 border-white border-opacity-10'>
+                <img src='assets/img/ai-img-7.png' title='' alt='' />
               </div>
             </div>
           </div>
@@ -55,16 +69,16 @@ const Home = () => {
 
         {/* <!-- End Section -->
             <!-- Section --> */}
-        <section className="section bg-effect">
-          <div className="bg-ef-1"></div>
-          <div className="bg-ef-2"></div>
-          <div className="bg-ef-3"></div>
-          <div className="bg-ef-4"></div>
-          <div className="container position-relative">
-            <div className="row justify-content-center section-heading">
-              <div className="col-lg-7 text-center">
-                <h6 className="text-primary text-uppercase">Discover</h6>
-                <h2 className="h1">Explore New NFTs</h2>
+        <section className='section bg-effect'>
+          <div className='bg-ef-1'></div>
+          <div className='bg-ef-2'></div>
+          <div className='bg-ef-3'></div>
+          <div className='bg-ef-4'></div>
+          <div className='container position-relative'>
+            <div className='row justify-content-center section-heading'>
+              <div className='col-lg-7 text-center'>
+                <h6 className='text-primary text-uppercase'>Discover</h6>
+                <h2 className='h1'>Explore New NFTs</h2>
               </div>
             </div>
             {/* <div className="row gy-4 section-heading">
@@ -164,10 +178,10 @@ const Home = () => {
                 </div>
               </div>
             </div> */}
-            <div className="row g-3">
-              {[1, 2, 3, 4, 5, 6, 7, 8].map((x: number) => (
-                <div className="col-sm-6 col-lg-3" key={x}>
-                  <ProductCard />
+            <div className='row g-3'>
+              {collections.map((x: number) => (
+                <div className='col-sm-6 col-lg-3' key={x.address}>
+                  <ProductCard product={x} />
                 </div>
               ))}
             </div>
@@ -175,7 +189,7 @@ const Home = () => {
         </section>
         {/* <!-- End Section -->
             <!-- Section --> */}
-        <section className="section bg-effect">
+        {/* <section className="section bg-effect">
           <div className="bg-ef-center"></div>
           <div className="container position-relative">
             <div className="row justify-content-center section-heading">
@@ -304,79 +318,74 @@ const Home = () => {
               </div>
             </div>
           </div>
-        </section>
+        </section> */}
         {/* <!-- End Section -->
             <!-- Section --> */}
-        <section className="section bg-effect">
-          <div className="bg-ef-1"></div>
-          <div className="bg-ef-3"></div>
-          <div className="bg-ef-4"></div>
-          <div className="bg-ef-2"></div>
-          <div className="bg-ef-center"></div>
-          <div className="container position-relative">
-            <div className="row justify-content-center section-heading">
-              <div className="col-lg-7 text-center">
-                <h6 className="text-primary text-uppercase">Collection</h6>
-                <h2 className="h1">Top Collections of</h2>
+        <section className='section bg-effect'>
+          <div className='bg-ef-1'></div>
+          <div className='bg-ef-3'></div>
+          <div className='bg-ef-4'></div>
+          <div className='bg-ef-2'></div>
+          <div className='bg-ef-center'></div>
+          <div className='container position-relative'>
+            <div className='row justify-content-center section-heading'>
+              <div className='col-lg-7 text-center'>
+                <h6 className='text-primary text-uppercase'>Collection</h6>
+                <h2 className='h1'>Top Collections of</h2>
               </div>
             </div>
             <ul
-              className="nav nav-pills justify-content-lg-center mb-3 overflow-x-auto mw-100 flex-nowrap pb-3"
-              id="collections-tab"
-              role="tablist"
-            >
-              <li className="nav-item" role="presentation">
+              className='nav nav-pills justify-content-lg-center mb-3 overflow-x-auto mw-100 flex-nowrap pb-3'
+              id='collections-tab'
+              role='tablist'>
+              <li className='nav-item' role='presentation'>
                 <button
-                  className="btn btn-border-mode text-uppercase mx-lg-3 me-3 rounded-pill active"
-                  id="pills-top_sellers-tab"
-                  data-bs-toggle="pill"
-                  data-bs-target="#pills-top_sellers"
-                  type="button"
-                  role="tab"
-                  aria-controls="pills-top_sellers"
-                  aria-selected="true"
-                >
+                  className='btn btn-border-mode text-uppercase mx-lg-3 me-3 rounded-pill active'
+                  id='pills-top_sellers-tab'
+                  data-bs-toggle='pill'
+                  data-bs-target='#pills-top_sellers'
+                  type='button'
+                  role='tab'
+                  aria-controls='pills-top_sellers'
+                  aria-selected='true'>
                   Top Sellers
                 </button>
               </li>
-              <li className="nav-item" role="presentation">
+              <li className='nav-item' role='presentation'>
                 <button
-                  className="btn btn-border-mode text-uppercase mx-lg-3 me-3 rounded-pill"
-                  id="pills-creators-tab"
-                  data-bs-toggle="pill"
-                  data-bs-target="#pills-creators"
-                  type="button"
-                  role="tab"
-                  aria-controls="pills-creators"
-                  aria-selected="false"
-                >
+                  className='btn btn-border-mode text-uppercase mx-lg-3 me-3 rounded-pill'
+                  id='pills-creators-tab'
+                  data-bs-toggle='pill'
+                  data-bs-target='#pills-creators'
+                  type='button'
+                  role='tab'
+                  aria-controls='pills-creators'
+                  aria-selected='false'>
                   Top Creators
                 </button>
               </li>
-              <li className="nav-item" role="presentation">
+              <li className='nav-item' role='presentation'>
                 <button
-                  className="btn btn-border-mode text-uppercase mx-lg-3 me-3 rounded-pill"
-                  id="pills-buyers-tab"
-                  data-bs-toggle="pill"
-                  data-bs-target="#pills-buyers"
-                  type="button"
-                  role="tab"
-                  aria-controls="pills-buyers"
-                  aria-selected="false"
-                >
+                  className='btn btn-border-mode text-uppercase mx-lg-3 me-3 rounded-pill'
+                  id='pills-buyers-tab'
+                  data-bs-toggle='pill'
+                  data-bs-target='#pills-buyers'
+                  type='button'
+                  role='tab'
+                  aria-controls='pills-buyers'
+                  aria-selected='false'>
                   Top Buyers
                 </button>
               </li>
             </ul>
-            <div className="tab-content" id="collections-tabContent">
+            <div className='tab-content' id='collections-tabContent'>
               <div
-                className="tab-pane fade show active"
-                id="pills-top_sellers"
-                role="tabpanel"
-                aria-labelledby="pills-top_sellers-tab"
-                tabIndex={0}
-              >
-                <div className="row g-3">
+                className='tab-pane fade show active'
+                id='pills-top_sellers'
+                role='tabpanel'
+                aria-labelledby='pills-top_sellers-tab'
+                tabIndex={0}>
+                <div className='row g-3'>
                   {[1, 2, 3, 4, 5, 6].map((x: number) => (
                     <UserCard key={x} />
                   ))}
@@ -387,88 +396,83 @@ const Home = () => {
         </section>
         {/* <!-- End Section -->
             <!-- Section --> */}
-        <section className="section">
-          <div className="container">
-            <div className="row justify-content-center section-heading">
-              <div className="col-lg-7 text-center">
-                <h6 className="text-primary text-uppercase">How it works</h6>
-                <h2 className="h1">How to use the platform </h2>
+        <section className='section'>
+          <div className='container'>
+            <div className='row justify-content-center section-heading'>
+              <div className='col-lg-7 text-center'>
+                <h6 className='text-primary text-uppercase'>How it works</h6>
+                <h2 className='h1'>How to use the platform </h2>
               </div>
             </div>
             <div
-              className="nav nav-pills user-steps-section"
-              id="v-steps-tab"
-              role="tablist"
-              aria-orientation="vertical"
-            >
+              className='nav nav-pills user-steps-section'
+              id='v-steps-tab'
+              role='tablist'
+              aria-orientation='vertical'>
               <div
-                data-bs-toggle="pill"
-                role="tab"
+                data-bs-toggle='pill'
+                role='tab'
                 aria-selected={activeTile == 1}
                 onClick={() => setActiveTile(1)}
                 className={`user-steps-card ${activeTile == 1 ? "active" : ""}`}
-                tabIndex={activeTile == 1 ? 1 : -1}
-              >
-                <div className="icon-xl user-steps-card-icon bg-primary text-white">
+                tabIndex={activeTile == 1 ? 1 : -1}>
+                <div className='icon-xl user-steps-card-icon bg-primary text-white'>
                   <span>01</span>
-                  <i className="cf cf-esp"></i>
+                  <i className='cf cf-esp'></i>
                 </div>
-                <div className="user-steps-card-body text-center pt-5">
+                <div className='user-steps-card-body text-center pt-5'>
                   <h5>Register Your Assets</h5>
                   <p>Tell us where it is located and its value.</p>
-                  <a className="btn btn-gradient" href="#">
+                  <a className='btn btn-gradient' href='#'>
                     Start Now
-                    <span className="btn-icon bi-chevron-right"></span>
+                    <span className='btn-icon bi-chevron-right'></span>
                   </a>
                 </div>
               </div>
               <div
-                data-bs-toggle="pill"
-                role="tab"
+                data-bs-toggle='pill'
+                role='tab'
                 aria-selected={activeTile == 2}
                 onClick={() => setActiveTile(2)}
                 className={`user-steps-card ${activeTile == 2 ? "active" : ""}`}
-                tabIndex={activeTile == 2 ? 1 : -1}
-              >
-                <div className="icon-xl user-steps-card-icon bg-primary text-white">
+                tabIndex={activeTile == 2 ? 1 : -1}>
+                <div className='icon-xl user-steps-card-icon bg-primary text-white'>
                   <span>02</span>
-                  <i className="cf cf-esp"></i>
+                  <i className='cf cf-esp'></i>
                 </div>
-                <div className="user-steps-card-body text-center pt-5">
+                <div className='user-steps-card-body text-center pt-5'>
                   <h5>Verification</h5>
                   <p>We verify the asset</p>
                 </div>
               </div>
               <div
-                data-bs-toggle="pill"
-                role="tab"
+                data-bs-toggle='pill'
+                role='tab'
                 aria-selected={activeTile == 3}
                 onClick={() => setActiveTile(3)}
                 className={`user-steps-card ${activeTile == 3 ? "active" : ""}`}
-                tabIndex={activeTile == 3 ? 1 : -1}
-              >
-                <div className="icon-xl user-steps-card-icon bg-primary text-white">
+                tabIndex={activeTile == 3 ? 1 : -1}>
+                <div className='icon-xl user-steps-card-icon bg-primary text-white'>
                   <span>03</span>
-                  <i className="cf cf-esp"></i>
+                  <i className='cf cf-esp'></i>
                 </div>
-                <div className="user-steps-card-body text-center pt-5">
+                <div className='user-steps-card-body text-center pt-5'>
                   <h5>Receive and mint your tokens</h5>
                   <p>You get 100 tokens of your real estate nft</p>
                 </div>
               </div>
               <div
-                data-bs-toggle="pill"
-                role="tab"
+                data-bs-toggle='pill'
+                role='tab'
                 aria-selected={activeTile == 4}
                 onClick={() => setActiveTile(4)}
                 className={`user-steps-card ${activeTile == 4 ? "active" : ""}`}
-                tabIndex={activeTile == 4 ? 1 : -1}
-              >
-                <div className="icon-xl user-steps-card-icon bg-primary text-white">
+                tabIndex={activeTile == 4 ? 1 : -1}>
+                <div className='icon-xl user-steps-card-icon bg-primary text-white'>
                   <span>04</span>
-                  <i className="cf cf-esp"></i>
+                  <i className='cf cf-esp'></i>
                 </div>
-                <div className="user-steps-card-body text-center pt-5">
+                <div className='user-steps-card-body text-center pt-5'>
                   <h5>Buy and Sell fractions of your asset</h5>
                   <p>Trade or auction portions of your asset</p>
                   {/* <a className="btn btn-gradient" href="#">
@@ -478,49 +482,47 @@ const Home = () => {
                 </div>
               </div>
               <div
-                data-bs-toggle="pill"
-                role="tab"
+                data-bs-toggle='pill'
+                role='tab'
                 aria-selected={activeTile == 5}
                 onClick={() => setActiveTile(5)}
                 className={`user-steps-card ${activeTile == 5 ? "active" : ""}`}
-                tabIndex={activeTile == 5 ? 1 : -1}
-              >
-                <div className="icon-xl user-steps-card-icon bg-primary text-white">
+                tabIndex={activeTile == 5 ? 1 : -1}>
+                <div className='icon-xl user-steps-card-icon bg-primary text-white'>
                   <span>05</span>
-                  <i className="cf cf-esp"></i>
+                  <i className='cf cf-esp'></i>
                 </div>
-                <div className="user-steps-card-body text-center pt-5">
+                <div className='user-steps-card-body text-center pt-5'>
                   <h5>Get Paid for holding</h5>
                   <p>
                     You get monthly dividends if you hold a portion of the asset
                   </p>
-                  <a className="btn btn-gradient" href="#">
+                  <a className='btn btn-gradient' href='#'>
                     Start Now
-                    <span className="btn-icon bi-chevron-right"></span>
+                    <span className='btn-icon bi-chevron-right'></span>
                   </a>
                 </div>
               </div>
               <div
-                data-bs-toggle="pill"
-                role="tab"
+                data-bs-toggle='pill'
+                role='tab'
                 aria-selected={activeTile == 6}
                 onClick={() => setActiveTile(6)}
                 className={`user-steps-card ${activeTile == 6 ? "active" : ""}`}
-                tabIndex={activeTile == 6 ? 1 : -1}
-              >
-                <div className="icon-xl user-steps-card-icon bg-primary text-white">
+                tabIndex={activeTile == 6 ? 1 : -1}>
+                <div className='icon-xl user-steps-card-icon bg-primary text-white'>
                   <span>06</span>
-                  <i className="cf cf-esp"></i>
+                  <i className='cf cf-esp'></i>
                 </div>
-                <div className="user-steps-card-body text-center pt-5">
+                <div className='user-steps-card-body text-center pt-5'>
                   <h5>Claim asset</h5>
                   <p>
                     You can claim back your asset if you have monopoly of the
                     tokens (all 100). This involves delisting the token
                   </p>
-                  <a className="btn btn-gradient" href="#">
+                  <a className='btn btn-gradient' href='#'>
                     Start Now
-                    <span className="btn-icon bi-chevron-right"></span>
+                    <span className='btn-icon bi-chevron-right'></span>
                   </a>
                 </div>
               </div>
