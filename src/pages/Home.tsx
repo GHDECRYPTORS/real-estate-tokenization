@@ -185,7 +185,7 @@ const Home = () => {
 				</section>
 				{/* <!-- End Section -->
             <!-- Section --> */}
-				<section className="section bg-effect">
+				{/* <section className="section bg-effect">
 					<div className="bg-ef-center"></div>
 					<div className="container position-relative">
 						<div className="row justify-content-center section-heading">
@@ -310,7 +310,7 @@ const Home = () => {
 							</div>
 						</div>
 					</div>
-				</section>
+				</section> */}
 				{/* <!-- End Section -->
             <!-- Section --> */}
         {/* <section className='section bg-effect'>

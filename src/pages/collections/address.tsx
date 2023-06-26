@@ -142,7 +142,7 @@ function SingleCollection() {
               </div>
             </div>
           </div>
-          <ul className="list-menu-02 mt-5 fs-lg">
+          {/* <ul className="list-menu-02 mt-5 fs-lg">
             <li>
               <a href="#">Items</a>
             </li>
@@ -151,7 +151,7 @@ function SingleCollection() {
                 Activity
               </a>
             </li>
-          </ul>
+          </ul> */}
         </div>
       </section>
 
@@ -186,7 +186,7 @@ function SingleCollection() {
           </ul>
           {new Array(100).fill(0).map((_, index) => (
             // <div>index</div>
-            <div className="activity-table rounded-3 mb-8" key={index}>
+            <div className="activity-table rounded-3 mb-4" key={index}>
               <Link
                 to={`/collections/${address}/${index}`}
                 style={{ textDecoration: "none" }}

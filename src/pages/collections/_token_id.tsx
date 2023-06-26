@@ -16,11 +16,11 @@ import { toast } from "react-toastify";
 function SingleCollectionToken() {
   const [activeoffer, setActiveOffer] = useState(false);
   const [isNotAucted, setIsNotAuction] = useState(false);
+  const [isInstantBuyEnabled, setInstantBuyEnabled] = useState(false);
   const { address: userAddress } = useAccount();
   const [isRented, setIsRented] = useState(false);
   const [durationTime, setDurationTime] = useState("0");
   const [offerAmount, setOfferAmount] = useState("");
-  const [instantBuy, setInstantBuy] = useState(false);
   const [tokenOwner, setTokenOwner] = useState("");
   const [highestBidder, setHighestBidder] = useState("");
   const [highestBid, setHighestBid] = useState("");
@@ -54,9 +54,50 @@ function SingleCollectionToken() {
       );
 
       const isInstantBuy = await contract.instantBuyEnabled(tokenId);
+      setInstantBuyEnabled(isInstantBuy);
 
       return isInstantBuy;
     } catch (error) {
+      console.error("Error occurred while checking instant buy:", error);
+    }
+  }
+  async function enableInstantBuy() {
+    try {
+      await approveToken();
+      const provider = new ethers.providers.Web3Provider(window.ethereum);
+      const signer = provider.getSigner();
+
+      const contract = new ethers.Contract(
+        address as string,
+        houseNFTABI,
+        signer
+      );
+
+      const instantBuy = await contract.enableInstantBuy(tokenId);
+      toast.success(`#${tokenId} approved for sale`);
+      return instantBuy;
+    } catch (error: any) {
+      toast.error(`#${tokenId} could not approved for sale : ${error.message}`);
+      console.error("Error occurred while buying the token:", error);
+    }
+  }
+
+  async function disableInstantBuy() {
+    try {
+      const provider = new ethers.providers.Web3Provider(window.ethereum);
+      const signer = provider.getSigner();
+
+      const contract = new ethers.Contract(
+        address as string,
+        houseNFTABI,
+        signer
+      );
+
+      const instantBuy = await contract.disableInstantBuy(tokenId);
+      toast.success(`#${tokenId} disabled for sale`);
+      return instantBuy;
+    } catch (error) {
+      toast.error(`#${tokenId} could not disabled for sale`);
       console.error("Error occurred while buying the token:", error);
     }
   }
@@ -74,7 +115,7 @@ function SingleCollectionToken() {
     const isApprovedAll = await contract.isApprovedForAll(userAddress, address);
     if (isApproved != address && !isApprovedAll) {
       await contract.approve(address, tokenId);
-      toast.success(`#${tokenId} approved for sale`);
+      toast.success(`#${tokenId} approved for contract`);
     }
 
     return isApproved;
@@ -172,12 +213,12 @@ function SingleCollectionToken() {
         signer
       );
       const buyNFTTX = await contract.instantBuy(tokenId, {
-        value: collection?.unitPrice ? ethValue(collection?.unitPrice) : 0,
+        value: collection?.unitPrice ? collection?.unitPrice : 0,
       });
       toast.success(`NFT #${tokenId} bought`);
       return buyNFTTX;
-    } catch (error) {
-      toast.error(`failed to purchase #${tokenId} `);
+    } catch (error: any) {
+      toast.error(`failed to purchase #${tokenId} : ${error.message}`);
       console.error("Error occurred while making an offer", error);
     }
   }
@@ -199,6 +240,8 @@ function SingleCollectionToken() {
     }
   }
 
+  const zeroAddr = "0x0000000000000000000000000000000000000000";
+
   async function canCreateAuction() {
     try {
       const provider = new ethers.providers.Web3Provider(window.ethereum);
@@ -212,14 +255,12 @@ function SingleCollectionToken() {
       const canCreateAuction = await contract.auctions(tokenId);
       console.log(canCreateAuction);
 
-      setIsNotAuction(
-        canCreateAuction[0] === "0x0000000000000000000000000000000000000000"
-      );
+      setIsNotAuction(canCreateAuction[0] === zeroAddr);
       const weiValue = ethers.BigNumber.from(canCreateAuction[2]._hex);
       const ethValue = ethers.utils.formatUnits(weiValue, "ether");
 
       setHighestBid(ethValue);
-      setHighestBidder(ellipsify(canCreateAuction[1] || "", 20));
+      setHighestBidder(canCreateAuction[1]);
 
       return canCreateAuction;
     } catch (error) {
@@ -244,7 +285,7 @@ function SingleCollectionToken() {
 
   useEffect(() => {
     getInstantBuy()
-      .then((e) => setInstantBuy(e))
+      .then((e) => console.log(e))
       .catch((e) => console.log(e.message));
   }, [userAddress]);
 
@@ -348,6 +389,24 @@ function SingleCollectionToken() {
                         >
                           <i className="bi-tags"></i> Create Auction
                         </a>
+                        {isInstantBuyEnabled ? (
+                          <a
+                            className="btn btn-lg btn-gradient w-100 mt-4"
+                            href="#"
+                            onClick={(e) => disableInstantBuy()}
+                          >
+                            <i className="bi-cart"></i> Disable InstantBuy
+                          </a>
+                        ) : (
+                          <a
+                            className="btn btn-lg btn-gradient w-100 mt-4"
+                            href="#"
+                            onClick={(e) => enableInstantBuy()}
+                          >
+                            {isInstantBuyEnabled}
+                            <i className="bi-cart"></i> Enable InstantBuy
+                          </a>
+                        )}
                       </>
                     ) : (
                       <></>
@@ -360,7 +419,7 @@ function SingleCollectionToken() {
                   href="#"
                   onClick={(e) => acceptAuction()}
                 >
-                  <i className="bi-tags"></i> End Auction
+                  <i className="bi-x"></i> End Auction
                 </a>
               </div>
             </div>
@@ -420,7 +479,7 @@ function SingleCollectionToken() {
 
                 <div className="pt-3">
                   {tokenOwner != "" && tokenOwner != userAddress ? (
-                    instantBuy ? (
+                    isInstantBuyEnabled ? (
                       <a
                         className="btn btn-lg btn-gradient w-100"
                         href="#"
@@ -468,49 +527,51 @@ function SingleCollectionToken() {
                         <i className="bi-tags"></i> Offers
                       </button>
                     </h2>
-                    <div
-                      id="ex_de_01"
-                      className={`accordion-collapse collapse ${
-                        activeoffer ? "show" : ""
-                      }`}
-                      // className="accordion-collapse collapse show"
-                      aria-labelledby="ex_de_heading_01"
-                      data-bs-parent="#explor_details"
-                    >
-                      <div className="accordion-body">
-                        <div className="border-gray-200 pb-2 mb-2 d-flex">
-                          <div className="avatar">
-                            <img
-                              className="avatar-img rounded-circle"
-                              src="/assets/img/avatar-1.jpg"
-                              title=""
-                              alt=""
-                            />
-                          </div>
-                          <div className="ps-2 col">
-                            <div className="d-flex pb-1 align-items-center">
-                              <h6 className="m-0 fw-500">
-                                <i className="cf cf-eth text-primary"></i>{" "}
-                                {highestBid}
-                              </h6>
-                              <span className="ps-2">
-                                {/* {collection?.unitPrice} */}
-                                {calculatePercentageRelativeToFloor(
-                                  +highestBid,
-                                  // 0
-                                  collection?.unitPrice / 10 ** 18
-                                )}
+                    {highestBidder != zeroAddr && (
+                      <div
+                        id="ex_de_01"
+                        className={`accordion-collapse collapse ${
+                          activeoffer ? "show" : ""
+                        }`}
+                        // className="accordion-collapse collapse show"
+                        aria-labelledby="ex_de_heading_01"
+                        data-bs-parent="#explor_details"
+                      >
+                        <div className="accordion-body">
+                          <div className="border-gray-200 pb-2 mb-2 d-flex">
+                            <div className="avatar">
+                              <img
+                                className="avatar-img rounded-circle"
+                                src="/assets/img/avatar-1.jpg"
+                                title=""
+                                alt=""
+                              />
+                            </div>
+                            <div className="ps-2 col">
+                              <div className="d-flex pb-1 align-items-center">
+                                <h6 className="m-0 fw-500">
+                                  <i className="cf cf-eth text-primary"></i>{" "}
+                                  {highestBid}{" "}
+                                </h6>
+                                <span className="ps-2">
+                                  {/* {collection?.unitPrice} */}
+                                  {calculatePercentageRelativeToFloor(
+                                    +highestBid,
+                                    // 0
+                                    collection?.unitPrice / 10 ** 18
+                                  )}
+                                </span>
+                              </div>
+                              <span className="fs-sm">
+                                <a className="text-mode opacity-80" href="#">
+                                  {ellipsify(highestBidder || "", 20)}
+                                </a>
                               </span>
                             </div>
-                            <span className="fs-sm">
-                              <a className="text-mode opacity-80" href="#">
-                                {highestBidder}
-                              </a>
-                            </span>
                           </div>
                         </div>
                       </div>
-                    </div>
+                    )}
                   </div>
                   {/* <div className="accordion-item">
                     <h2 className="accordion-header" id="ex_de_heading_02">
