@@ -5,7 +5,10 @@ import { useEffect, useState } from "react";
 
 import { ellipsify } from "../../components/ellipsify";
 import { ethers } from "ethers";
-import { getSingleCollection } from "../../services/collectionsServices";
+import {
+  getAunctionByToken,
+  getSingleCollection,
+} from "../../services/collectionsServices";
 import getTokenOwner from "../../helpers/getTokenOwner";
 import getUniqueOwners from "../../helpers/uniqueHolders";
 import { useAccount } from "wagmi";
@@ -15,6 +18,7 @@ import { toast } from "react-toastify";
 // import Accordion from "react-bootstrap/Accordion";
 function SingleCollectionToken() {
   const [activeoffer, setActiveOffer] = useState(false);
+  const [auctionEndTime, setAuctionEndTime] = useState("");
   const [isNotAucted, setIsNotAuction] = useState(false);
   const [isInstantBuyEnabled, setInstantBuyEnabled] = useState(false);
   const { address: userAddress } = useAccount();
@@ -34,11 +38,25 @@ function SingleCollectionToken() {
   // const navigate = useNavigate();
   useEffect(() => {
     const getCollection = async () => {
-      const response = await getSingleCollection(address);
-      console.log("response", response?.data?.data);
-      setCollection(response?.data?.data);
+      try {
+        const response = await getSingleCollection(address);
+        console.log("response", response?.data?.data);
+        setCollection(response?.data?.data);
+      } catch (error: any) {
+        console.log(`Error : ${error.message}`);
+      }
+    };
+    const getAuByToken = async () => {
+      try {
+        const response = await getAunctionByToken(address, tokenId);
+        setAuctionEndTime(new Date(response?.data?.data?.ends_at).toString());
+        // setCollection(response?.data?.data);
+      } catch (error: any) {
+        console.log(`Error : ${error.message}`);
+      }
     };
     getCollection();
+    getAuByToken();
   }, [userAddress]);
 
   async function getInstantBuy() {
@@ -53,6 +71,7 @@ function SingleCollectionToken() {
       );
 
       const isInstantBuy = await contract.instantBuyEnabled(tokenId);
+
       setInstantBuyEnabled(isInstantBuy);
 
       return isInstantBuy;
@@ -73,6 +92,7 @@ function SingleCollectionToken() {
       );
 
       const instantBuy = await contract.enableInstantBuy(tokenId);
+      await instantBuy.wait(1);
       toast.success(`#${tokenId} approved for sale`);
       return instantBuy;
     } catch (error: any) {
@@ -92,9 +112,10 @@ function SingleCollectionToken() {
         signer
       );
 
-      const instantBuy = await contract.disableInstantBuy(tokenId);
+      const disableInstantBuy = await contract.disableInstantBuy(tokenId);
+      await disableInstantBuy.wait(1);
       toast.success(`#${tokenId} disabled for sale`);
-      return instantBuy;
+      return disableInstantBuy;
     } catch (error) {
       toast.error(`#${tokenId} could not disabled for sale`);
       console.error("Error occurred while buying the token:", error);
@@ -113,7 +134,8 @@ function SingleCollectionToken() {
     const isApproved = await contract.getApproved(tokenId);
     const isApprovedAll = await contract.isApprovedForAll(userAddress, address);
     if (isApproved != address && !isApprovedAll) {
-      await contract.approve(address, tokenId);
+      const approval = await contract.approve(address, tokenId);
+      await approval.wait(1);
       toast.success(`#${tokenId} approved for contract`);
     }
 
@@ -153,6 +175,7 @@ function SingleCollectionToken() {
       const placedBid = await contract.placeBid(tokenId, {
         value: ethers.utils.parseUnits(offerAmount, "ether"),
       });
+      await placedBid.wait(1);
       toast.success(`Bid placed for #${tokenId} approved for sale`);
       return placedBid;
     } catch (error: any) {
@@ -172,6 +195,7 @@ function SingleCollectionToken() {
         signer
       );
       const acceptAuction = await contract.finalizeAuction(tokenId);
+      await acceptAuction.wait(1);
       toast.success(`Auction ended for #${tokenId} `);
       return acceptAuction;
     } catch (error: any) {
@@ -194,6 +218,7 @@ function SingleCollectionToken() {
         tokenId,
         durationTime
       );
+      await createAuctionTx.wait(1);
       toast.success(`Auction created for #${tokenId} `);
       return createAuctionTx;
     } catch (error) {
@@ -214,6 +239,7 @@ function SingleCollectionToken() {
       const buyNFTTX = await contract.instantBuy(tokenId, {
         value: collection?.unitPrice ? collection?.unitPrice : 0,
       });
+      await buyNFTTX.wait(1);
       toast.success(`NFT #${tokenId} bought`);
       return buyNFTTX;
     } catch (error: any) {
@@ -252,7 +278,7 @@ function SingleCollectionToken() {
         signer
       );
       const canCreateAuction = await contract.auctions(tokenId);
-
+      console.log(canCreateAuction);
       setIsNotAuction(canCreateAuction[0] === zeroAddr);
       const weiValue = ethers.BigNumber.from(canCreateAuction[2]._hex);
       const ethValue = ethers.utils.formatUnits(weiValue, "ether");
@@ -325,7 +351,7 @@ function SingleCollectionToken() {
                 title=""
                 alt=""
               />
-              <div className="d-flex align-items-center justify-content-center mt-4">
+              {/* <div className="d-flex align-items-center justify-content-center mt-4">
                 <div className="border border-gray-300 rounded-3 d-flex p-3">
                   <a
                     data-bs-toggle="tooltip"
@@ -360,7 +386,7 @@ function SingleCollectionToken() {
                     <i className="bi-flag"></i>
                   </a>
                 </div>
-              </div>
+              </div> */}
 
               <div className="border border-gray-300 p-3 rounded-3 mt-3">
                 <p className="mb-23 pb-3 border-bottom border-gray-300">
@@ -446,10 +472,14 @@ function SingleCollectionToken() {
                 </div> */}
               </div>
               <div className="border border-gray-300 p-3 rounded-3 mt-3">
-                <p className="mb-23 pb-3 border-bottom border-gray-300">
-                  SALE ENDS AT
-                  <span className="text-mode fw-500"> December 25, 2023</span>
-                </p>
+                {isNotAucted ? (
+                  <>{isNotAucted ? "Yes" : "NO"}</>
+                ) : (
+                  <p className="mb-23 pb-3 border-bottom border-gray-300">
+                    SALE ENDS AT
+                    <span className="text-mode fw-500"> {auctionEndTime}</span>
+                  </p>
+                )}
                 {isRented && (
                   <div className="pt-2">
                     <label className="pb-2">RENTED PROPERTY </label>
