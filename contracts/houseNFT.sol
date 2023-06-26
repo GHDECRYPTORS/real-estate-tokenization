@@ -2,8 +2,9 @@
 pragma solidity ^0.8.0;
 
 import "@openzeppelin/contracts/token/ERC721/ERC721.sol";
-import "hardhat/console.sol";
+
 import "./Deployer.sol";
+import "hardhat/console.sol";
 
 contract HouseNFT is ERC721 {
     string private _name;
@@ -35,26 +36,20 @@ contract HouseNFT is ERC721 {
         isRented[address(this)] = false;
     }
 
-    function _afterTokenTransfer(
-        address from,
-        address to,
-        uint256 tokenId,
-        uint256 batchSize
-    ) internal override {
+    function _afterTokenTransfer(address from, address to, uint256 tokenId, uint256 batchSize) internal override {
         super._afterTokenTransfer(from, to, tokenId, batchSize);
-        Deployer(deployer_).tokenTransfer(from, to, tokenId);
+        Deployer(deployer_).tokenTransfer(from,to,tokenId);
     }
 
-    function toggleRent(bool setRented) public returns (bool) {
-        require(msg.sender == _devAddr, "Only dev can rent this asset");
+
+    function toggleRent(bool setRented) public returns(bool){
+        require(msg.sender == _devAddr,"Only dev can rent this asset");
         isRented[address(this)] = setRented;
         Deployer(deployer_).isnftRented(setRented);
         return true;
     }
 
-    function tokenURI(
-        uint256 tokenId
-    ) public view override returns (string memory) {
+    function tokenURI(uint256 tokenId) public view override returns (string memory) {
         _requireMinted(tokenId);
         return tokenImageUrl;
     }
@@ -76,7 +71,7 @@ contract HouseNFT is ERC721 {
                 ownerOf(tokenId) == msg.sender,
                 "You must own all tokens to perform this action"
             );
-            safeTransferFrom(ownerOf(tokenId), _deadAddr, tokenId);
+            ERC721(address(this)).safeTransferFrom(ownerOf(tokenId), _deadAddr, tokenId);
         }
         Deployer(deployer_).tokenDestroyed();
     }
@@ -109,7 +104,10 @@ contract HouseNFT is ERC721 {
     mapping(uint256 => Auction) public auctions;
     mapping(uint256 => bool) public instantBuyEnabled;
 
+    
+
     function createAuction(uint256 tokenId, uint256 duration) external {
+        
         require(
             ownerOf(tokenId) == msg.sender,
             "You must own this token to perform this action"
@@ -152,7 +150,7 @@ contract HouseNFT is ERC721 {
         require(successDev, "Failed to transfer dev fee");
     }
 
-    function getBidPrice(uint256 tokenId) external view returns (uint256) {
+    function getBidPrice(uint256 tokenId) external view returns (uint256){
         Auction storage auction = auctions[tokenId];
         return auction.highestBid;
     }
@@ -161,7 +159,7 @@ contract HouseNFT is ERC721 {
         Auction storage auction = auctions[tokenId];
 
         require(!auction.ended, "Auction has ended");
-
+        
         require(block.timestamp < auction.endTime, "Auction has expired");
         require(
             msg.value > auction.highestBid,
@@ -196,13 +194,13 @@ contract HouseNFT is ERC721 {
 
         auction.ended = true;
 
-        safeTransferFrom(ownerOf(tokenId), auction.highestBidder, tokenId);
+        ERC721(address(this)).safeTransferFrom(ownerOf(tokenId), auction.highestBidder, tokenId);
 
         (bool success, ) = auction.seller.call{value: auction.highestBid}("");
         require(success, "Failed to transfer funds to the seller");
 
         Deployer(deployer_).auctionFinalized(
-            tokenId,
+            tokenId, 
             auction.seller,
             auction.highestBidder,
             auction.highestBid
@@ -230,7 +228,10 @@ contract HouseNFT is ERC721 {
         instantBuyEnabled[tokenId] = false;
     }
 
-    function instantBuy(uint256 tokenId) external payable {
+    function instantBuy(uint256 tokenId)
+        external
+        payable
+    {
         require(
             instantBuyEnabled[tokenId],
             "Instant buy is not enabled for this token"
@@ -238,8 +239,14 @@ contract HouseNFT is ERC721 {
 
         require(msg.value >= getPrice(), "Insufficient payment amount");
 
-        safeTransferFrom(ownerOf(tokenId), msg.sender, tokenId);
+        ERC721(address(this)).safeTransferFrom(ownerOf(tokenId), msg.sender, tokenId);
 
-        Deployer(deployer_).instantBuy(tokenId, msg.sender, msg.value);
+        instantBuyEnabled[tokenId] = false;
+
+        Deployer(deployer_).instantBuy(
+            tokenId, 
+            msg.sender, 
+            msg.value
+        );
     }
 }

@@ -32,7 +32,6 @@ function SingleCollectionToken() {
   const { address, tokenId } = params;
   const [collection, setCollection] = useState<any>(null);
   // const navigate = useNavigate();
-  console.log(collection);
   useEffect(() => {
     const getCollection = async () => {
       const response = await getSingleCollection(address);
@@ -253,7 +252,6 @@ function SingleCollectionToken() {
         signer
       );
       const canCreateAuction = await contract.auctions(tokenId);
-      console.log(canCreateAuction);
 
       setIsNotAuction(canCreateAuction[0] === zeroAddr);
       const weiValue = ethers.BigNumber.from(canCreateAuction[2]._hex);
