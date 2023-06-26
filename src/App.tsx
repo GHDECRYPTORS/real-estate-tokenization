@@ -15,13 +15,16 @@ import NotFound from "./pages/404";
 import PrivateRoute from "./private.routes";
 import Profile from "./pages/Profile";
 import PublicLayout from "./layouts/public.layout";
-import { ReactNode } from "react";
+import { ReactNode, useEffect, useState } from "react";
 import { BrowserRouter as Router } from "react-router-dom";
 import RouterCombiner from "./route.combiner";
 import SingleCollection from "./pages/collections/address";
 import SingleCollectionToken from "./pages/collections/_token_id";
-import { Web3Modal } from "@web3modal/react";
-import { auroraTestnet } from "wagmi/chains";
+import { Web3Modal, Web3NetworkSwitch } from "@web3modal/react";
+import { aurora, auroraTestnet } from "wagmi/chains";
+import getCurrChainId from "./helpers/getChainId";
+import { hederaMainnet, hederaTestnet } from "./services/chains";
+const currentChain = import.meta.env.VITE_CURRENT_CHAIN;
 
 // import { hederaMainnet, hederaTestnet } from "./services/chains";
 
@@ -35,7 +38,9 @@ const chain = "aurora";
 // >;
 
 // const chains = chain === "aurora-testnet" ? aurorachains : hederachains;
-const chains = [auroraTestnet];
+const chains = [auroraTestnet, aurora, hederaMainnet, hederaTestnet].filter(
+  (e: any) => e.id == currentChain
+);
 
 const projectId = "02c135931686e1628630c41236d10acf";
 
@@ -120,6 +125,31 @@ const Routes = [
 
 const App = () => {
   const auth = false; /* Its Only Use For Now,I Handle It With ReduxStore */
+  const [currentchain, setcurrentChain] = useState(0);
+
+  useEffect(() => {
+    window.ethereum.on("chainChanged", function (networkId: any) {
+      setcurrentChain(+networkId);
+    });
+
+    window.ethereum.on("chainIdChanged", (networkId: any) => {
+      setcurrentChain(+networkId);
+    });
+
+    getCurrChainId().then((networkId: any) => setcurrentChain(networkId));
+  }, []);
+
+  if (chains[0].id != currentchain) {
+    return (
+      <WagmiConfig config={wagmiConfig}>
+        <Web3Modal projectId={projectId} ethereumClient={ethereumClient} />
+        <div className="container mt-4">
+          Switch to {chains[0].name} <Web3NetworkSwitch />
+        </div>
+      </WagmiConfig>
+    );
+  }
+
   return (
     <div>
       {chain === "aurora" ? (

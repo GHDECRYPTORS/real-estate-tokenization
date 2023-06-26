@@ -1,3 +1,5 @@
+import { Chain } from "wagmi";
+
 export const hederaMainnet = {
   id: 295,
   name: "Hedera Mainnet",
@@ -8,6 +10,9 @@ export const hederaMainnet = {
     symbol: "HBAR",
   },
   rpcUrls: {
+    public: {
+      http: ["https://mainnet.hashio.io/api"],
+    },
     default: {
       http: ["https://mainnet.hashio.io/api"],
     },
@@ -19,7 +24,7 @@ export const hederaMainnet = {
     },
   },
   testnet: false,
-};
+} as const satisfies Chain;
 
 export const hederaTestnet = {
   id: 296,
@@ -34,6 +39,9 @@ export const hederaTestnet = {
     default: {
       http: ["https://testnet.hashio.io/api"],
     },
+    public: {
+      http: ["https://testnet.hashio.io/api"],
+    },
   },
   blockExplorers: {
     default: {
@@ -42,4 +50,4 @@ export const hederaTestnet = {
     },
   },
   testnet: true,
-};
+} as const satisfies Chain;

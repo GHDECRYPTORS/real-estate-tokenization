@@ -22,7 +22,7 @@ function SingleCollectionToken() {
   const [isNotAucted, setIsNotAuction] = useState(false);
   const [isInstantBuyEnabled, setInstantBuyEnabled] = useState(false);
   const { address: userAddress } = useAccount();
-  const [isRented, setIsRented] = useState(false);
+  const [isRented, _] = useState(false);
   const [durationTime, setDurationTime] = useState("0");
   const [offerAmount, setOfferAmount] = useState("");
   const [tokenOwner, setTokenOwner] = useState("");
@@ -409,7 +409,7 @@ function SingleCollectionToken() {
                         <a
                           className="btn btn-lg btn-gradient w-100"
                           href="#"
-                          onClick={(e) => createAuction()}
+                          onClick={(_) => createAuction()}
                         >
                           <i className="bi-tags"></i> Create Auction
                         </a>
@@ -417,7 +417,7 @@ function SingleCollectionToken() {
                           <a
                             className="btn btn-lg btn-gradient w-100 mt-4"
                             href="#"
-                            onClick={(e) => disableInstantBuy()}
+                            onClick={(_) => disableInstantBuy()}
                           >
                             <i className="bi-cart"></i> Disable InstantBuy
                           </a>
@@ -425,7 +425,7 @@ function SingleCollectionToken() {
                           <a
                             className="btn btn-lg btn-gradient w-100 mt-4"
                             href="#"
-                            onClick={(e) => enableInstantBuy()}
+                            onClick={(_) => enableInstantBuy()}
                           >
                             {isInstantBuyEnabled}
                             <i className="bi-cart"></i> Enable InstantBuy
@@ -444,7 +444,7 @@ function SingleCollectionToken() {
                   <a
                     className="btn btn-lg btn-gradient w-100 mt-4"
                     href="#"
-                    onClick={(e) => acceptAuction()}
+                    onClick={(_) => acceptAuction()}
                   >
                     <i className="bi-x"></i> End Auction
                   </a>
@@ -515,7 +515,7 @@ function SingleCollectionToken() {
                       <a
                         className="btn btn-lg btn-gradient w-100"
                         href="#"
-                        onClick={(e) => buyNFT()}
+                        onClick={(_) => buyNFT()}
                       >
                         <i className="bi-cart"></i> Buy
                       </a>
@@ -530,7 +530,7 @@ function SingleCollectionToken() {
                         <a
                           className="btn btn-lg btn-gradient w-100"
                           href="#"
-                          onClick={(e) => makeOffer()}
+                          onClick={(_) => makeOffer()}
                         >
                           <i className="bi-tags"></i> Make offer
                         </a>

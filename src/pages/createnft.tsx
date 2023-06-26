@@ -18,6 +18,7 @@ const Createnft = () => {
   const [nft_name, setNFTName] = useState("");
   const [nft_symbol, setNFTSymbol] = useState("");
   const [nft_description, setNFTDescription] = useState("");
+  const [nft_Owner, setNFTOwner] = useState("");
   const [previewUrl, setPreviewUrl] = useState("");
   const [unitPrice, setUnitPrice] = useState(0);
   const createItem = "Create your item";
@@ -47,7 +48,7 @@ const Createnft = () => {
     const imageFile = imageDom.current.files;
 
     if (imageFile?.length != 1) {
-      alert("Please select one image");
+      toast.error("Please select one image");
       return;
     }
     const cidImage = await client.put(imageFile, { wrapWithDirectory: false });
@@ -65,14 +66,13 @@ const Createnft = () => {
     const provider = new ethers.providers.Web3Provider(window.ethereum);
     const signer = provider.getSigner();
     const contract = new ethers.Contract(deployerContract, deployer, signer);
-    const address = await signer.getAddress();
 
     const mintNFTR = await contract.mintNFT(
       nft_name,
       nft_symbol,
       ethers.utils.parseEther(unitPrice.toString()),
       `ipfs://${cid}`,
-      address.trim()
+      nft_Owner
     );
     await mintNFTR.wait(1);
     toast.success(`NFT created, view on blockexplorer ${mintNFTR.hash}`);
@@ -86,15 +86,15 @@ const Createnft = () => {
       return;
     }
     if (nft_name.trim() == "") {
-      alert("NFT name can not be empty");
+      toast.error("NFT name can not be empty");
       return;
     }
     if (nft_symbol.trim() == "") {
-      alert("NFT symbol can not be empty");
+      toast.error("NFT symbol can not be empty");
       return;
     }
     if (nft_description.trim() == "") {
-      alert("NFT description can not be empty");
+      toast.error("NFT description can not be empty");
       return;
     }
 
@@ -175,7 +175,19 @@ const Createnft = () => {
                                 setNFTSymbol(e.target.value)
                               }
                             />
-                          </div>{" "}
+                          </div>
+                          <div className="col-12">
+                            <label className="form-label">Owner</label>
+                            <input
+                              type="text"
+                              name="nft_symbol"
+                              className="form-control"
+                              placeholder="Enter Owner"
+                              onInput={(e: ChangeEvent<HTMLInputElement>) =>
+                                setNFTOwner(e.target.value)
+                              }
+                            />
+                          </div>
                           <div className="col-12">
                             <label className="form-label">Price</label>
                             <input

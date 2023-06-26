@@ -2,8 +2,6 @@
 
 import { Link, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
-
-import { ellipsify } from "../../components/ellipsify";
 // export default SingleCollection;
 import { ethers } from "ethers";
 import { getSingleCollection } from "../../services/collectionsServices";

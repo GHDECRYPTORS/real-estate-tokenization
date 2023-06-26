@@ -3,20 +3,18 @@
 import { useEffect, useState } from "react";
 
 import { Link } from "react-router-dom";
-import { ellipsify } from "../components/ellipsify";
 // export default MyTokens;
 import { ethers } from "ethers";
 import { getMyTokens } from "../services/collectionsServices";
 // import getUniqueOwners from "../helpers/uniqueHolders";
 import { useAccount } from "wagmi";
-import getUniqueOwners from "../helpers/uniqueHolders";
 // import houseNFTABI from "../../../nft_abi.json";
 
 // import Accordion from "react-bootstrap/Accordion";
 
 function MyTokens() {
   const [collection, setCollection] = useState<any>(null);
-  const [collections, setCollections] = useState<any[]>([]);
+  const [_, setCollections] = useState<any[]>([]);
   const [selectedCollection, setSelectedCollection] = useState<any>(null);
   const [collectionNames, setCollectionNames] = useState<Array<string>>([]);
   const [tokens, setTokens] = useState<any[]>([]);
