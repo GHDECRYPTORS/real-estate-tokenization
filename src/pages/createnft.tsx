@@ -74,6 +74,7 @@ const Createnft = () => {
       `ipfs://${cid}`,
       address.trim()
     );
+    await mintNFTR.wait(1);
     toast.success(`NFT created, view on blockexplorer ${mintNFTR.hash}`);
 
     return cid;

@@ -473,7 +473,7 @@ function SingleCollectionToken() {
               </div>
               <div className="border border-gray-300 p-3 rounded-3 mt-3">
                 {isNotAucted ? (
-                  <>{isNotAucted ? "Yes" : "NO"}</>
+                  <></>
                 ) : (
                   <p className="mb-23 pb-3 border-bottom border-gray-300">
                     SALE ENDS AT

@@ -36,20 +36,26 @@ contract HouseNFT is ERC721 {
         isRented[address(this)] = false;
     }
 
-    function _afterTokenTransfer(address from, address to, uint256 tokenId, uint256 batchSize) internal override {
+    function _afterTokenTransfer(
+        address from,
+        address to,
+        uint256 tokenId,
+        uint256 batchSize
+    ) internal override {
         super._afterTokenTransfer(from, to, tokenId, batchSize);
-        Deployer(deployer_).tokenTransfer(from,to,tokenId);
+        Deployer(deployer_).tokenTransfer(from, to, tokenId);
     }
 
-
-    function toggleRent(bool setRented) public returns(bool){
-        require(msg.sender == _devAddr,"Only dev can rent this asset");
+    function toggleRent(bool setRented) public returns (bool) {
+        require(msg.sender == _devAddr, "Only dev can rent this asset");
         isRented[address(this)] = setRented;
         Deployer(deployer_).isnftRented(setRented);
         return true;
     }
 
-    function tokenURI(uint256 tokenId) public view override returns (string memory) {
+    function tokenURI(
+        uint256 tokenId
+    ) public view override returns (string memory) {
         _requireMinted(tokenId);
         return tokenImageUrl;
     }
@@ -71,7 +77,11 @@ contract HouseNFT is ERC721 {
                 ownerOf(tokenId) == msg.sender,
                 "You must own all tokens to perform this action"
             );
-            ERC721(address(this)).safeTransferFrom(ownerOf(tokenId), _deadAddr, tokenId);
+            ERC721(address(this)).safeTransferFrom(
+                ownerOf(tokenId),
+                _deadAddr,
+                tokenId
+            );
         }
         Deployer(deployer_).tokenDestroyed();
     }
@@ -104,10 +114,7 @@ contract HouseNFT is ERC721 {
     mapping(uint256 => Auction) public auctions;
     mapping(uint256 => bool) public instantBuyEnabled;
 
-    
-
     function createAuction(uint256 tokenId, uint256 duration) external {
-        
         require(
             ownerOf(tokenId) == msg.sender,
             "You must own this token to perform this action"
@@ -115,7 +122,7 @@ contract HouseNFT is ERC721 {
 
         require(
             !instantBuyEnabled[tokenId],
-            "Instant buy is not enabled for this token"
+            "You can not create auction when instant buy is enabled"
         );
 
         uint256 endTime = block.timestamp + duration;
@@ -150,7 +157,7 @@ contract HouseNFT is ERC721 {
         require(successDev, "Failed to transfer dev fee");
     }
 
-    function getBidPrice(uint256 tokenId) external view returns (uint256){
+    function getBidPrice(uint256 tokenId) external view returns (uint256) {
         Auction storage auction = auctions[tokenId];
         return auction.highestBid;
     }
@@ -159,14 +166,17 @@ contract HouseNFT is ERC721 {
         Auction storage auction = auctions[tokenId];
 
         require(!auction.ended, "Auction has ended");
-        
+
+        require(msg.sender != auction.seller, "Seller can not place bid");
         require(block.timestamp < auction.endTime, "Auction has expired");
         require(
             msg.value > auction.highestBid,
             "Bid must be higher than current highest bid"
         );
 
-        if (auction.highestBid != 0) {
+        if (
+            auction.highestBid != 0 && auction.highestBidder != auction.seller
+        ) {
             // Return funds to the previous highest bidder
             (bool success, ) = auction.highestBidder.call{
                 value: auction.highestBid
@@ -194,13 +204,20 @@ contract HouseNFT is ERC721 {
 
         auction.ended = true;
 
-        ERC721(address(this)).safeTransferFrom(ownerOf(tokenId), auction.highestBidder, tokenId);
-
-        (bool success, ) = auction.seller.call{value: auction.highestBid}("");
-        require(success, "Failed to transfer funds to the seller");
+        if (auction.highestBidder != auction.seller) {
+            (bool success, ) = auction.seller.call{value: auction.highestBid}(
+                ""
+            );
+            require(success, "Failed to transfer funds to the seller");
+            ERC721(address(this)).safeTransferFrom(
+                ownerOf(tokenId),
+                auction.highestBidder,
+                tokenId
+            );
+        }
 
         Deployer(deployer_).auctionFinalized(
-            tokenId, 
+            tokenId,
             auction.seller,
             auction.highestBidder,
             auction.highestBid
@@ -228,10 +245,7 @@ contract HouseNFT is ERC721 {
         instantBuyEnabled[tokenId] = false;
     }
 
-    function instantBuy(uint256 tokenId)
-        external
-        payable
-    {
+    function instantBuy(uint256 tokenId) external payable {
         require(
             instantBuyEnabled[tokenId],
             "Instant buy is not enabled for this token"
@@ -239,14 +253,14 @@ contract HouseNFT is ERC721 {
 
         require(msg.value >= getPrice(), "Insufficient payment amount");
 
-        ERC721(address(this)).safeTransferFrom(ownerOf(tokenId), msg.sender, tokenId);
+        ERC721(address(this)).safeTransferFrom(
+            ownerOf(tokenId),
+            msg.sender,
+            tokenId
+        );
 
         instantBuyEnabled[tokenId] = false;
 
-        Deployer(deployer_).instantBuy(
-            tokenId, 
-            msg.sender, 
-            msg.value
-        );
+        Deployer(deployer_).instantBuy(tokenId, msg.sender, msg.value);
     }
 }

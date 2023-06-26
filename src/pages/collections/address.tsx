@@ -88,11 +88,11 @@ function SingleCollection() {
                   <h6 className="fw-400 m-0">{tokenHolders}</h6>
                   <div className="vr position-absolute top-0 bottom-0 end-0"></div>
                 </div>
-                <div className="col-4 col-sm-3 col-md-auto position-relative">
+                {/* <div className="col-4 col-sm-3 col-md-auto position-relative">
                   <span className="fs-xs">VOL</span>
                   <h6 className="fw-400 m-0">96.27 ETH</h6>
                   <div className="vr position-absolute top-0 bottom-0 end-0"></div>
-                </div>
+                </div> */}
                 <div className="col-4 col-sm-3 col-md-auto position-relative">
                   <span className="fs-xs">Floor</span>
                   <h6 className="fw-400 m-0">
