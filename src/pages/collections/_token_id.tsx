@@ -17,6 +17,12 @@ import { toast } from "react-toastify";
 
 // import Accordion from "react-bootstrap/Accordion";
 function SingleCollectionToken() {
+  const [makeAcceptAuctionLoading, setAcceptAuctionLoading] = useState(false);
+  const [makeBuyNFTLoading, setBuyNFTLoading] = useState(false);
+  const [makeCreateAuctionLoading, setCreateAuctionLoading] = useState(false);
+  const [makeOfferLoading, setMakeOfferLoading] = useState(false);
+  const [makeEnableInstantBuy, setEnableInstantBuyLoading] = useState(false);
+  const [makeDisenableInstantBuy, setDisenableInstantLoading] = useState(false);
   const [activeoffer, setActiveOffer] = useState(false);
   const [auctionEndTime, setAuctionEndTime] = useState("");
   const [isNotAucted, setIsNotAuction] = useState(false);
@@ -35,6 +41,7 @@ function SingleCollectionToken() {
   const params = useParams();
   const { address, tokenId } = params;
   const [collection, setCollection] = useState<any>(null);
+
   // const navigate = useNavigate();
   useEffect(() => {
     const getCollection = async () => {
@@ -81,6 +88,7 @@ function SingleCollectionToken() {
   }
   async function enableInstantBuy() {
     try {
+      setEnableInstantBuyLoading(true);
       await approveToken();
       const provider = new ethers.providers.Web3Provider(window.ethereum);
       const signer = provider.getSigner();
@@ -98,11 +106,14 @@ function SingleCollectionToken() {
     } catch (error: any) {
       toast.error(`#${tokenId} could not approved for sale : ${error.message}`);
       console.error("Error occurred while buying the token:", error);
+    } finally {
+      setEnableInstantBuyLoading(false);
     }
   }
 
   async function disableInstantBuy() {
     try {
+      setDisenableInstantLoading(true);
       const provider = new ethers.providers.Web3Provider(window.ethereum);
       const signer = provider.getSigner();
 
@@ -119,6 +130,8 @@ function SingleCollectionToken() {
     } catch (error) {
       toast.error(`#${tokenId} could not disabled for sale`);
       console.error("Error occurred while buying the token:", error);
+    } finally {
+      setDisenableInstantLoading(false);
     }
   }
 
@@ -164,6 +177,7 @@ function SingleCollectionToken() {
 
   async function makeOffer() {
     try {
+      setMakeOfferLoading(true);
       const provider = new ethers.providers.Web3Provider(window.ethereum);
 
       const signer = provider.getSigner();
@@ -181,10 +195,13 @@ function SingleCollectionToken() {
     } catch (error: any) {
       console.error("Error occurred while making an offer", error);
       toast.error(`failed to place bid for #${tokenId} : ${error.message}`);
+    } finally {
+      setMakeOfferLoading(false);
     }
   }
   async function acceptAuction() {
     try {
+      setAcceptAuctionLoading(true);
       await approveToken();
       const provider = new ethers.providers.Web3Provider(window.ethereum);
 
@@ -201,10 +218,13 @@ function SingleCollectionToken() {
     } catch (error: any) {
       toast.error(`failed to end auction for #${tokenId} : ${error.message}`);
       console.error("Error occurred while making an offer", error);
+    } finally {
+      setAcceptAuctionLoading(false);
     }
   }
   async function createAuction() {
     try {
+      setCreateAuctionLoading(true);
       await approveToken();
       const provider = new ethers.providers.Web3Provider(window.ethereum);
 
@@ -224,12 +244,14 @@ function SingleCollectionToken() {
     } catch (error) {
       toast.error(`Auction failed to create for #${tokenId}: ${error} `);
       console.error("Error occurred while making an offer", error);
+    } finally {
+      setCreateAuctionLoading(false);
     }
   }
   async function buyNFT() {
     try {
       const provider = new ethers.providers.Web3Provider(window.ethereum);
-
+      setBuyNFTLoading(true);
       const signer = provider.getSigner();
       const contract = new ethers.Contract(
         address as string,
@@ -245,6 +267,8 @@ function SingleCollectionToken() {
     } catch (error: any) {
       toast.error(`failed to purchase #${tokenId} : ${error.message}`);
       console.error("Error occurred while making an offer", error);
+    } finally {
+      setBuyNFTLoading(false);
     }
   }
 
@@ -409,26 +433,53 @@ function SingleCollectionToken() {
                         <a
                           className="btn btn-lg btn-gradient w-100"
                           href="#"
-                          onClick={(_) => createAuction()}
+                          onClick={(_) =>
+                            makeCreateAuctionLoading ? null : createAuction()
+                          }
                         >
-                          <i className="bi-tags"></i> Create Auction
+                          {makeCreateAuctionLoading ? (
+                            "Loading..."
+                          ) : (
+                            <>
+                              <i className="bi-tags"></i> Create Auction
+                            </>
+                          )}
                         </a>
                         {isInstantBuyEnabled ? (
                           <a
                             className="btn btn-lg btn-gradient w-100 mt-4"
                             href="#"
-                            onClick={(_) => disableInstantBuy()}
+                            onClick={(_) =>
+                              makeDisenableInstantBuy
+                                ? null
+                                : disableInstantBuy()
+                            }
                           >
-                            <i className="bi-cart"></i> Disable InstantBuy
+                            {makeDisenableInstantBuy ? (
+                              "Loading..."
+                            ) : (
+                              <>
+                                <i className="bi-cart"></i> Disable InstantBuy
+                              </>
+                            )}
                           </a>
                         ) : (
                           <a
                             className="btn btn-lg btn-gradient w-100 mt-4"
                             href="#"
-                            onClick={(_) => enableInstantBuy()}
+                            onClick={(_) =>
+                              makeEnableInstantBuy ? null : enableInstantBuy()
+                            }
                           >
                             {isInstantBuyEnabled}
-                            <i className="bi-cart"></i> Enable InstantBuy
+
+                            {makeEnableInstantBuy ? (
+                              "Loading..."
+                            ) : (
+                              <>
+                                <i className="bi-cart"></i> Enable InstantBuy
+                              </>
+                            )}
                           </a>
                         )}
                       </>
@@ -444,9 +495,17 @@ function SingleCollectionToken() {
                   <a
                     className="btn btn-lg btn-gradient w-100 mt-4"
                     href="#"
-                    onClick={(_) => acceptAuction()}
+                    onClick={(_) =>
+                      makeAcceptAuctionLoading ? null : acceptAuction()
+                    }
                   >
-                    <i className="bi-x"></i> End Auction
+                    {makeAcceptAuctionLoading ? (
+                      "Loading..."
+                    ) : (
+                      <>
+                        <i className="bi-x"></i> End Auction
+                      </>
+                    )}
                   </a>
                 )}
               </div>
@@ -515,9 +574,15 @@ function SingleCollectionToken() {
                       <a
                         className="btn btn-lg btn-gradient w-100"
                         href="#"
-                        onClick={(_) => buyNFT()}
+                        onClick={(_) => (makeBuyNFTLoading ? null : buyNFT())}
                       >
-                        <i className="bi-cart"></i> Buy
+                        {makeBuyNFTLoading ? (
+                          "Loading..."
+                        ) : (
+                          <>
+                            <i className="bi-cart"></i> Buy
+                          </>
+                        )}
                       </a>
                     ) : (
                       <>
@@ -530,9 +595,17 @@ function SingleCollectionToken() {
                         <a
                           className="btn btn-lg btn-gradient w-100"
                           href="#"
-                          onClick={(_) => makeOffer()}
+                          onClick={(_) =>
+                            makeOfferLoading ? null : makeOffer()
+                          }
                         >
-                          <i className="bi-tags"></i> Make offer
+                          {makeOfferLoading ? (
+                            "Loading..."
+                          ) : (
+                            <>
+                              <i className="bi-tags"></i> Make offer
+                            </>
+                          )}
                         </a>
                       </>
                     )
