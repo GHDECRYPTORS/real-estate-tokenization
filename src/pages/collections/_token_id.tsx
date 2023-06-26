@@ -390,7 +390,7 @@ function SingleCollectionToken() {
 
               <div className="border border-gray-300 p-3 rounded-3 mt-3">
                 <p className="mb-23 pb-3 border-bottom border-gray-300">
-                  AUCTION
+                  ACTIONS
                 </p>
                 {tokenOwner == userAddress && (
                   <>
@@ -438,13 +438,17 @@ function SingleCollectionToken() {
                   </>
                 )}
 
-                <a
-                  className="btn btn-lg btn-gradient w-100 mt-4"
-                  href="#"
-                  onClick={(e) => acceptAuction()}
-                >
-                  <i className="bi-x"></i> End Auction
-                </a>
+                {isNotAucted ? (
+                  <></>
+                ) : (
+                  <a
+                    className="btn btn-lg btn-gradient w-100 mt-4"
+                    href="#"
+                    onClick={(e) => acceptAuction()}
+                  >
+                    <i className="bi-x"></i> End Auction
+                  </a>
+                )}
               </div>
             </div>
             <div className="col-lg-5 col-xxl-4">
