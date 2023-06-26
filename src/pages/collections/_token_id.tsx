@@ -14,6 +14,7 @@ import houseNFTABI from "../../../nft_abi.json";
 // import Accordion from "react-bootstrap/Accordion";
 function SingleCollectionToken() {
   const [activeoffer, setActiveOffer] = useState(false);
+  const [isNotAucted, setIsNotAuction] = useState(false);
   const { address: userAddress } = useAccount();
   const [isRented, setIsRented] = useState(false);
   const [durationTime, setDurationTime] = useState("0");
@@ -147,12 +148,38 @@ function SingleCollectionToken() {
     }
   }
 
+  async function canCreateAuction() {
+    try {
+      const provider = new ethers.providers.Web3Provider(window.ethereum);
+
+      const signer = provider.getSigner();
+      const contract = new ethers.Contract(
+        address as string,
+        houseNFTABI,
+        signer
+      );
+      const canCreateAuction = await contract.auctions(tokenId);
+      setIsNotAuction(
+        canCreateAuction[0] === "0x0000000000000000000000000000000000000000"
+      );
+      console.log(
+        canCreateAuction[0] === "0x0000000000000000000000000000000000000000"
+      );
+      return canCreateAuction;
+    } catch (error) {
+      console.error("Error occurred while making an offer", error);
+    }
+  }
+
   useEffect(() => {
     getTokenOwner(address as string, tokenId)
       .then((owner) => setTokenOwner(owner))
       .catch((e) => console.log(`Error: ${e.message}`));
 
     isRentedF()
+      .then((iRented) => console.log(iRented))
+      .catch((e) => console.log(`Error: ${e.message}`));
+    canCreateAuction()
       .then((iRented) => console.log(iRented))
       .catch((e) => console.log(`Error: ${e.message}`));
   }, [userAddress]);
@@ -247,20 +274,28 @@ function SingleCollectionToken() {
                 {tokenOwner == userAddress && (
                   <>
                     {" "}
-                    <input
-                      type="text"
-                      value={durationTime}
-                      placeholder="Enter duration in seconds"
-                      className="border p-2 mb-4 rounded-0 shadow-none form-control form-control-sm flex-full"
-                      onInput={(e) => setDurationTime(e.currentTarget.value)}
-                    />
-                    <a
-                      className="btn btn-lg btn-gradient w-100"
-                      href="#"
-                      onClick={(e) => createAuction()}
-                    >
-                      <i className="bi-tags"></i> Create Auction
-                    </a>
+                    {isNotAucted ? (
+                      <>
+                        <input
+                          type="text"
+                          value={durationTime}
+                          placeholder="Enter duration in seconds"
+                          className="border p-2 mb-4 rounded-0 shadow-none form-control form-control-sm flex-full"
+                          onInput={(e) =>
+                            setDurationTime(e.currentTarget.value)
+                          }
+                        />
+                        <a
+                          className="btn btn-lg btn-gradient w-100"
+                          href="#"
+                          onClick={(e) => createAuction()}
+                        >
+                          <i className="bi-tags"></i> Create Auction
+                        </a>
+                      </>
+                    ) : (
+                      <></>
+                    )}
                   </>
                 )}
 
