@@ -60,26 +60,23 @@ function SingleCollectionToken() {
   }
 
   async function approveToken() {
-    try {
-      const provider = new ethers.providers.Web3Provider(window.ethereum);
+    const provider = new ethers.providers.Web3Provider(window.ethereum);
+    const signer = provider.getSigner();
+    const contract = new ethers.Contract(
+      address as string,
+      houseNFTABI,
+      signer
+    );
 
-      const contract = new ethers.Contract(
-        address as string,
-        houseNFTABI,
-        provider
-      );
-
-      const isApproved = await contract.getApproved(tokenId);
-      // isApprovedForAll(address owner, address operator)
-      console.log(isApproved);
-      return isApproved;
-    } catch (error: any) {
-      console.error(
-        "Error occurred while checking if token is rented",
-        error.message
-      );
+    // const isApproved = await contract.getApproved(tokenId);
+    const isApprovedAll = await contract.isApprovedForAll(userAddress, address);
+    if (!isApprovedAll) {
+      const approveToken = await contract.setApprovalForAll(address, true);
     }
+
+    return isApprovedAll;
   }
+
   async function isRentedF() {
     try {
       const provider = new ethers.providers.Web3Provider(window.ethereum);
@@ -120,6 +117,7 @@ function SingleCollectionToken() {
   }
   async function acceptAuction() {
     try {
+      await approveToken();
       const provider = new ethers.providers.Web3Provider(window.ethereum);
 
       const signer = provider.getSigner();
@@ -136,6 +134,7 @@ function SingleCollectionToken() {
   }
   async function createAuction() {
     try {
+      await approveToken();
       const provider = new ethers.providers.Web3Provider(window.ethereum);
 
       const signer = provider.getSigner();

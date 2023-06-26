@@ -72,8 +72,7 @@ function SingleCollection() {
               </div>
               <div className="fs-sm pb-2">By {collection?.name} Deployer </div>
               <p className="d-flex align-items-center fs-sm">
-                Created Jan 2023 <span className="vr mx-2 my-1"></span>Chain
-                Aurora Testnet
+                Created Jan 2023 <span className="vr mx-2 my-1"></span>
               </p>
               <p className="fs-sm">
                 {collection?.name} is a RealEstate NFT project with 100 tokens.
@@ -187,7 +186,7 @@ function SingleCollection() {
           </ul>
           {new Array(100).fill(0).map((_, index) => (
             // <div>index</div>
-            <div className="activity-table rounded-3" key={index}>
+            <div className="activity-table rounded-3 mb-8" key={index}>
               <Link
                 to={`/collections/${address}/${index}`}
                 style={{ textDecoration: "none" }}
@@ -205,7 +204,7 @@ function SingleCollection() {
                       </div>
                       <div className="col ps-3">
                         <h6 className="m-0">{collection?.name}</h6>
-                        <span>{ellipsify(collection?.address || "", 20)}</span>
+                        <span>#{index}</span>
                       </div>
                     </div>
                   </div>
@@ -218,7 +217,7 @@ function SingleCollection() {
                             ? ethValue(collection?.unitPrice)
                             : 0}
                         </h6>
-                        <span className="fs-xs w-100">55% &lt; floor</span>{" "}
+                        <span className="fs-xs w-100">0% &lt; floor</span>{" "}
                       </div>{" "}
                       <div className="col d-none d-md-flex flex-column">
                         <span>
