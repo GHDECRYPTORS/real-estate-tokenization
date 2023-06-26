@@ -211,7 +211,7 @@ function SingleCollectionToken() {
       );
       const canCreateAuction = await contract.auctions(tokenId);
       console.log(canCreateAuction);
-      console.log(address);
+
       setIsNotAuction(
         canCreateAuction[0] === "0x0000000000000000000000000000000000000000"
       );
