@@ -8,6 +8,7 @@ import { ethers } from "ethers";
 import { selectUserInstance } from "../store/slices/user.slice";
 import { useAppSelector } from "../store/hooks";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 const apiKey = import.meta.env.VITE_WEB3_STORAGE_KEY;
 const deployerContract = import.meta.env.VITE_NFT_DEPLOYER;
@@ -73,7 +74,7 @@ const Createnft = () => {
       `ipfs://${cid}`,
       address.trim()
     );
-    alert(`NFT created, view on blockexplorer ${mintNFTR.hash}`);
+    toast.success(`NFT created, view on blockexplorer ${mintNFTR.hash}`);
 
     return cid;
   }
@@ -100,6 +101,7 @@ const Createnft = () => {
       setLoadingPlace(loading);
       await uploadMetaData();
     } catch (error: any) {
+      toast.error(error.message);
       console.log(error.message);
     } finally {
       setLoadingPlace(createItem);

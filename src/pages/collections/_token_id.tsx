@@ -10,6 +10,7 @@ import getTokenOwner from "../../helpers/getTokenOwner";
 import getUniqueOwners from "../../helpers/uniqueHolders";
 import { useAccount } from "wagmi";
 import houseNFTABI from "../../../nft_abi.json";
+import { toast } from "react-toastify";
 
 // import Accordion from "react-bootstrap/Accordion";
 function SingleCollectionToken() {
@@ -53,6 +54,7 @@ function SingleCollectionToken() {
       );
 
       const isInstantBuy = await contract.instantBuyEnabled(tokenId);
+
       return isInstantBuy;
     } catch (error) {
       console.error("Error occurred while buying the token:", error);
@@ -68,13 +70,14 @@ function SingleCollectionToken() {
       signer
     );
 
-    // const isApproved = await contract.getApproved(tokenId);
+    const isApproved = await contract.getApproved(tokenId);
     const isApprovedAll = await contract.isApprovedForAll(userAddress, address);
-    if (!isApprovedAll) {
-      const approveToken = await contract.setApprovalForAll(address, true);
+    if (isApproved != address && !isApprovedAll) {
+      await contract.approve(address, tokenId);
+      toast.success(`#${tokenId} approved for sale`);
     }
 
-    return isApprovedAll;
+    return isApproved;
   }
 
   async function isRentedF() {
@@ -110,9 +113,11 @@ function SingleCollectionToken() {
       const placedBid = await contract.placeBid(tokenId, {
         value: ethers.utils.parseUnits(offerAmount, "ether"),
       });
+      toast.success(`Bid placed for #${tokenId} approved for sale`);
       return placedBid;
-    } catch (error) {
+    } catch (error: any) {
       console.error("Error occurred while making an offer", error);
+      toast.error(`failed to place bid for #${tokenId} : ${error.message}`);
     }
   }
   async function acceptAuction() {
@@ -127,8 +132,10 @@ function SingleCollectionToken() {
         signer
       );
       const acceptAuction = await contract.finalizeAuction(tokenId);
+      toast.success(`Auction ended for #${tokenId} `);
       return acceptAuction;
-    } catch (error) {
+    } catch (error: any) {
+      toast.error(`failed to end auction for #${tokenId} : ${error.message}`);
       console.error("Error occurred while making an offer", error);
     }
   }
@@ -147,8 +154,10 @@ function SingleCollectionToken() {
         tokenId,
         durationTime
       );
+      toast.success(`Auction created for #${tokenId} `);
       return createAuctionTx;
     } catch (error) {
+      toast.error(`Auction failed to create for #${tokenId}: ${error} `);
       console.error("Error occurred while making an offer", error);
     }
   }
@@ -165,8 +174,10 @@ function SingleCollectionToken() {
       const buyNFTTX = await contract.instantBuy(tokenId, {
         value: collection?.unitPrice ? ethValue(collection?.unitPrice) : 0,
       });
+      toast.success(`NFT #${tokenId} bought`);
       return buyNFTTX;
     } catch (error) {
+      toast.error(`failed to purchase #${tokenId} `);
       console.error("Error occurred while making an offer", error);
     }
   }
