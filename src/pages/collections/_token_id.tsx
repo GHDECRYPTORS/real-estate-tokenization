@@ -21,6 +21,8 @@ function SingleCollectionToken() {
   const [offerAmount, setOfferAmount] = useState("");
   const [instantBuy, setInstantBuy] = useState(false);
   const [tokenOwner, setTokenOwner] = useState("");
+  const [highestBidder, setHighestBidder] = useState("");
+  const [highestBid, setHighestBid] = useState("");
   // const [activeproperties, setActiveProperties] = useState(false);
   const [activecolldetails, setActiveCollDetails] = useState(false);
   const [activetokendetails, setActiveTokenDetails] = useState(false);
@@ -54,6 +56,28 @@ function SingleCollectionToken() {
       return isInstantBuy;
     } catch (error) {
       console.error("Error occurred while buying the token:", error);
+    }
+  }
+
+  async function approveToken() {
+    try {
+      const provider = new ethers.providers.Web3Provider(window.ethereum);
+
+      const contract = new ethers.Contract(
+        address as string,
+        houseNFTABI,
+        provider
+      );
+
+      const isApproved = await contract.getApproved(tokenId);
+      // isApprovedForAll(address owner, address operator)
+      console.log(isApproved);
+      return isApproved;
+    } catch (error: any) {
+      console.error(
+        "Error occurred while checking if token is rented",
+        error.message
+      );
     }
   }
   async function isRentedF() {
@@ -148,6 +172,23 @@ function SingleCollectionToken() {
     }
   }
 
+  function calculatePercentageRelativeToFloor(
+    currentValue: number,
+    floorValue: number
+  ) {
+    if (currentValue === floorValue) {
+      return "Equal to the floor value";
+    } else if (currentValue > floorValue) {
+      const difference = currentValue - floorValue;
+      const percentageAboveFloor = (difference / floorValue) * 100;
+      return `${percentageAboveFloor.toFixed(2)}% above the floor value`;
+    } else {
+      const difference = floorValue - currentValue;
+      const percentageBelowFloor = (difference / floorValue) * 100;
+      return `${percentageBelowFloor.toFixed(2)}% below the floor value`;
+    }
+  }
+
   async function canCreateAuction() {
     try {
       const provider = new ethers.providers.Web3Provider(window.ethereum);
@@ -159,12 +200,17 @@ function SingleCollectionToken() {
         signer
       );
       const canCreateAuction = await contract.auctions(tokenId);
+      console.log(canCreateAuction);
+      console.log(address);
       setIsNotAuction(
         canCreateAuction[0] === "0x0000000000000000000000000000000000000000"
       );
-      console.log(
-        canCreateAuction[0] === "0x0000000000000000000000000000000000000000"
-      );
+      const weiValue = ethers.BigNumber.from(canCreateAuction[2]._hex);
+      const ethValue = ethers.utils.formatUnits(weiValue, "ether");
+
+      setHighestBid(ethValue);
+      setHighestBidder(ellipsify(canCreateAuction[1] || "", 20));
+
       return canCreateAuction;
     } catch (error) {
       console.error("Error occurred while making an offer", error);
@@ -422,7 +468,7 @@ function SingleCollectionToken() {
                       data-bs-parent="#explor_details"
                     >
                       <div className="accordion-body">
-                        <div className="border-bottom border-gray-200 pb-2 mb-2 d-flex">
+                        <div className="border-gray-200 pb-2 mb-2 d-flex">
                           <div className="avatar">
                             <img
                               className="avatar-img rounded-circle"
@@ -435,130 +481,23 @@ function SingleCollectionToken() {
                             <div className="d-flex pb-1 align-items-center">
                               <h6 className="m-0 fw-500">
                                 <i className="cf cf-eth text-primary"></i>{" "}
-                                0.0285
+                                {highestBid}
                               </h6>
-                              <span className="ps-2">63% below floor</span>
+                              <span className="ps-2">
+                                {/* {collection?.unitPrice} */}
+                                {calculatePercentageRelativeToFloor(
+                                  +highestBid,
+                                  // 0
+                                  collection?.unitPrice / 10 ** 18
+                                )}
+                              </span>
                             </div>
                             <span className="fs-sm">
-                              By
                               <a className="text-mode opacity-80" href="#">
-                                @tarzan75
+                                {highestBidder}
                               </a>
-                              Expiry: in 7 minutes
                             </span>
                           </div>
-                        </div>
-                        <div className="border-bottom border-gray-200 pb-2 mb-2 d-flex">
-                          <div className="avatar">
-                            <img
-                              className="avatar-img rounded-circle"
-                              src="/assets/img/avatar-2.jpg"
-                              title=""
-                              alt=""
-                            />
-                          </div>
-                          <div className="ps-2 col">
-                            <div className="d-flex pb-1 align-items-center">
-                              <h6 className="m-0 fw-500">
-                                <i className="cf cf-eth text-primary"></i>{" "}
-                                0.0277
-                              </h6>
-                              <span className="ps-2">63% below floor</span>
-                            </div>
-                            <span className="fs-sm">
-                              By
-                              <a className="text-mode opacity-80" href="#">
-                                @tarzan75
-                              </a>
-                              Expiry: in 19 minutes
-                            </span>
-                          </div>
-                        </div>
-                        <div className="border-bottom border-gray-200 pb-2 mb-2 d-flex">
-                          <div className="avatar">
-                            <img
-                              className="avatar-img rounded-circle"
-                              src="/assets/img/avatar-3.jpg"
-                              title=""
-                              alt=""
-                            />
-                          </div>
-                          <div className="ps-2 col">
-                            <div className="d-flex pb-1 align-items-center">
-                              <h6 className="m-0 fw-500">
-                                <i className="cf cf-eth text-primary"></i>{" "}
-                                0.0177
-                              </h6>
-                              <span className="ps-2">63% below floor</span>
-                            </div>
-                            <span className="fs-sm">
-                              By
-                              <a className="text-mode opacity-80" href="#">
-                                @tarzan75
-                              </a>
-                              Expiry: in 7 minutes
-                            </span>
-                          </div>
-                        </div>
-                        <div className="border-bottom border-gray-200 pb-2 mb-2 d-flex">
-                          <div className="avatar">
-                            <img
-                              className="avatar-img rounded-circle"
-                              src="/assets/img/avatar-4.jpg"
-                              title=""
-                              alt=""
-                            />
-                          </div>
-                          <div className="ps-2 col">
-                            <div className="d-flex pb-1 align-items-center">
-                              <h6 className="m-0 fw-500">
-                                <i className="cf cf-eth text-primary"></i>{" "}
-                                0.0977
-                              </h6>
-                              <span className="ps-2">63% below floor</span>
-                            </div>
-                            <span className="fs-sm">
-                              By
-                              <a className="text-mode opacity-80" href="#">
-                                @tarzan75
-                              </a>
-                              Expiry: in 25 days
-                            </span>
-                          </div>
-                        </div>
-                        <div className="border-bottom border-gray-200 pb-2 mb-2 d-flex">
-                          <div className="avatar">
-                            <img
-                              className="avatar-img rounded-circle"
-                              src="/assets/img/avatar-5.jpg"
-                              title=""
-                              alt=""
-                            />
-                          </div>
-                          <div className="ps-2 col">
-                            <div className="d-flex pb-1 align-items-center">
-                              <h6 className="m-0 fw-500">
-                                <i className="cf cf-eth text-primary"></i>{" "}
-                                0.0877
-                              </h6>
-                              <span className="ps-2">63% below floor</span>
-                            </div>
-                            <span className="fs-sm">
-                              By
-                              <a className="text-mode opacity-80" href="#">
-                                @tarzan75
-                              </a>
-                              Expiry: in 7 minutes
-                            </span>
-                          </div>
-                        </div>
-                        <div className="text-center">
-                          <a
-                            className="btn btn-sm rounded-pill btn-border-mode"
-                            href="#"
-                          >
-                            Load More
-                          </a>
                         </div>
                       </div>
                     </div>
@@ -914,22 +853,6 @@ function SingleCollectionToken() {
                           </div>
                           <div className="col-5 text-end">
                             <span>ERC-721</span>
-                          </div>
-                        </div>
-                        <div className="row mb-2">
-                          <div className="col-7">
-                            <h6 className="m-0 fw-400">Chain</h6>
-                          </div>
-                          <div className="col-5 text-end">
-                            <span>Aurora Testnet</span>
-                          </div>
-                        </div>
-                        <div className="row mb-2">
-                          <div className="col-7">
-                            <h6 className="m-0 fw-400">Creator Fee</h6>
-                          </div>
-                          <div className="col-5 text-end">
-                            <span>5%</span>
                           </div>
                         </div>
                       </div>
