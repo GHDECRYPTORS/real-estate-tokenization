@@ -1,16 +1,17 @@
 /** @format */
 
 import axios from "axios";
+const backEndUrl = import.meta.env.VITE_BACKENDURL;
 
 const AuthUrl = axios.create({
-	baseURL: "https://real-estate-backend.azurewebsites.net/v1",
-	headers: { "Content-Type": "application/json" },
+  baseURL: backEndUrl,
+  headers: { "Content-Type": "application/json" },
 });
 
 export const getNonce = async (address: any) => {
-	return AuthUrl.get(`/auth/nonce/${address}`);
+  return AuthUrl.get(`/auth/nonce/${address}`);
 };
 
 export const postLogin = async (form: any) => {
-	return AuthUrl.post(`auth/login/`, form);
+  return AuthUrl.post(`auth/login/`, form);
 };

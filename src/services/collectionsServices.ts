@@ -1,9 +1,9 @@
 /** @format */
 
 import axios from "axios";
-
+const backEndUrl = import.meta.env.VITE_BACKENDURL;
 const AuthUrl = axios.create({
-  baseURL: "https://real-estate-backend.azurewebsites.net/v1",
+  baseURL: backEndUrl,
   headers: { "Content-Type": "application/json" },
 });
 

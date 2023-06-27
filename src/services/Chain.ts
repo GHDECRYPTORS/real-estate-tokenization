@@ -3,7 +3,7 @@ import axios from "axios";
 export abstract class Chain {
   protected walletConnected: boolean;
   protected walletAddress: string | undefined;
-  public url = "https://real-estate-backend.azurewebsites.net/v1";
+  public url = import.meta.env.VITE_BACKENDURL;
 
   constructor() {
     this.walletConnected = false;
