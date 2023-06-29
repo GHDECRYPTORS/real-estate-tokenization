@@ -20,3 +20,11 @@ Real estate has long been regarded as one of the most secure and profitable inve
 6. **Income Generation**: RealToken offers a unique income generation model. When a property is tokenized, the rental income generated from the property is distributed among the token holders proportionally. This ensures that investors receive a steady stream of income from their investments, enhancing the overall return on investment.
 
 7. **Future Potential**: The growth potential of RealToken is immense. As blockchain technology becomes more mainstream and NFTs gain wider adoption, the demand for tokenized real estate is expected to soar. RealToken is at the forefront of this emerging trend, positioning itself as a leader in the space and providing early investors with the opportunity to benefit from its success.
+
+### Features Of RealToken
+1. Instant Buy
+2. Initial Tokenization
+3. Auctions
+4. Rent
+
+   
