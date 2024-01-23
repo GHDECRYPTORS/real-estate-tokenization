@@ -2,9 +2,126 @@
 pragma solidity ^0.8.0;
 
 import "@openzeppelin/contracts/token/ERC721/ERC721.sol";
-
-import "./Deployer.sol";
 import "hardhat/console.sol";
+
+contract Deployer {
+
+    mapping (HouseNFT => bool) public HouseNFTDeployed;
+    address public owner;
+    event AuctionCreated(
+        uint256 indexed tokenId,
+        address indexed seller,
+        uint256 duration,
+        address indexed tokenContract
+    );
+    event NFTContractMinted(
+        HouseNFT indexed tokenContract,
+        address indexed tokenOwner
+    );
+    event AuctionFinalized(
+        uint256 indexed tokenId,
+        address seller,
+        address indexed highestBidder,
+        uint256 highestBid,
+        address indexed tokenContract
+    );
+    event InstantBuy(
+        uint256 indexed tokenId,
+        address indexed buyer,
+        uint256 price,
+        address indexed tokenContract
+    );
+    event BidPlaced(
+        uint256 indexed tokenId,
+        address indexed bidder,
+        uint256 bidAmount,
+        address indexed tokenContract
+    );
+
+    event isNFTRented(
+        address indexed tokenContract,
+        bool indexed isRented
+    );
+
+     event TokenDestroyed(
+        address indexed tokenContract
+    );
+
+    event TokenTransfer(
+        address indexed tokenContract,
+        address from,
+        address indexed to,
+        uint256 indexed tokenId
+    );
+
+    event TokenRentPayed(
+        address indexed tokenContract,
+        uint256 indexed unitRent
+    );
+
+    constructor(){
+        owner = msg.sender;
+    }
+
+    function mintNFT(
+        string memory name_,
+        string memory symbol_,
+        uint256 unitPrice_,
+        string memory baseUrl_,
+        address tokenOwner
+    ) public returns (HouseNFT){
+        require(msg.sender == owner,"Only the owner can deploy this contract");
+        require(unitPrice_ > 0.0001 ether,"Unit price must be higher than 0.0001");
+        HouseNFT houseNFt = new HouseNFT(name_,
+            symbol_,
+            unitPrice_,
+            baseUrl_,
+            address(this),
+            tokenOwner
+        );
+        HouseNFTDeployed[houseNFt] = true;
+        emit NFTContractMinted(houseNFt,tokenOwner);
+        return houseNFt;
+    }
+
+    modifier onlyRecognized {
+        require(HouseNFTDeployed[HouseNFT(msg.sender)],"Contract not recognized");
+        _;
+    }
+
+    function auctionCreated(uint256 tokenId,address seller,uint256 duration) external onlyRecognized{
+        emit AuctionCreated(tokenId, seller, duration, msg.sender);
+    }
+
+    function bidPlaced(uint256 tokenId,address seller,uint256 amount) external onlyRecognized{
+        emit BidPlaced(tokenId, seller, amount, msg.sender);
+    }
+
+    function auctionFinalized(uint256 tokenId,address seller,address highestBidder,uint256 highestBid) external onlyRecognized{
+        emit AuctionFinalized(tokenId, seller, highestBidder,highestBid, msg.sender);
+    }
+
+    function instantBuy(uint256 tokenId,address buyer,uint256 price) external onlyRecognized{
+        emit InstantBuy(tokenId, buyer, price, msg.sender);
+    }
+
+    function isnftRented(bool isRented) external onlyRecognized{
+        emit isNFTRented(msg.sender,isRented);
+    }
+
+    function tokenDestroyed() external onlyRecognized{
+        emit TokenDestroyed(msg.sender);
+    }
+
+    function tokenTransfer(address from, address to, uint256 tokenId) external {
+        emit TokenTransfer(msg.sender,from,to,tokenId);
+    }
+
+    function tokenRentPayed(uint256 unitRent) external onlyRecognized{
+        emit TokenRentPayed(msg.sender,unitRent);
+    }
+}
+
 
 contract HouseNFT is ERC721 {
     string private _name;
@@ -12,7 +129,7 @@ contract HouseNFT is ERC721 {
 
     uint256 public _unitPrice;
     address public _deadAddr = 0x000000000000000000000000000000000000dEaD;
-    address public _devAddr = 0x65Ce6D885C1935b8c4D53CB99e3f55cf5841dd16;
+    address public _devAddr = 0x830a582E30073E1EFed0a1FFEAb9390b5D6C2BE3;
     string public tokenImageUrl;
     address public deployer_;
     mapping(address => bool) public isRented;
@@ -36,16 +153,11 @@ contract HouseNFT is ERC721 {
         isRented[address(this)] = false;
     }
 
-    function _afterTokenTransfer(
-        address from,
-        address to,
-        uint256 tokenId,
-        uint256 batchSize
-    ) internal override {
-        super._afterTokenTransfer(from, to, tokenId, batchSize);
+    function _safeTransfer(address from, address to, uint256 tokenId, bytes memory data) internal override  {
+        super._safeTransfer(from, to, tokenId, data);
         Deployer(deployer_).tokenTransfer(from, to, tokenId);
     }
-
+    
     function toggleRent(bool setRented) public returns (bool) {
         require(msg.sender == _devAddr, "Only dev can rent this asset");
         isRented[address(this)] = setRented;
@@ -54,9 +166,9 @@ contract HouseNFT is ERC721 {
     }
 
     function tokenURI(
-        uint256 tokenId
+        uint256
     ) public view override returns (string memory) {
-        _requireMinted(tokenId);
+        // _requireMinted(tokenId);
         return tokenImageUrl;
     }
 
