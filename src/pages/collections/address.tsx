@@ -218,10 +218,7 @@ function SingleCollection() {
                         <span className="fs-xs w-100">0% &lt; floor</span>{" "}
                       </div>{" "}
                       <div className="col d-none d-md-flex flex-column">
-                        <span>
-                          Rented
-                          <a className="h6 m-0" href="#"></a>
-                        </span>
+                        <span>Rented</span>
                         <span>{collection?.isRented ? "Yes" : "No"}</span>
                       </div>
                       <div className="col d-none d-md-flex flex-column">

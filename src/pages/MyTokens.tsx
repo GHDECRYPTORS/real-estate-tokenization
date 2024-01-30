@@ -24,6 +24,7 @@ function MyTokens() {
   useEffect(() => {
     const getCollection = async () => {
       const response = await getMyTokens(address);
+      console.log(response?.data?.data);
       setCollection(response?.data?.data);
     };
 
@@ -52,7 +53,7 @@ function MyTokens() {
   useEffect(() => {
     setTokens(
       collection?.filter(
-        (item: any) => item.collection.name === selectedCollection
+        (item: any) => item.collection_.name === selectedCollection
       )
     );
   }, [selectedCollection]);
@@ -62,10 +63,10 @@ function MyTokens() {
       setCollection(response?.data?.data);
       setCollectionNames([
         ...new Set(
-          response?.data?.data?.map((item: any) => item.collection.name)
+          response?.data?.data?.map((item: any) => item.collection_.name)
         ),
       ] as string[]);
-      setCollections(response?.data?.data?.map((item: any) => item.collection));
+      setCollections(response?.data?.data?.map((item: any) => item.collection_));
     });
   }, []);
 

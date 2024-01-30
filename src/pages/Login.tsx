@@ -26,10 +26,12 @@ function Login() {
           console.log("Before", address);
           const nonceResponse = await getNonce(address);
 
-          console.log("After", address);
           const { message } = nonceResponse.data;
 
+          console.log(window.ethereum.isConnected());
+
           const provider = new ethers.providers.Web3Provider(window.ethereum);
+
           const signer = provider.getSigner();
           const signature = await signer.signMessage(message);
 
@@ -37,6 +39,7 @@ function Login() {
             const formdata = {
               address,
               signature,
+              message,
             };
             const response = await postLogin(formdata);
 
