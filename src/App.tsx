@@ -23,7 +23,7 @@ import SingleCollectionToken from "./pages/collections/_token_id";
 import { Web3Modal, Web3NetworkSwitch } from "@web3modal/react";
 import { aurora, auroraTestnet } from "wagmi/chains";
 import getCurrChainId from "./helpers/getChainId";
-import { hederaMainnet, hederaTestnet } from "./services/chains";
+import { lightLinkTestnet } from "./services/chains";
 const currentChain = import.meta.env.VITE_CURRENT_CHAIN;
 
 // import { hederaMainnet, hederaTestnet } from "./services/chains";
@@ -38,9 +38,7 @@ const chain = "aurora";
 // >;
 
 // const chains = chain === "aurora-testnet" ? aurorachains : hederachains;
-const chains = [auroraTestnet, aurora, hederaMainnet, hederaTestnet].filter(
-  (e: any) => e.id == currentChain
-);
+const chains = [lightLinkTestnet].filter((e: any) => e.id == currentChain);
 
 const projectId = "02c135931686e1628630c41236d10acf";
 

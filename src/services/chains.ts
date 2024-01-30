@@ -26,6 +26,32 @@ export const hederaMainnet = {
   testnet: false,
 } as const satisfies Chain;
 
+export const lightLinkTestnet= {
+  id: 295,
+  name: "Lightlink Pegasus Testnet",
+  network: "lightlink-testnet",
+  nativeCurrency: {
+    decimals: 18,
+    name: "Pegasus",
+    symbol: "ETH",
+  },
+  rpcUrls: {
+    public: {
+      http: ["https://replicator.pegasus.lightlink.io/rpc/v1"],
+    },
+    default: {
+      http: ["https://replicator.pegasus.lightlink.io/rpc/v1"],
+    },
+  },
+  blockExplorers: {
+    default: {
+      name: "Pegasus",
+      url: "https://pegasus.lightlink.io",
+    },
+  },
+  testnet: false,
+} as const satisfies Chain;
+
 export const hederaTestnet = {
   id: 296,
   name: "Hedera Testnet",
