@@ -24,11 +24,9 @@ import { Web3Modal, Web3NetworkSwitch } from "@web3modal/react";
 import { aurora, auroraTestnet } from "wagmi/chains";
 import getCurrChainId from "./helpers/getChainId";
 import { lightLinkTestnet } from "./services/chains";
-const currentChain = import.meta.env.VITE_CURRENT_CHAIN;
 
 // import { hederaMainnet, hederaTestnet } from "./services/chains";
 
-// const chain = import.meta.env.VITE_CHAIN_NAME || "aurora-testnet";
 const chain = "lightlink-testnet";
 
 // const aurorachains = [auroraTestnet];
@@ -48,6 +46,8 @@ const wagmiConfig = createConfig({
   connectors: w3mConnectors({ projectId, version: 2, chains }),
   publicClient,
 });
+
+
 const ethereumClient = new EthereumClient(wagmiConfig, chains);
 
 const Pages = {
@@ -137,7 +137,7 @@ const App = () => {
     getCurrChainId().then((networkId: any) => setcurrentChain(networkId));
   }, []);
 
-  if (chains[0].id != currentchain) {
+  if (chains[0].id != wagmiConfig.lastUsedChainId) {
     return (
       <WagmiConfig config={wagmiConfig}>
         <Web3Modal projectId={projectId} ethereumClient={ethereumClient} />
