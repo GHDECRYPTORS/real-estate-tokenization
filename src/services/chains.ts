@@ -27,7 +27,7 @@ export const hederaMainnet = {
 } as const satisfies Chain;
 
 export const lightLinkTestnet= {
-  id: 295,
+  id: 1891,
   name: "Lightlink Pegasus Testnet",
   network: "lightlink-testnet",
   nativeCurrency: {

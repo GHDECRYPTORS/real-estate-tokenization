@@ -29,7 +29,7 @@ const currentChain = import.meta.env.VITE_CURRENT_CHAIN;
 // import { hederaMainnet, hederaTestnet } from "./services/chains";
 
 // const chain = import.meta.env.VITE_CHAIN_NAME || "aurora-testnet";
-const chain = "aurora";
+const chain = "lightlink-testnet";
 
 // const aurorachains = [auroraTestnet];
 //   const chains = aurorachains;
@@ -38,7 +38,7 @@ const chain = "aurora";
 // >;
 
 // const chains = chain === "aurora-testnet" ? aurorachains : hederachains;
-const chains = [lightLinkTestnet].filter((e: any) => e.id == currentChain);
+const chains = [lightLinkTestnet];
 
 const projectId = "02c135931686e1628630c41236d10acf";
 
@@ -150,7 +150,7 @@ const App = () => {
 
   return (
     <div>
-      {chain === "aurora" ? (
+      {chain === "lightlink-testnet" ? (
         <WagmiConfig config={wagmiConfig}>
           <Web3Modal projectId={projectId} ethereumClient={ethereumClient} />
           <Router>
