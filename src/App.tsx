@@ -21,7 +21,7 @@ import RouterCombiner from "./route.combiner";
 import SingleCollection from "./pages/collections/address";
 import SingleCollectionToken from "./pages/collections/_token_id";
 import { Web3Modal, Web3NetworkSwitch } from "@web3modal/react";
-import { aurora, auroraTestnet } from "wagmi/chains";
+// import { aurora, auroraTestnet } from "wagmi/chains";
 import getCurrChainId from "./helpers/getChainId";
 import { lightLinkTestnet } from "./services/chains";
 
