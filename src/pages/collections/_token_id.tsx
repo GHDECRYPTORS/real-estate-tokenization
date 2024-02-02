@@ -149,7 +149,7 @@ function SingleCollectionToken() {
     if (isApproved != address && !isApprovedAll) {
       const approval = await contract.approve(address, tokenId);
       await approval.wait(1);
-      toast.success(`#${tokenId} approved for contract`);
+      toast.success(`#${tokenId} approved for contract `);
     }
 
     return isApproved;
