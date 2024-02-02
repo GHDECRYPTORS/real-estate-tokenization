@@ -123,9 +123,21 @@ const Routes = [
 const App = () => {
   const auth = false; /* Its Only Use For Now,I Handle It With ReduxStore */
   const [_, setcurrentChain] = useState(0);
+  const [loading, setLoading] = useState("");
+  let interval;
 
   useEffect(() => {
+    if (chains[0].id != wagmiConfig.lastUsedChainId) {
+      interval = setInterval(function () {
+        if (chains[0].id == wagmiConfig.lastUsedChainId) {
+          clearInterval(interval);
+          setLoading(" ");
+        }
+      }, 1000);
+    }
+
     if (!!window.ethereum == false) return;
+
     window.ethereum.on("chainChanged", function (networkId: any) {
       setcurrentChain(+networkId);
     });
@@ -150,6 +162,7 @@ const App = () => {
 
   return (
     <div>
+      {loading}
       {chain === "lightlink-testnet" ? (
         <WagmiConfig config={wagmiConfig}>
           <Web3Modal projectId={projectId} ethereumClient={ethereumClient} />
