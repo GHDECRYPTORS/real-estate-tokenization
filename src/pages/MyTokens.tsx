@@ -66,7 +66,9 @@ function MyTokens() {
           response?.data?.data?.map((item: any) => item.collection_.name)
         ),
       ] as string[]);
-      setCollections(response?.data?.data?.map((item: any) => item.collection_));
+      setCollections(
+        response?.data?.data?.map((item: any) => item.collection_)
+      );
     });
   }, []);
 
@@ -94,12 +96,12 @@ function MyTokens() {
       <section className="pb-3 mt-10">
         <div className="container mt-n10">
           <div className="avatar avatar-xxl mb-4">
-            <img
+            {/* <img
               src={ipfsTohttp(collection?.tokenURI)}
               title=""
               alt=""
               className="border border-3 border-gray-400 rounded-3"
-            />
+            /> */}
           </div>
           <div className="row">
             <div className="col-md-8">
@@ -222,14 +224,14 @@ function MyTokens() {
                   <div className="row activity-row g-0">
                     <div className="col-7 col-sm-4 p-3">
                       <div className="d-flex align-items-center">
-                        {/* <div className='avatar-sm'>
+                        <div className="avatar-sm">
                           <img
-                            className='avatar-img rounded-circle'
-                            src={ipfsTohttp(collection?.tokenURI)}
-                            title=''
-                            alt=''
+                            className="avatar-img rounded-circle"
+                            src={ipfsTohttp(token.collection?.tokenURI)}
+                            title=""
+                            alt=""
                           />
-                        </div> */}
+                        </div>
                         <div className="col ps-3">
                           <h6 className="m-0">{selectedCollection}</h6>
                           <span>
@@ -241,30 +243,13 @@ function MyTokens() {
                     </div>
                     <div className="col-5 col-sm-8 p-3">
                       <div className="d-flex">
-                        <div className="col">
-                          {/* <h6 className='m-0'>
-                            <i className='cf cf-etc fw-400 pe-1'></i>{" "}
-                            {token.collection?.unitPrice
-                              ? ethValue(collection?.unitPrice)
-                              : 0}
-                          </h6> */}
-                          {/* <span className='fs-xs w-100'>55% &lt; floor</span>{" "} */}
-                        </div>{" "}
+                        <div className="col"></div>{" "}
                         <div className="col d-none d-md-flex flex-column">
-                          <span>
-                            Rented
-                            <a className="h6 m-0" href="#"></a>
-                          </span>
+                          <span>Rented</span>
                           <span>
                             {token.collection?.isRented ? "Yes" : "No"}
                           </span>
                         </div>
-                        {/* <div className='col d-none d-md-flex flex-column'>
-                        <span>Updated Time Frame</span>
-                        <span>
-                          {new Date(collection?.updated_at).toLocaleString()}
-                        </span>
-                      </div> */}
                       </div>
                     </div>
                   </div>
