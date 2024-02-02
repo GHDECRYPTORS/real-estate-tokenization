@@ -47,7 +47,6 @@ const wagmiConfig = createConfig({
   publicClient,
 });
 
-
 const ethereumClient = new EthereumClient(wagmiConfig, chains);
 
 const Pages = {
@@ -123,7 +122,7 @@ const Routes = [
 
 const App = () => {
   const auth = false; /* Its Only Use For Now,I Handle It With ReduxStore */
-  const [currentchain, setcurrentChain] = useState(0);
+  const [_, setcurrentChain] = useState(0);
 
   useEffect(() => {
     window.ethereum.on("chainChanged", function (networkId: any) {

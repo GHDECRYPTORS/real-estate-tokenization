@@ -46,7 +46,13 @@ function Login() {
             console.log("response", response);
 
             if (response?.data?.statusCode === 200) {
-              console.log("responseData", response?.data?.data);
+              console.log("responseDatay", response?.data);
+              console.log({
+                username: response?.data?.data?.user?.username,
+                accessToken: response?.data?.data?.access_token,
+                id: response?.data?.data?.user?._id,
+                just_signed_up: response?.data?.data?.user?.just_signed_up,
+              });
               dispatch(
                 AuthenticateUser({
                   username: response?.data?.data?.user?.username,
