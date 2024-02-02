@@ -3,7 +3,6 @@ import Header from "../components/header";
 import Footer from "../components/footer";
 import { Helmet } from "react-helmet";
 
-
 function replay(eventType: string) {
   const event = new Event(eventType);
   console.log(eventType);
@@ -23,10 +22,10 @@ function PublicLayout({ children }: { children: ReactNode }) {
     <div>
       <Helmet>
         {/* <script src="assets/vendor/bootstrap/dist/js/bootstrap.bundle.min.js"></script> */}
-        <script src="assets/vendor/swiper/swiper-bundle.min.js"></script>
-        <script src="assets/vendor/headroom/headroom.min.js"></script>
-        <script src="assets/vendor/timezz/timezz.js"></script>
-        <script src="assets/js/theme.js"></script>
+        <script src="/assets/vendor/swiper/swiper-bundle.min.js"></script>
+        <script src="/assets/vendor/headroom/headroom.min.js"></script>
+        <script src="/assets/vendor/timezz/timezz.js"></script>
+        <script src="/assets/js/theme.js"></script>
         {/* <script src="assets/vendor/bootstrap/dist/js/bootstrap.bundle.min.js"></script> */}
       </Helmet>
       <Header></Header>

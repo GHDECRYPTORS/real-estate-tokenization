@@ -27,7 +27,7 @@ function CollectionCard({ collection }: any) {
             >
               <img
                 className="avatar-img rounded-circle"
-                src="assets/img/avatar-1.jpg"
+                src="/assets/img/avatar-1.jpg"
                 title=""
                 alt=""
               />
@@ -44,7 +44,7 @@ function CollectionCard({ collection }: any) {
             >
               <img
                 className="avatar-img rounded-circle"
-                src="assets/img/avatar-2.jpg"
+                src="/assets/img/avatar-2.jpg"
                 title=""
                 alt=""
               />
@@ -58,7 +58,7 @@ function CollectionCard({ collection }: any) {
             >
               <img
                 className="avatar-img rounded-circle"
-                src="assets/img/avatar-3.jpg"
+                src="/assets/img/avatar-3.jpg"
                 title=""
                 alt=""
               />

@@ -52,7 +52,7 @@ const User: React.FC<UserProps> = ({ showUser, setShowUser }) => {
             <div className="avatar">
               <img
                 className="avatar-img rounded-circle"
-                src="assets/img/avatar-2.jpg"
+                src="/assets/img/avatar-2.jpg"
                 title=""
                 alt=""
               />

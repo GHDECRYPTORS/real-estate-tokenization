@@ -76,7 +76,7 @@ function Profile() {
                           <div className="avatar-lg">
                             <img
                               className="avatar-img rounded"
-                              src="assets/img/avatar-2.jpg"
+                              src="/assets/img/avatar-2.jpg"
                               title=""
                               alt=""
                             />

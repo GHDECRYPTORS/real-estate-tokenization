@@ -165,7 +165,7 @@ function SingleCollectionToken() {
         provider
       );
 
-      const isRented = await contract.isRented(+(tokenId as string));
+      const isRented = await contract.isRented(address);
       return isRented;
     } catch (error: any) {
       console.error(
@@ -529,8 +529,7 @@ function SingleCollectionToken() {
               <div className="d-flex pt-2">
                 <div>
                   <Link to={`/collections/${address}`}>
-                    <span>Owned by</span>{" "}
-                    <a href="#">{ellipsify(tokenOwner || "", 20)}</a>
+                    <span>Owned by</span> {ellipsify(tokenOwner || "", 20)}
                   </Link>
                 </div>
                 {/* <div className='ms-auto d-flex fs-sm'>

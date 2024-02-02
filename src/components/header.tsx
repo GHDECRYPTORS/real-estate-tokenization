@@ -31,14 +31,14 @@ function Header() {
               <Link className='navbar-brand' to='/'>
                 <img
                   className='logo-dark w-8'
-                  src='assets/img/logo.png'
+                  src='/assets/img/logo.png'
                   title=''
                   alt=''
                   style={{ width: "200px" }}
                 />
                 <img
                   className='logo-light'
-                  src='assets/img/logo.png'
+                  src='/assets/img/logo.png'
                   title=''
                   alt=''
                   style={{ width: "200px" }}

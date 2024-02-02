@@ -8,7 +8,7 @@ export default function UserCard() {
         <div className="avatar avatar-lg">
           <img
             className="avatar-img rounded-circle"
-            src="assets/img/avatar-1.jpg"
+            src="/assets/img/avatar-1.jpg"
             title=""
             alt=""
           />

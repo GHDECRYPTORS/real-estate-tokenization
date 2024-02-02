@@ -230,7 +230,7 @@ const Home = () => {
 											<div className="avatar">
 												<img
 													className="avatar-img rounded-circle"
-													src="assets/img/avatar-1.jpg"
+													src="/assets/img/avatar-1.jpg"
 													title=""
 													alt=""
 												/>
@@ -248,7 +248,7 @@ const Home = () => {
 											<div className="avatar">
 												<img
 													className="avatar-img rounded-circle"
-													src="assets/img/avatar-2.jpg"
+													src="/assets/img/avatar-2.jpg"
 													title=""
 													alt=""
 												/>
