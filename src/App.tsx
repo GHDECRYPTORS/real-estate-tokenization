@@ -125,6 +125,7 @@ const App = () => {
   const [_, setcurrentChain] = useState(0);
 
   useEffect(() => {
+    if (!!window.ethereum == false) return;
     window.ethereum.on("chainChanged", function (networkId: any) {
       setcurrentChain(+networkId);
     });

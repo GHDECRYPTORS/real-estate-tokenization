@@ -29,7 +29,7 @@ function SingleCollectionToken() {
   const [isInstantBuyEnabled, setInstantBuyEnabled] = useState(false);
   const { address: userAddress } = useAccount();
   const [isRented, _] = useState(false);
-  const [durationTime, setDurationTime] = useState("0");
+  const [durationTime, setDurationTime] = useState("");
   const [offerAmount, setOfferAmount] = useState("");
   const [tokenOwner, setTokenOwner] = useState("");
   const [highestBidder, setHighestBidder] = useState("");
@@ -104,7 +104,7 @@ function SingleCollectionToken() {
       toast.success(`#${tokenId} approved for sale`);
       return instantBuy;
     } catch (error: any) {
-      toast.error(`#${tokenId} could not approved for sale : ${error.message}`);
+      toast.error(getWordsFromString(error.message));
       console.error("Error occurred while buying the token:", error);
     } finally {
       setEnableInstantBuyLoading(false);
@@ -127,8 +127,8 @@ function SingleCollectionToken() {
       await disableInstantBuy.wait(1);
       toast.success(`#${tokenId} disabled for sale`);
       return disableInstantBuy;
-    } catch (error) {
-      toast.error(`#${tokenId} could not disabled for sale`);
+    } catch (error: any) {
+      toast.error(getWordsFromString(error.message));
       console.error("Error occurred while buying the token:", error);
     } finally {
       setDisenableInstantLoading(false);
@@ -175,6 +175,12 @@ function SingleCollectionToken() {
     }
   }
 
+  function getWordsFromString(str: any) {
+    const startIndex = str.indexOf('reason="') + 8;
+    const substring = str.slice(startIndex);
+    return substring.split('"')[0];
+  }
+
   async function makeOffer() {
     try {
       setMakeOfferLoading(true);
@@ -193,8 +199,7 @@ function SingleCollectionToken() {
       toast.success(`Bid placed for #${tokenId} approved for sale`);
       return placedBid;
     } catch (error: any) {
-      console.error("Error occurred while making an offer", error);
-      toast.error(`failed to place bid for #${tokenId} : ${error.message}`);
+      toast.error(getWordsFromString(error.message));
     } finally {
       setMakeOfferLoading(false);
     }
@@ -216,7 +221,7 @@ function SingleCollectionToken() {
       toast.success(`Auction ended for #${tokenId} `);
       return acceptAuction;
     } catch (error: any) {
-      toast.error(`failed to end auction for #${tokenId} : ${error.message}`);
+      toast.error(getWordsFromString(error.message));
       console.error("Error occurred while making an offer", error);
     } finally {
       setAcceptAuctionLoading(false);
@@ -224,6 +229,9 @@ function SingleCollectionToken() {
   }
   async function createAuction() {
     try {
+      if (durationTime === "0") throw new Error("Enter duration in seconds");
+      if (isNaN(+durationTime) || durationTime.trim() === "")
+        throw new Error("Enter valid duration");
       setCreateAuctionLoading(true);
       await approveToken();
       const provider = new ethers.providers.Web3Provider(window.ethereum);
@@ -242,7 +250,7 @@ function SingleCollectionToken() {
       toast.success(`Auction created for #${tokenId} `);
       return createAuctionTx;
     } catch (error) {
-      toast.error(`Auction failed to create for #${tokenId}: ${error} `);
+      toast.error(getWordsFromString(error.message));
       console.error("Error occurred while making an offer", error);
     } finally {
       setCreateAuctionLoading(false);
@@ -265,7 +273,7 @@ function SingleCollectionToken() {
       toast.success(`NFT #${tokenId} bought`);
       return buyNFTTX;
     } catch (error: any) {
-      toast.error(`failed to purchase #${tokenId} : ${error.message}`);
+      toast.error(getWordsFromString(error.message));
       console.error("Error occurred while making an offer", error);
     } finally {
       setBuyNFTLoading(false);

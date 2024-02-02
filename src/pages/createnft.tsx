@@ -9,8 +9,10 @@ import { selectUserInstance } from "../store/slices/user.slice";
 import { useAppSelector } from "../store/hooks";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import lighthouse from "@lighthouse-web3/sdk";
 
 const apiKey = import.meta.env.VITE_WEB3_STORAGE_KEY;
+const lightApiKey = import.meta.env.VITE_LIGHTHOUSE_API;
 const deployerContract = import.meta.env.VITE_NFT_DEPLOYER;
 const Createnft = () => {
   const navigate = useNavigate();
@@ -43,25 +45,52 @@ const Createnft = () => {
     return new Web3Storage({ token: apiKey });
   }
 
+  const progressCallback = (progressData: any) => {
+    let percentageDone =
+      100 - (progressData?.total / progressData?.uploaded)?.toFixed(2);
+    console.log(percentageDone);
+  };
+  const uploadFile = async (file: any) => {
+    try {
+      const response = await lighthouse.upload(
+        [file],
+        lightApiKey,
+        false,
+        null,
+        progressCallback
+      );
+      return response;
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   async function uploadMetaData() {
-    const client = makeStorageClient();
     const imageFile = imageDom.current.files;
 
     if (imageFile?.length != 1) {
       toast.error("Please select one image");
       return;
     }
-    const cidImage = await client.put(imageFile, { wrapWithDirectory: false });
+    const response = await uploadFile(imageFile[0]);
+    const hash = response.data.Hash;
+
+    const image = `https://gateway.lighthouse.storage/ipfs/${hash}`;
 
     const obj = {
-      image: `ipfs://${cidImage}`,
+      image,
       name: nft_name,
       description: nft_description,
     };
     const blob = new Blob([JSON.stringify(obj)], { type: "application/json" });
 
-    const files = [new File([blob], "hello.json")];
-    const cid = await client.put(files, { wrapWithDirectory: false });
+    const metaData = await uploadFile(new File([blob], "meta.json"));
+
+    const metaDatahash = metaData.data.Hash;
+
+    const metaDataUrl = `https://gateway.lighthouse.storage/ipfs/${metaDatahash}`;
+
+    console.log(metaData);
 
     const provider = new ethers.providers.Web3Provider(window.ethereum);
     const signer = provider.getSigner();
@@ -71,13 +100,13 @@ const Createnft = () => {
       nft_name,
       nft_symbol,
       ethers.utils.parseEther(unitPrice.toString()),
-      `ipfs://${cid}`,
+      metaDataUrl,
       nft_Owner
     );
     await mintNFTR.wait(1);
     toast.success(`NFT created, view on blockexplorer ${mintNFTR.hash}`);
 
-    return cid;
+    return metaDatahash;
   }
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
