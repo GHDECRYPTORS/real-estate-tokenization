@@ -249,7 +249,7 @@ function SingleCollectionToken() {
       await createAuctionTx.wait(1);
       toast.success(`Auction created for #${tokenId} `);
       return createAuctionTx;
-    } catch (error) {
+    } catch (error: any) {
       toast.error(getWordsFromString(error.message));
       console.error("Error occurred while making an offer", error);
     } finally {

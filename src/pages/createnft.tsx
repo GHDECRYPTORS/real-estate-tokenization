@@ -41,15 +41,8 @@ const Createnft = () => {
       reader.readAsDataURL(file);
     }
   };
-  function makeStorageClient() {
-    return new Web3Storage({ token: apiKey });
-  }
 
-  const progressCallback = (progressData: any) => {
-    let percentageDone =
-      100 - (progressData?.total / progressData?.uploaded)?.toFixed(2);
-    console.log(percentageDone);
-  };
+  const progressCallback = (_: any) => {};
   const uploadFile = async (file: any) => {
     try {
       const response = await lighthouse.upload(
@@ -59,6 +52,7 @@ const Createnft = () => {
         null,
         progressCallback
       );
+      if (response == null) return;
       return response;
     } catch (error) {
       console.log(error);
@@ -86,11 +80,11 @@ const Createnft = () => {
 
     const metaData = await uploadFile(new File([blob], "meta.json"));
 
+    if (metaData == null) return;
+
     const metaDatahash = metaData.data.Hash;
 
     const metaDataUrl = `https://gateway.lighthouse.storage/ipfs/${metaDatahash}`;
-
-    console.log(metaData);
 
     const provider = new ethers.providers.Web3Provider(window.ethereum);
     const signer = provider.getSigner();
