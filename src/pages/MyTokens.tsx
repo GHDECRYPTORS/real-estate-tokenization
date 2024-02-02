@@ -227,7 +227,7 @@ function MyTokens() {
                         <div className="avatar-sm">
                           <img
                             className="avatar-img rounded-circle"
-                            src={ipfsTohttp(token.collection?.tokenURI)}
+                            src={ipfsTohttp(token.collection_?.tokenURI)}
                             title=""
                             alt=""
                           />
