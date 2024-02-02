@@ -23,11 +23,9 @@ import SingleCollectionToken from "./pages/collections/_token_id";
 import { Web3Modal, Web3NetworkSwitch } from "@web3modal/react";
 // import { aurora, auroraTestnet } from "wagmi/chains";
 import getCurrChainId from "./helpers/getChainId";
-import { lightLinkTestnet } from "./services/chains";
+import { areaonTestnet, lightLinkTestnet } from "./services/chains";
 
 // import { hederaMainnet, hederaTestnet } from "./services/chains";
-
-const chain = "lightlink-testnet";
 
 // const aurorachains = [auroraTestnet];
 //   const chains = aurorachains;
@@ -36,7 +34,7 @@ const chain = "lightlink-testnet";
 // >;
 
 // const chains = chain === "aurora-testnet" ? aurorachains : hederachains;
-const chains = [lightLinkTestnet];
+const chains = [areaonTestnet];
 
 const projectId = "02c135931686e1628630c41236d10acf";
 
@@ -154,7 +152,7 @@ const App = () => {
       <WagmiConfig config={wagmiConfig}>
         <Web3Modal projectId={projectId} ethereumClient={ethereumClient} />
         <div className="container mt-4">
-          Switch to {chains[0].name} <Web3NetworkSwitch />
+          Switch <Web3NetworkSwitch />
         </div>
       </WagmiConfig>
     );
@@ -163,7 +161,7 @@ const App = () => {
   return (
     <div>
       {loading}
-      {chain === "lightlink-testnet" ? (
+      {
         <WagmiConfig config={wagmiConfig}>
           <Web3Modal projectId={projectId} ethereumClient={ethereumClient} />
           <Router>
@@ -175,16 +173,7 @@ const App = () => {
             />
           </Router>
         </WagmiConfig>
-      ) : (
-        <Router>
-          <RouterCombiner
-            routes={Routes}
-            PrivateRoute={PrivateRoute}
-            auth={auth}
-            PageNotFound={Pages.NotFound}
-          />
-        </Router>
-      )}
+      }
     </div>
   );
 };

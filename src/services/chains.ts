@@ -26,7 +26,7 @@ export const hederaMainnet = {
   testnet: false,
 } as const satisfies Chain;
 
-export const lightLinkTestnet= {
+export const lightLinkTestnet = {
   id: 1891,
   name: "Lightlink Pegasus Testnet",
   network: "lightlink-testnet",
@@ -47,6 +47,31 @@ export const lightLinkTestnet= {
     default: {
       name: "Pegasus",
       url: "https://pegasus.lightlink.io",
+    },
+  },
+  testnet: false,
+} as const satisfies Chain;
+export const areaonTestnet = {
+  id: 462,
+  name: "Areon Pegasus Testnet",
+  network: "areon-testnet",
+  nativeCurrency: {
+    decimals: 18,
+    name: "Areon",
+    symbol: "TAREA",
+  },
+  rpcUrls: {
+    public: {
+      http: ["https://testnet-rpc.areon.network"],
+    },
+    default: {
+      http: ["https://testnet-rpc.areon.network"],
+    },
+  },
+  blockExplorers: {
+    default: {
+      name: "Areon",
+      url: "https://areonscan.com/",
     },
   },
   testnet: false,
