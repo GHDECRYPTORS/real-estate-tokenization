@@ -34,7 +34,7 @@ import { areaonTestnet, lightLinkTestnet } from "./services/chains";
 // >;
 
 // const chains = chain === "aurora-testnet" ? aurorachains : hederachains;
-const chains = [areaonTestnet];
+const chains = [lightLinkTestnet];
 
 const projectId = "02c135931686e1628630c41236d10acf";
 
